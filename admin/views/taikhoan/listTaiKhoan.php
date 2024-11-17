@@ -36,6 +36,7 @@
                     <th>SĐT</th>
                     <th>Địa chỉ</th>
                     <th>Chức vụ</th>
+                    <th>Thao tác</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -47,6 +48,7 @@
                     <td><?= $listtk['so_dien_thoai'] ?></td>
                     <td><?= $listtk['dia_chi']?></td>
                     <td><?= $listtk['ten_chuc_vu'] ?></td>
+                    <td><a href="<?= BASE_URL_ADMIN.'?act=updatetaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi chức vụ</button></a></td>
                   </tr>
                   <?php } ?>
                   </tbody>
@@ -58,6 +60,7 @@
                     <th>SĐT</th>
                     <th>Trạng thái</th>
                     <th>Chức vụ</th>
+                    <th>Thao tác</th>
                   </tr>
                   </tfoot>
                 </table>
