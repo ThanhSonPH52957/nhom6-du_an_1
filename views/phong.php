@@ -96,7 +96,8 @@
         .room5 {
             display: flex;
             flex-direction: row;
-            margin-left: 80px;
+            margin-left: 75px;
+            margin-top: 10px
         }
 
         .room5 .room6 {

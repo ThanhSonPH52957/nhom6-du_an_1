@@ -86,6 +86,7 @@ include_once "views/layout/menu.php";
     .room4 h3 {
         font-size: 18px;
         font-weight: 500;
+        margin: 10px 0;
     }
 
     .room4 ul li {
@@ -94,8 +95,7 @@ include_once "views/layout/menu.php";
     }
 
     .room8 {
-        margin-left: -12px;
-        margin-top: 10px;
+        margin: 10px 0px;
     }
 
     .room4 ul li img {
