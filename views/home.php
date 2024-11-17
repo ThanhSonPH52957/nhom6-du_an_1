@@ -1,8 +1,8 @@
 <?php
-include_once "views/layout/header.php";
+include_once "layout/header.php";
 ?>
 <?php
-include_once "views/layout/menu.php";
+include_once "layout/menu.php";
 ?>
 <style>
     section {
@@ -419,5 +419,5 @@ include_once "views/layout/menu.php";
 </section>
 
 <?php
-include_once "views/layout/footer.php";
+include_once "layout/footer.php";
 ?>

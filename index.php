@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 // Require file Common
 require_once './commons/env.php'; // Khai báo biến môi trường
@@ -19,12 +19,14 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     // Trang chủ
-    '/' => (new HomeController()) -> home(),
-    'chitietsanpham' => (new HomeController()) -> chiTietSanPham($_GET['id']),
-    'themgiohang' => (new HomeController()) -> themGioHang(),
+    '/' => (new HomeController())->home(),
+    'phong' => (new HomeController())->phong(),
+    'dichvu' => (new HomeController())->dichvu(),
+    'chitietsanpham' => (new HomeController())->chiTietSanPham($_GET['id']),
+    'themgiohang' => (new HomeController())->themGioHang(),
     // 'giohang' => (new HomeController()) -> gioHang(),
-    'login' => (new HomeController()) -> formLogin(),
-    'checklogin' => (new HomeController()) -> postLogin(),
-    'logout' => (new HomeController()) -> logout(),
+    'login' => (new HomeController())->formLogin(),
+    'checklogin' => (new HomeController())->postLogin(),
+    'logout' => (new HomeController())->logout(),
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };

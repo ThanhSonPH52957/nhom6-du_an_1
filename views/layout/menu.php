@@ -9,14 +9,14 @@
         <nav class="main-nav">
             <a href="index.php">Trang chủ</a>
             <div class="dropdown">
-                <a href="#">Phòng</a>
+                <a href="?act=phong">Phòng</a>
                 <div class="dropdown-content">
                     <a href="#">Phòng đơn</a>
                     <a href="#">Phòng đôi</a>
                     <a href="#">Phòng VIP</a>
                 </div>
             </div>
-            <a href="dichvu.php">Dịch vụ</a>
+            <a href="?act=dichvu">Dịch vụ</a>
             <a href="lienhe.php">Liên hệ</a>
             <a href="GioiThieu.php">Giới thiệu</a>
         </nav>

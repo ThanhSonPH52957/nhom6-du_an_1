@@ -31,25 +31,24 @@
         }
 
         .phong {
-            padding: 2px 10px;
-            width: 1240px;
+            padding: 10px 10px;
+            width: 1250px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(245, 245, 245, 1);
+            background-color: gainsboro;
             border-radius: 8px;
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
         .phong1 {
             display: flex;
             flex-direction: row;
-            align-items: center;
         }
 
         .phong1 p {
-            margin-left: 5px;
+            margin: 5px;
         }
 
         .room2 {

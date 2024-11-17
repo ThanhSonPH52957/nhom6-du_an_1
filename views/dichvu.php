@@ -1,8 +1,8 @@
 <?php
-include_once "views/layout/header.php";
+include_once "layout/header.php";
 ?>
 <?php
-include_once "views/layout/menu.php";
+include_once "layout/menu.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,49 +35,49 @@ include_once "views/layout/menu.php";
         }
 
         .phong {
-            padding: 2px 10px;
-            width: 1240px;
+            padding: 10px 10px;
+            width: 1250px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(245, 245, 245, 1);
+            background-color: gainsboro;
             border-radius: 8px;
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
         .phong1 {
             display: flex;
             flex-direction: row;
-            align-items: center;
         }
 
         .phong1 p {
-            margin-left: 5px;
+            margin: 5px;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1 {
+        .container h1 {
+            margin: 30px 0;
             text-align: center;
-            margin-bottom: 20px;
             font-size: 1.8em;
             color: #d46a6a;
         }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 80px;
             margin-bottom: 40px;
         }
 
         .card {
+            width: 250px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -95,8 +95,6 @@ include_once "views/layout/menu.php";
             padding: 15px;
             color: #555;
         }
-
-        img
     </style>
     <section>
         <div class="img1">
@@ -116,43 +114,45 @@ include_once "views/layout/menu.php";
     </section>
     <section>
         <div class="container">
-            <h1>Hội Nghị - Cưới Hỏi</h1>
-            <div class="grid">
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/to-chuc-tiec-hoi-nghi-hoi-thao-cao-cap.jpg?v=1670341379893" alt="Tổ chức tiệc hội nghị">
-                    <p>Tổ chức tiệc hội nghị, hội thảo cao cấp</p>
+            <div>
+                <h1>Hội Nghị - Cưới Hỏi</h1>
+                <div class="grid">
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/to-chuc-tiec-hoi-nghi-hoi-thao-cao-cap.jpg?v=1670341379893" alt="Tổ chức tiệc hội nghị">
+                        <p>Tổ chức tiệc hội nghị, hội thảo cao cấp</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/to-chuc-tiec-cuoi-ket-noi-nhan-duyen.jpg?v=1670341337250" alt="Tổ chức tiệc cưới">
+                        <p>Tổ chức tiệc cưới - kết nối nhân duyên</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/to-chuc-tiec-cuoi-ngoai-troi.jpg?v=1670341251877" alt="Tổ chức tiệc cưới ngoài trời">
+                        <p>Tổ chức tiệc cưới ngoài trời</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/goi-hoi-nghi-hoi-thao-to-chuc-trong-ngay.jpg?v=1670341205840" alt="Gói hội nghị, hội thảo">
+                        <p>Gói hội nghị, hội thảo tổ chức trong ngày</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/to-chuc-tiec-cuoi-ket-noi-nhan-duyen.jpg?v=1670341337250" alt="Tổ chức tiệc cưới">
-                    <p>Tổ chức tiệc cưới - kết nối nhân duyên</p>
-                </div>
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/to-chuc-tiec-cuoi-ngoai-troi.jpg?v=1670341251877" alt="Tổ chức tiệc cưới ngoài trời">
-                    <p>Tổ chức tiệc cưới ngoài trời</p>
-                </div>
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/goi-hoi-nghi-hoi-thao-to-chuc-trong-ngay.jpg?v=1670341205840" alt="Gói hội nghị, hội thảo">
-                    <p>Gói hội nghị, hội thảo tổ chức trong ngày</p>
-                </div>
-            </div>
 
-            <h1>Sức Khỏe - Làm Đẹp</h1>
-            <div class="grid">
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/massa-thu-gian-da-nong.jpg?v=1670341861677" alt="Massage thư giãn">
-                    <p>Ngâm dưỡng kết hợp massage thư giãn với đá nóng</p>
-                </div>
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/tam-trang-va-duong-da-toan-than.jpg?v=1670341775100" alt="Liệu trình spa">
-                    <p>Tắm trắng với liệu pháp dưỡng da toàn thân</p>
-                </div>
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/massa-tinh-dau.jpg?v=1670341723720" alt="Massage toàn thân">
-                    <p>Massage toàn thân bằng thảo dược và tinh dầu tự nhiên</p>
-                </div>
-                <div class="card">
-                    <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/tay-te-bao-chet-voi-cam-gao.jpg?v=1670341667380" alt="Tẩy tế bào chết">
-                    <p>Tẩy tế bào chết bằng bùn thiên nhiên, ngải cứu</p>
+                <h1>Sức Khỏe - Làm Đẹp</h1>
+                <div class="grid">
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/massa-thu-gian-da-nong.jpg?v=1670341861677" alt="Massage thư giãn">
+                        <p>Ngâm dưỡng kết hợp massage thư giãn với đá nóng</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/tam-trang-va-duong-da-toan-than.jpg?v=1670341775100" alt="Liệu trình spa">
+                        <p>Tắm trắng với liệu pháp dưỡng da toàn thân</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/massa-tinh-dau.jpg?v=1670341723720" alt="Massage toàn thân">
+                        <p>Massage toàn thân bằng thảo dược và tinh dầu tự nhiên</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://bizweb.dktcdn.net/thumb/large/100/472/947/articles/tay-te-bao-chet-voi-cam-gao.jpg?v=1670341667380" alt="Tẩy tế bào chết">
+                        <p>Tẩy tế bào chết bằng bùn thiên nhiên, ngải cứu</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -161,5 +161,5 @@ include_once "views/layout/menu.php";
 
 </html>
 <?php
-require_once 'layout/footer.php'
+include_once "layout/footer.php";
 ?>
