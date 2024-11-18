@@ -1,11 +1,165 @@
 <!-- Scroll to top start -->
-<div class="scroll-top not-visible">
-    <i class="fa fa-angle-up"></i>
-</div>
 <!-- Scroll to Top End -->
 l
-<link rel="stylesheet" href="assets/css/style.css">
 <!-- footer area start -->
+<style>
+    footer {
+        background-image: url("./assets/img/logo/footer.png");
+        background-size: cover;
+        background-position: center;
+        background-color: #333;
+        color: #ffffff;
+        padding: 40px 0;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        position: relative;
+    }
+
+    footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 0;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        gap: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-info,
+    .footer-subscribe,
+    .footer-payment {
+        text-align: left;
+        flex: 1 1 30%;
+    }
+
+    .footer-info strong,
+    .footer-subscribe strong,
+    .footer-payment strong {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .footer-subscribe form {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .footer-subscribe input[type="email"] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+        width: 200px;
+    }
+
+    .footer-subscribe button {
+        padding: 10px 20px;
+        background-color: #bfa14c;
+        color: #333;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .footer-payment img {
+        margin: 5px 10px 5px 5;
+        width: 40px;
+        vertical-align: middle;
+    }
+
+    .footer-about,
+    .footer-news,
+    .footer-policies {
+        flex: 1 1 30%;
+
+        max-width: 375px;
+    }
+
+    .footer-about h3,
+    .footer-news h3,
+    .footer-policies h3 {
+        color: #ffffff;
+    }
+
+    .footer-about p,
+    .footer-news p,
+    .footer-policies ul {
+        line-height: 1.5;
+        margin: 10px 0;
+    }
+
+    .footer-about {
+        max-width: 300px;
+    }
+
+    .footer-about h3 {
+        text-align: center;
+    }
+
+    .footer-about p {
+        text-align: center;
+        line-height: 1.6;
+        color: #ffffff;
+    }
+
+    .footer-news ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-news li {
+        color: white;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .footer-news p {
+        font-style: italic;
+        color: #ffffff;
+        margin-top: -5px;
+    }
+
+    .footer-about p {
+        color: #ffffff;
+        margin-top: -5px;
+    }
+
+    .footer-policies ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-policies ul li {
+        margin-bottom: 8px;
+    }
+
+    .footer-policies ul li a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .footer-policies ul li a:hover {
+        text-decoration: underline;
+    }
+</style>
 <footer>
 
     <div class="footer-container">
@@ -25,14 +179,14 @@ l
 
         <div class="footer-payment">
             <p><strong>Hình thức thanh toán</strong></p>
-            <img src="assets/img/logo/mastercard.png" alt="Mastercard">
-            <img src="assets/img/logo/visa.png" alt="Visa">
-            <img src="assets/img/logo/jcb.png" alt="JCB">
-            <img src="assets/img/logo/onepay.png" alt="OnePay">
-            <img src="assets/img/logo/payoo.png" alt="Payoo">
-            <img src="assets/img/logo/vietcombank.png" alt="Vietcombank">
-            <img src="assets/img/logo/standardchartered.png" alt="Standard Chartered">
-            <img src="assets/img/logo/citimart.png" alt="Citimart">
+            <img src="./assets/img/logo/mastercard.png" alt="Mastercard">
+            <img src="./assets/img/logo/visa.png" alt="Visa">
+            <img src="./assets/img/logo/jcb.png" alt="JCB">
+            <img src="./assets/img/logo/onepay.png" alt="OnePay">
+            <img src="./assets/img/logo/payoo.png" alt="Payoo">
+            <img src="./assets/img/logo/vietcombank.png" alt="Vietcombank">
+            <img src="./assets/img/logo/standardchartered.png" alt="Standard Chartered">
+            <img src="./assets/img/logo/citimart.png" alt="Citimart">
         </div>
         <div class="footer-about">
             <h3>PH Management</h3>
