@@ -21,7 +21,6 @@ class HomeController
     }
     public function phong()
     {
-
         require_once './views/phong.php';
     }
     public function dichvu()
@@ -29,6 +28,7 @@ class HomeController
 
         require_once './views/dichvu.php';
     }
+
 
     public function chiTietSanPham($id)
     {
@@ -122,4 +122,15 @@ class HomeController
             header("location: " . BASE_URL_ADMIN . '?act=login');
         }
     }
+
+    function lienhe()
+    {
+        require_once  './views/lienhe.php';
+    }
+    function gioithieu()
+    {
+        require_once './views/gioithieu.php';
+    }
+    
+}
 }

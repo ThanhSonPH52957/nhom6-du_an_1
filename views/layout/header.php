@@ -35,7 +35,6 @@
     <!-- jquery UI css -->
     <link rel="stylesheet" href="assets/css/plugins/jqueryui.min.css">
     <!-- main style css -->
-    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 

@@ -28,5 +28,9 @@ match ($act) {
     'login' => (new HomeController())->formLogin(),
     'checklogin' => (new HomeController())->postLogin(),
     'logout' => (new HomeController())->logout(),
+    // 'binhluan' => (new HomeController()) -> binhLuan(),
+    'lienhe' => (new homeController())->lienhe(),
+    'gioithieu' => (new HomeController())->gioithieu(),
+    'home' => (new HomeController())->home()
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };
