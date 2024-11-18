@@ -19,6 +19,16 @@ class HomeController
         $listSanPhamNew = $this->modelSanPham->GetNewSanPham();
         require_once './views/home.php';
     }
+    public function phong()
+    {
+        require_once './views/phong.php';
+    }
+    public function dichvu()
+    {
+
+        require_once './views/dichvu.php';
+    }
+
 
     public function chiTietSanPham($id)
     {
@@ -122,4 +132,5 @@ class HomeController
         require_once './views/gioithieu.php';
     }
     
+}
 }

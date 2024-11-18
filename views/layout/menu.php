@@ -98,14 +98,14 @@
         <nav class="main-nav">
             <a href="?act=home">Trang chủ</a>
             <div class="dropdown">
-                <a href="#">Phòng</a>
+                <a href="?act=phong">Phòng</a>
                 <div class="dropdown-content">
                     <a href="#">Phòng đơn</a>
                     <a href="#">Phòng đôi</a>
                     <a href="#">Phòng VIP</a>
                 </div>
             </div>
-            <a href="dichvu.php">Dịch vụ</a>
+            <a href="?act=dichvu">Dịch vụ</a>
             <a href="?act=lienhe">Liên hệ</a>
             <a href="?act=gioithieu">Giới thiệu</a>
         </nav>

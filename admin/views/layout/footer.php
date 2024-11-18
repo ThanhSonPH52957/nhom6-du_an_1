@@ -1,8 +1,8 @@
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>By Thanh Sơn</b>
+      <b>By Nhóm 6</b>
     </div>
-    <strong>Website bán thú cưng SonnvtPH52957</strong>
+    <strong>Website quản lý đặt phòng khách sạn PHManagement</strong>
   </footer>
 
   <!-- Control Sidebar -->

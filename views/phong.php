@@ -1,305 +1,147 @@
+<?php require_once 'layout/header.php'; ?>
+<?php require_once 'layout/menu.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<?php
-include_once "layout/header.php";
-?>
-<?php
-include_once "layout/menu.php";
-?>
-<style>
-    section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 1535px;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-    .img1 {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
+<body>
+    <style>
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        object-position: center;
-    }
+        .img1 {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
 
-    .title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 30px 0;
-    }
+        .img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            object-position: center;
+        }
 
-    .title1 {
-        width: 50%;
-    }
+        .phong {
+            padding: 10px 10px;
+            width: 1250px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: gainsboro;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
 
-    .title1 img {
-        width: 600px;
-        height: 350px;
-        object-fit: cover;
-        object-position: center;
-    }
+        .phong1 {
+            display: flex;
+            flex-direction: row;
+        }
 
-    .title2 {
-        width: 50%;
-        margin-left: 50px;
-    }
+        .phong1 p {
+            margin: 5px;
+        }
 
-    .title2 p {
-        width: 600px;
-        line-height: 25px;
-    }
+        .room2 {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+        }
 
-    .title2 h2 {
-        font-size: 36px;
-        font-weight: 500;
-    }
+        .room3 img {
+            width: 300px;
+        }
 
-    .title2 button {
-        padding: 10px;
-        border-style: none;
-        background-color: orange;
-    }
+        .room4 {
+            width: 300px;
+            text-align: center;
+            background-color: #fff;
+            padding-top: 2px;
+            margin-top: -2px;
+        }
 
-    .room7 {
-        background-color: rgba(243, 243, 243, 1);
-    }
+        .room4 h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 10px 0;
+        }
 
-    .room2 {
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-    }
+        .room4 ul li {
+            display: inline-block;
+            margin: 0 5px;
+        }
 
-    .room3 img {
-        width: 300px;
-    }
+        .room8 {
+            margin: 10px 0px;
+        }
 
-    .room4 {
-        width: 300px;
-        text-align: center;
-        background-color: #fff;
-        padding-top: 2px;
-        margin-top: -2px;
-    }
+        .room4 ul li img {
+            min-width: 30px;
+            max-width: 30px;
+            display: inline-block;
+        }
 
-    .room4 h3 {
-        font-size: 18px;
-        font-weight: 500;
-    }
+        .room4 ul {
+            margin-left: -10px;
+        }
 
-    .room4 ul li {
-        display: inline-block;
-        margin-right: 10px;
-    }
+        .room5 {
+            display: flex;
+            flex-direction: row;
+            margin-left: 75px;
+            margin-top: 10px
+        }
 
-    .room8 {
-        margin-left: -12px;
-    }
+        .room5 .room6 {
+            color: red;
+            margin-right: 10px;
+        }
 
-    .img1 {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
+        .room2 .room4 button {
+            width: 100%;
+            background-color: red;
+            border-style: none;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+        }
 
-    .img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        object-position: center;
-    }
+        .room {
+            background-color: rgba(240, 240, 240, 1);
+            margin: 20px 0;
+        }
 
-    .title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 30px 0;
-    }
-
-    .title1 {
-        width: 50%;
-    }
-
-    .title1 img {
-        width: 600px;
-        height: 350px;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    .title2 {
-        width: 50%;
-        margin-left: 50px;
-    }
-
-    .title2 p {
-        width: 600px;
-        line-height: 25px;
-    }
-
-    .title2 h2 {
-        font-size: 36px;
-        font-weight: 500;
-    }
-
-    .title2 button {
-        padding: 10px;
-        border-style: none;
-        background-color: orange;
-    }
-
-    .room7 {
-        background-color: rgba(243, 243, 243, 1);
-    }
-
-    .room2 {
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-    }
-
-    .room3 img {
-        width: 300px;
-    }
-
-    .room4 {
-        width: 300px;
-        text-align: center;
-        background-color: #fff;
-        padding-top: 2px;
-        margin-top: -2px;
-    }
-
-    .room4 h3 {
-        font-size: 18px;
-        font-weight: 500;
-        margin: 10px 0;
-    }
-
-    .room4 ul li {
-        display: inline-block;
-        margin-right: 10px;
-    }
-
-    .room8 {
-        margin: 10px 0px;
-    }
-
-    .room4 ul li img {
-        min-width: 30px;
-        max-width: 30px;
-        display: inline-block;
-    }
-
-    .room4 ul {
-        margin-left: -10px;
-    }
-
-    .room5 {
-        display: flex;
-        flex-direction: row;
-        margin-left: 75px;
-        margin-top: 10px
-    }
-
-    .room5 .room6 {
-        color: red;
-        margin-right: 10px;
-    }
-
-    .room2 .room4 button {
-        width: 100%;
-        background-color: red;
-        border-style: none;
-        padding: 10px;
-        font-size: 16px;
-        color: #fff;
-    }
-
-    .room1 {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-    }
-
-    .room {
-        margin-bottom: 50px;
-    }
-
-    .room h2 {
-        text-align: center;
-        font-size: 38px;
-        font-weight: 500;
-    }
-
-    .vip2 .vip3 img {
-        width: 620px;
-        height: 300px;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    .vip2 .vip4 {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        align-items: center;
-        margin-top: -60px;
-        padding: 0 10px;
-    }
-
-
-    .vip4 h3 {
-        font-size: 20px;
-        font-weight: 400;
-        color: #fff;
-    }
-
-    .vip4 button {
-        border-style: none;
-        padding: 7px 7px;
-        background-color: red;
-        color: #fff;
-    }
-
-    .vip1 {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-
-    .vip {
-        margin-bottom: 50px;
-    }
-
-    .vip h2 {
-        text-align: center;
-        font-size: 38px;
-        font-weight: 500;
-    }
-</style>
-<section>
-    <div class="img1">
-        <img class="img" src="https://cdn.pixabay.com/photo/2017/03/09/06/30/pool-2128578_640.jpg" alt="">
-    </div>
-</section>
-<section>
-    <div class="title">
-        <div class="title1">
-            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQFaj7f7dOtxWXPMssbTyXAT7_mOQYme0JIzmg_J2tNEIsuAzL-" alt="">
+        .room1 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+    </style>
+    <section>
+        <div class="img1">
+            <img class="img" src="https://cdn.pixabay.com/photo/2017/03/09/06/30/pool-2128578_640.jpg" alt="">
         </div>
-        <div class="title2">
-            <h2>PH Management</h2>
-            <p>Là khách sạn 5 sao đẳng cấp quốc tế, tọa lạc tại giao điểm của bốn quận chính, nơi được xem như trái tim và trung tâm của TP. Hồ Chí Minh. Với hệ thống phòng tiêu chuẩn và phòng hạng sang thiết kế đẹp mắt và trang nhã được chú trọng tới từng chi tiết sẽ đem lại sự tiện nghi và thoải mái tối đa cho quý khách dù là thời gian nghỉ ngơi thư giãn hay trong chuyến công tác...</p>
-            <button>xem thêm</button>
+    </section>
+    <section>
+        <div class="phong">
+            <h3>
+                PHÒNG
+            </h3>
+            <div class="phong1">
+                <p>Sắp xếp</p>
+                <p>Mặc định</p>
+            </div>
         </div>
-    </div>
-</section>
-<section class="room7">
-    <div>
+    </section>
+    <section>
         <div class="room">
-            <h2>PHÒNG</h2>
             <div class="room1">
                 <div class="room2">
                     <div class="room3">
@@ -381,11 +223,6 @@ include_once "layout/menu.php";
                         <button>Đặt Phòng</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="room">
-            <h2>PHÒNG ĐÔI</h2>
-            <div class="room1">
                 <div class="room2">
                     <div class="room3">
                         <img src="https://www.newdfhotel.com/img/room/rooms-1.jpg" alt="">
@@ -468,43 +305,8 @@ include_once "layout/menu.php";
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section>
-    <div class="vip">
-        <h2>PHÒNG VIP</h2>
-        <div class="vip1">
-            <div class="vip2">
-                <div class="vip3"><img src="https://pix8.agoda.net/hotelImages/168/168950/168950_18052900490065897272.jpg?ca=0&ce=1&s=600x" alt=""></div>
-                <div class="vip4">
-                    <h3>PHÒNG GIA ĐÌNH</h3>
-                    <button>XEM CHI TIẾT</button>
-                </div>
-            </div>
-            <div class="vip2">
-                <div class="vip3"><img src="https://pix8.agoda.net/hotelImages/168/168950/168950_18052900490065897272.jpg?ca=0&ce=1&s=600x" alt=""></div>
-                <div class="vip4">
-                    <h3>PHÒNG GIA ĐÌNH</h3>
-                    <button>XEM CHI TIẾT</button>
-                </div>
-            </div>
-            <div class="vip2">
-                <div class="vip3"><img src="https://pix8.agoda.net/hotelImages/168/168950/168950_18052900490065897272.jpg?ca=0&ce=1&s=600x" alt=""></div>
-                <div class="vip4">
-                    <h3>PHÒNG GIA ĐÌNH</h3>
-                    <button>XEM CHI TIẾT</button>
-                </div>
-            </div>
-            <div class="vip2">
-                <div class="vip3"><img src="https://pix8.agoda.net/hotelImages/168/168950/168950_18052900490065897272.jpg?ca=0&ce=1&s=600x" alt=""></div>
-                <div class="vip4">
-                    <h3>PHÒNG GIA ĐÌNH</h3>
-                    <button>XEM CHI TIẾT</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<?php
-include_once "layout/footer.php";
-?>
+    </section>
+</body>
+
+</html>
+<?php require_once 'layout/footer.php' ?>
