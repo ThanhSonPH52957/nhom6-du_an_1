@@ -6,6 +6,7 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
 require_once './controllers/HomeController.php';
+require_once './controllers/SanphamControler.php';
 
 // Require toàn bộ file Models
 require_once './models/TaiKhoan.php';
@@ -21,6 +22,7 @@ match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
     'phong' => (new HomeController())->phong(),
+    'timphong' => (new SanphamController())->search(),
     'dichvu' => (new HomeController())->dichvu(),
     'chitietsanpham' => (new HomeController())->chiTietSanPham($_GET['id']),
     'themgiohang' => (new HomeController())->themGioHang(),
