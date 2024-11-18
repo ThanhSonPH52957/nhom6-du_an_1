@@ -1,71 +1,77 @@
 <?php
-    class SanPham {
-        public $conn;
-        function __construct(){
-            $this->conn = connectDB();
-        }
+class Phong {
+    private $db;
 
-        function GetAllSanPham(){
-            try {
-                $sql = 'select san_phams.*, danh_mucs.ten_danh_muc from san_phams inner join danh_mucs on san_phams.danh_muc_id = danh_mucs.id';
-
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute();
-                return $stmt->fetchAll();
-            } catch (Exception $e) {
-                echo "Lỗi" .$e->getMessage();
-            }
-        }
-
-        function GetNewSanPham(){
-            try {
-                $sql = 'select san_phams.*, danh_mucs.ten_danh_muc from san_phams inner join danh_mucs on san_phams.danh_muc_id = danh_mucs.id ORDER BY san_phams.id DESC LIMIT 4;';
-
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute();
-                return $stmt->fetchAll();
-            } catch (Exception $e) {
-                echo "Lỗi" .$e->getMessage();
-            }
-        }
-
-        function GetDetailSanPham($id) {
-            $sql = 'select san_phams.*, danh_mucs.ten_danh_muc from san_phams inner join danh_mucs on san_phams.danh_muc_id = danh_mucs.id where san_phams.id = :id';
-            $stmt = $this -> conn -> prepare($sql);
-            $stmt -> execute([
-                ':id' => $id
-            ]);
-            return $stmt->fetch();
-        }
-
-        function GetListAnhSanPham($id) {
-            $sql = 'select * from hinh_anh_san_phams where san_pham_id = :id';
-            $stmt = $this -> conn -> prepare($sql);
-            $stmt -> execute([
-                ':id' => $id
-            ]);
-            return $stmt->fetchAll();
-        }
-
-        function GetBinhLuanFromSanPham($id) {
-            $sql = 'select binh_luans.*, tai_khoans.ho_ten, tai_khoans.anh_dai_dien from binh_luans inner join tai_khoans on binh_luans.tai_khoan_id = tai_khoans.id where binh_luans.san_pham_id = :id';
-            $stmt = $this -> conn -> prepare($sql);
-            $stmt -> execute([
-                ':id' => $id
-            ]);
-            return $stmt->fetchAll();
-        }
-
-        function getListSanPhamDanhMuc($id) {
-            try {
-                $sql = 'select san_phams.*, danh_mucs.ten_danh_muc from san_phams inner join danh_mucs on san_phams.danh_muc_id = danh_mucs.id where danh_muc_id =' .$id;
-
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute();
-                return $stmt->fetchAll();
-            } catch (Exception $e) {
-                echo "Lỗi" .$e->getMessage();
-            }
-        }
+    public function __construct($dbConnection) {
+        $this->db = $dbConnection;
     }
+
+    public function layDanhSachHinhAnhTheoPhong($id) {
+        $sql = 'SELECT * FROM album_anh_phongs WHERE phong_id = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function layDanhSachPhongTheoDanhMuc($idDanhMuc) {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                WHERE danh_muc_id = :idDanhMuc';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':idDanhMuc' => $idDanhMuc]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function layChiTietPhong($id) {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                WHERE phongs.id = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function layDanhSachBinhLuanTheoPhong($idPhong) {
+        $sql = 'SELECT binh_luans.*, tai_khoans.ho_ten 
+                FROM binh_luans 
+                INNER JOIN tai_khoans ON binh_luans.tai_khoan_id = tai_khoans.id 
+                WHERE binh_luans.phong_id = :idPhong';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':idPhong' => $idPhong]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function layPhongMoiNhat() {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                ORDER BY phongs.id DESC LIMIT 4';
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function layPhongLienQuan($idDanhMuc, $idHienTai) {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                WHERE danh_muc_id = :idDanhMuc AND phongs.id != :idHienTai 
+                LIMIT 4';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':idDanhMuc' => $idDanhMuc, ':idHienTai' => $idHienTai]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function timKiemPhong($tuKhoa) {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                WHERE phongs.ten_phong LIKE :tuKhoa OR danh_muc_phongs.ten_danh_muc LIKE :tuKhoa';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':tuKhoa' => '%' . $tuKhoa . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
 ?>
