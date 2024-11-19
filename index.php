@@ -21,7 +21,7 @@ match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
     'phong' => (new HomeController())->phong(),
-    // 'timphong' => (new HomeController())->search(),
+    'timphong' => (new HomeController())->timKiemPhong(),
     'dichvu' => (new HomeController())->dichvu(),
     'chitietphong' => (new HomeController())->chiTietPhong(),
     'themgiohang' => (new HomeController())->themGioHang(),

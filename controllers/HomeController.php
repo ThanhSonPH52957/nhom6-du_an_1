@@ -6,27 +6,32 @@ class HomeController
     public $modelTaiKhoan;
     public $modelGioHang;
 
-    function __construct() {
+    function __construct()
+    {
         $this->modelPhong = new Phong();
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
     }
 
 
-    public function home() {
+    public function home()
+    {
         $newphong = $this->modelPhong->layPhongMoiNhat();
         require_once './views/home.php';
     }
-    public function phong() {
+    public function phong()
+    {
         require_once './views/phong.php';
     }
 
-    public function dichvu() {
+    public function dichvu()
+    {
         require_once './views/dichvu.php';
     }
 
 
-    public function chiTietPhong() {
+    public function chiTietPhong()
+    {
         // $Phong = $this->modelPhong->GetDetailPhong($id);
 
         // $listAnhPhong = $this->modelPhong->GetListAnhPhong($id);
@@ -37,12 +42,14 @@ class HomeController
         require_once './views/chitietPhong.php';
     }
 
-    function formLogin() {
+    function formLogin()
+    {
         require_once './views/auth/formLogin.php';
         deleteSessionError();
     }
 
-    function postLogin() {
+    function postLogin()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
             $pass = $_POST['password'];
@@ -110,23 +117,24 @@ class HomeController
         }
     }
 
-    function lienhe() {
+    function lienhe()
+    {
         require_once  './views/lienhe.php';
     }
 
-    function gioithieu() {
+    function gioithieu()
+    {
         require_once './views/gioithieu.php';
     }
 
-    // public function search()
-    // {
-    //     $search = isset($_POST['search']) ? trim($_POST['search']) : '';
-        
-    //     if (!empty($search)) {
-    //         $products = $this->modelPhong->search($search);
-    //     }
-        
-    //     require_once './views/timphong.php';
-    // }
-}
+    public function timKiemPhong()
+    {
+        $search = isset($_POST['search']) ? trim($_POST['search']) : '';
 
+        if (!empty($search)) {
+            $products = $this->modelPhong->timKiemPhong($search);
+        }
+
+        require_once './views/timphong.php';
+    }
+}
