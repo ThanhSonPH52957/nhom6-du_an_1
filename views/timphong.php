@@ -153,7 +153,7 @@
 
                                 </div>
                                 <div class="room5">
-                                    <p class="room6"><?= $value['gia_tien'] ?></p>
+                                    <p class="room6"><?= $value['gia_tien'] ?> đ</p>
                                     <p>02 Khách</p>
                                 </div>
                                 <button>Đặt Phòng</button>
