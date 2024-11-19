@@ -5,7 +5,19 @@
         padding: 0;
         box-sizing: border-box;
     }
-
+button{
+    margin: 0 6px;
+    padding: 2px 6px;
+    background-color: #ffc107;
+    border: none;
+    
+}
+form{
+    display: flex;
+}
+form input{
+    width: 100px;
+}
     body {
         font-family: Arial, sans-serif;
         margin: 0 auto;
@@ -85,7 +97,7 @@
     }
 
     .header-button:hover {
-        color: #d1b536;
+        color: white;
     }
 </style>
 <header class="header-area header-wide">
@@ -110,12 +122,13 @@
         </nav>
         <div class="header-actions">
             <form action="?act=timphong" method="Post">
-                <input type="text" placeholder="Tìm kiếm" name="search" class="search-box">
-                <button type="submit">Tìm kiếm</button>
+                <input  type="text" placeholder="Tìm kiếm" name="search" class="search-box">
+                <button type="submit" class="header-button"  >Tìm kiếm</button>
             </form>
-            <a href="datphong.php" class="header-button">Đặt phòng</a>
-            <a href="views/auth/dangky.php" class="header-button">Đăng ký</a>
-            <a href="views/auth/dangnhap.php" class="header-button">Đăng nhập</a>
-        </div>
+<button>  <a href="?act=datphong" class="header-button">Đặt phòng</a></button>
+<button> <a href="?act=dangky" class="header-button">Đăng ký</a></button>     
+<button>  <a href="?act=dangnhap" class="header-button">Đăng nhập</a>
+</button>       
+ </div>
     </div>
 </header>

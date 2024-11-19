@@ -21,14 +21,17 @@ match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
     'phong' => (new HomeController())->phong(),
+    'datphong' => (new HomeController())->datphong(),
     'timphong' => (new HomeController())->timKiemPhong(),
     'dichvu' => (new HomeController())->dichvu(),
     'chitietphong' => (new HomeController())->chiTietPhong(),
     'themgiohang' => (new HomeController())->themGioHang(),
     // 'giohang' => (new HomeController()) -> gioHang(),
-    'login' => (new HomeController())->formLogin(),
+    'dangky' => (new HomeController())->dangKy(),
+    'dangnhap' => (new HomeController())->formLogin(),
     'checklogin' => (new HomeController())->postLogin(),
     'logout' => (new HomeController())->logout(),
+
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),
     'gioithieu' => (new HomeController())->gioithieu(),

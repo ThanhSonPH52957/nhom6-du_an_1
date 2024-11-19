@@ -45,7 +45,7 @@ class HomeController
 
     function formLogin()
     {
-        require_once './views/auth/formLogin.php';
+        require_once './views/auth/dangnhap.php';
         deleteSessionError();
     }
 
@@ -137,5 +137,11 @@ class HomeController
         }
 
         require_once './views/timphong.php';
+    }
+    public function dangky(){
+        require_once './views/auth/dangky.php';
+    }
+    public function datphong(){
+        require_once './views/datphong.php';
     }
 }
