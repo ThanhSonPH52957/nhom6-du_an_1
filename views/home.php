@@ -1,4 +1,3 @@
-
 <?php
 include_once "layout/header.php";
 ?>
@@ -10,7 +9,6 @@ include_once "layout/menu.php";
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 1535px;
     }
 
     .img1 {
@@ -305,8 +303,8 @@ include_once "layout/menu.php";
         <div class="room">
             <h2>PHÒNG</h2>
             <div class="room1">
-                <?php foreach($newphong as $key => $phong) { ?>
-                    <a href="?act=chitietphong&id="<?= $phong['id']?> >
+                <?php foreach ($newphong as $key => $phong) { ?>
+                    <a href="?act=chitietphong&id=" <?= $phong['id'] ?>>
                         <div class="room2">
                             <div class="room3">
                                 <img src="<?= $phong['hinh_anh'] ?>" alt="">
