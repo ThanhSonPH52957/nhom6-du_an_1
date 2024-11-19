@@ -1,144 +1,139 @@
 <?php require_once 'layout/header.php'; ?>
 <?php require_once 'layout/menu.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    .phong {
+        padding: 10px 10px;
+        width: 1250px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: gainsboro;
+        border-radius: 8px;
+        margin: 25px 0;
+    }
 
-<body>
-    <style>
-        section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .phong1 {
+        display: flex;
+        flex-direction: row;
+    }
 
-        .phong {
-            padding: 10px 10px;
-            width: 1250px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            background-color: gainsboro;
-            border-radius: 8px;
-            margin: 25px 0;
-        }
+    .phong1 p {
+        margin: 5px;
+    }
 
-        .phong1 {
-            display: flex;
-            flex-direction: row;
-        }
+    .room7 {
+        background-color: rgba(243, 243, 243, 1);
+    }
 
-        .phong1 p {
-            margin: 5px;
-        }
+    .room2 {
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    }
 
-        .room7 {
-            background-color: rgba(243, 243, 243, 1);
-        }
+    .room3 img {
+        width: 300px;
+    }
 
-        .room2 {
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-        }
+    .room8 {
+        width: 300px;
+        margin: 10px auto;
+    }
 
-        .room3 img {
-            width: 300px;
-        }
+    .room8 li {
+        display: inline-block;
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+        margin: 5px;
+    }
 
-        .room8 {
-            width: 300px;
-            margin: 10px auto;
-        }
+    .room4 {
+        width: 300px;
+        text-align: center;
+        background-color: #fff;
+        padding-top: 2px;
+        margin-top: -2px;
+    }
 
-        .room8 li {
-            display: inline-block;
-            flex-direction: row;
-            justify-content: center;
-            align-items: baseline;
-            margin: 5px;
-        }
+    .room4 h3 {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 10px 0;
+    }
 
-        .room4 {
-            width: 300px;
-            text-align: center;
-            background-color: #fff;
-            padding-top: 2px;
-            margin-top: -2px;
-        }
+    .room5 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
 
-        .room4 h3 {
-            font-size: 18px;
-            font-weight: 500;
-            margin: 10px 0;
-        }
+    .room5 p {
+        display: inline-block;
+        margin: 0 5px;
+    }
 
-        .room5 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+    .room5 .room6 {
+        color: red;
+    }
 
-        .room5 p {
-            display: inline-block;
-            margin: 0 5px;
-        }
+    .room2 .room4 button {
+        width: 100%;
+        background-color: red;
+        border-style: none;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+    }
 
-        .room5 .room6 {
-            color: red;
-        }
+    .room1 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
 
-        .room2 .room4 button {
-            width: 100%;
-            background-color: red;
-            border-style: none;
-            padding: 10px;
-            font-size: 16px;
-            color: #fff;
-        }
+    .room {
+        margin-bottom: 50px;
+    }
 
-        .room1 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
+    .room h2 {
+        text-align: center;
+        font-size: 38px;
+        font-weight: 500;
+    }
 
-        .room {
-            margin-bottom: 50px;
-        }
+    .tim2 {
+        background-color: rgba(243, 243, 243, 1);
+    }
 
-        .room h2 {
-            text-align: center;
-            font-size: 38px;
-            font-weight: 500;
-        }
+    .tim1 {
+        margin: 30px 0;
+    }
 
-        .tim2 {
-            background-color: rgba(243, 243, 243, 1);
-        }
-
-        .tim1 {
-            margin: 30px 0;
-        }
-    </style>
-    <?php if (!empty($products)): ?>
-        <section>
-            <div class="phong">
-                <h3>
-                    Trang chủ > Tìm kiếm
-                </h3>
-            </div>
-        </section>
-        <section class="room">
-            <div>
-                <h2>
-                    Có <?= count($products) ?> kết quả tìm kiếm phù hợp
-                </h2>
-                <div class="room1">
-                    <?php foreach ($products as $value) : ?>
+    a {
+        text-decoration: none;
+    }
+</style>
+<?php if (!empty($products)): ?>
+    <section>
+        <div class="phong">
+            <h3>
+                Trang chủ > Tìm kiếm
+            </h3>
+        </div>
+    </section>
+    <section class="room">
+        <div>
+            <h2>
+                Có <?= count($products) ?> kết quả tìm kiếm phù hợp
+            </h2>
+            <div class="room1">
+                <?php foreach ($products as $value) : ?>
+                    <a href="?act=chitietphong&id=<?= $value['id'] ?>">
                         <div class="room2">
                             <div class="room3">
                                 <img src="<?= $value['hinh_anh'] ?>" alt="">
@@ -159,15 +154,17 @@
                                 <button>Đặt Phòng</button>
                             </div>
                         </div>
-                    <?php endforeach ?>
-                </div>
+                    </a>
+                <?php endforeach ?>
             </div>
-        </section>
-        </ul>
-    <?php else: ?>
-        <p>Không tìm thấy sản phẩm nào.</p>
-    <?php endif; ?>
-</body>
-
-</html>
+        </div>
+    </section>
+    </ul>
+<?php else: ?>
+    <section class="h00">
+        <h1>
+            Không tìm thấy sản phẩm nào.
+        </h1>
+    </section>
+<?php endif; ?>
 <?php require_once 'layout/footer.php' ?>

@@ -21,6 +21,7 @@ class HomeController
     }
     public function phong()
     {
+        $newphong = $this->modelPhong->layPhongMoiNhat();
         require_once './views/phong.php';
     }
 

@@ -266,7 +266,7 @@ include_once "layout/menu.php";
             <h2>PHÒNG</h2>
             <div class="room1">
                 <?php foreach ($newphong as $key => $phong) { ?>
-                    <a href="?act=chitietphong&id=" <?= $phong['id'] ?>>
+                    <a href="?act=chitietphong&id=<?= $phong['id'] ?>">
                         <div class="room2">
                             <div class="room3">
                                 <img src="<?= $phong['hinh_anh'] ?>" alt="">
