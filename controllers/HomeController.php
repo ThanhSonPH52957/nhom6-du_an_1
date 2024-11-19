@@ -13,6 +13,7 @@ class HomeController
         $this->modelGioHang = new GioHang();
     }
 
+
     public function home()
     {
         $listSanPham = $this->modelSanPham->GetAllSanPham();

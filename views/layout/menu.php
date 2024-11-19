@@ -110,7 +110,10 @@
             <a href="?act=gioithieu">Giới thiệu</a>
         </nav>
         <div class="header-actions">
-            <input type="text" placeholder="Tìm kiếm" class="search-box">
+            <form action="?act=timphong" method="Post">
+                <input type="text" placeholder="Tìm kiếm" name="search" class="search-box">
+                <button type="submit">Tìm kiếm</button>
+            </form>
             <a href="datphong.php" class="header-button">Đặt phòng</a>
             <a href="views/auth/dangky.php" class="header-button">Đăng ký</a>
             <a href="views/auth/dangnhap.php" class="header-button">Đăng nhập</a>
