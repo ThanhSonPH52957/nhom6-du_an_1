@@ -1,27 +1,6 @@
 <?php require_once 'layout/header.php'; ?>
 <?php require_once 'layout/menu.php'; ?>
-<?php
-// Kết nối database
-$host = 'localhost';
-$db = 'du_an_1';
-$user = 'root';
-$pass = '';
-$conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-$id = $_GET['id'] ?? 1; // Lấy ID từ URL, mặc định là 1
-$query = $conn->prepare("SELECT * FROM phong WHERE id = ?");
-$query->execute([$id]);
-$phong = $query->fetch(PDO::FETCH_ASSOC);
 
-// Nếu không tìm thấy phòng
-if (!$phong) {
-    die('Phòng không tồn tại');
-}
-
-// Lấy danh sách phòng tương tự
-$tuong_tu = $conn->prepare("SELECT * FROM phong WHERE uu_tien_tuong_tu = 1 AND id != ? LIMIT 4");
-$tuong_tu->execute([$id]);
-$phong_tuong_tu = $tuong_tu->fetchAll(PDO::FETCH_ASSOC);
-?>
 <style>
     .banner {
         width: 100%;
@@ -132,7 +111,7 @@ $phong_tuong_tu = $tuong_tu->fetchAll(PDO::FETCH_ASSOC);
 <main>
     <div class="container">
         <nav>
-            <a href="/">Trang chủ</a> > <a href="/phong.php">Phòng đơn</a> > Phòng đơn tiêu chuẩn
+            <a href="?act=/">Trang chủ</a> > <a href="/phong.php">Phòng đơn</a> > Phòng đơn tiêu chuẩn
         </nav>
         <div class="banner">
             <img src="../assets/img/logo/banner.png" alt="Banner khách sạn">

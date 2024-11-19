@@ -1,14 +1,14 @@
 <?php
 class Phong {
-    private $db;
+    public $conn;
 
-    public function __construct($dbConnection) {
-        $this->db = $dbConnection;
+    function __construct() {
+        $this -> conn = connectDB();
     }
 
     public function layDanhSachHinhAnhTheoPhong($id) {
         $sql = 'SELECT * FROM album_anh_phongs WHERE phong_id = :id';
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([':id' => $id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -18,7 +18,7 @@ class Phong {
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
                 WHERE danh_muc_id = :idDanhMuc';
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([':idDanhMuc' => $idDanhMuc]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -28,7 +28,7 @@ class Phong {
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
                 WHERE phongs.id = :id';
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -38,7 +38,7 @@ class Phong {
                 FROM binh_luans 
                 INNER JOIN tai_khoans ON binh_luans.tai_khoan_id = tai_khoans.id 
                 WHERE binh_luans.phong_id = :idPhong';
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([':idPhong' => $idPhong]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -46,9 +46,9 @@ class Phong {
     public function layPhongMoiNhat() {
         $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
-                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
                 ORDER BY phongs.id DESC LIMIT 4';
-        $stmt = $this->db->query($sql);
+        $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -58,7 +58,7 @@ class Phong {
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
                 WHERE danh_muc_id = :idDanhMuc AND phongs.id != :idHienTai 
                 LIMIT 4';
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([':idDanhMuc' => $idDanhMuc, ':idHienTai' => $idHienTai]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -68,7 +68,7 @@ class Phong {
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
                 WHERE phongs.ten_phong LIKE :tuKhoa OR danh_muc_phongs.ten_danh_muc LIKE :tuKhoa';
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([':tuKhoa' => '%' . $tuKhoa . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

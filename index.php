@@ -6,11 +6,10 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
 require_once './controllers/HomeController.php';
-require_once './controllers/SanphamControler.php';
 
 // Require toàn bộ file Models
 require_once './models/TaiKhoan.php';
-require_once './models/SanPham.php';
+require_once './models/Phong.php';
 require_once './models/GioHang.php';
 
 // Route
@@ -22,9 +21,9 @@ match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
     'phong' => (new HomeController())->phong(),
-    'timphong' => (new SanphamController())->search(),
+    // 'timphong' => (new HomeController())->search(),
     'dichvu' => (new HomeController())->dichvu(),
-    'chitietsanpham' => (new HomeController())->chiTietSanPham($_GET['id']),
+    'chitietphong' => (new HomeController())->chiTietPhong(),
     'themgiohang' => (new HomeController())->themGioHang(),
     // 'giohang' => (new HomeController()) -> gioHang(),
     'login' => (new HomeController())->formLogin(),
@@ -33,6 +32,5 @@ match ($act) {
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),
     'gioithieu' => (new HomeController())->gioithieu(),
-    'home' => (new HomeController())->home()
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };

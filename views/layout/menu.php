@@ -92,11 +92,11 @@
 <header class="header-area header-wide">
 
     <div class="header-container">
-        <a href="index.php" class="logo">
+        <a href="?act=/" class="logo">
             <img src="./assets/img/logo/LOGO.png" alt="PH Management Logo">
         </a>
         <nav class="main-nav">
-            <a href="?act=home">Trang chủ</a>
+            <a href="?act=/">Trang chủ</a>
             <div class="dropdown">
                 <a href="?act=phong">Phòng</a>
                 <div class="dropdown-content">

@@ -2,61 +2,47 @@
 
 class HomeController
 {
-    public $modelSanPham;
+    public $modelPhong;
     public $modelTaiKhoan;
     public $modelGioHang;
 
-    function __construct()
-    {
-        $this->modelSanPham = new SanPham();
+    function __construct() {
+        $this->modelPhong = new Phong();
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
     }
 
 
-    public function home()
-    {
-        $listSanPham = $this->modelSanPham->GetAllSanPham();
-        $listSanPhamNew = $this->modelSanPham->GetNewSanPham();
+    public function home() {
+        $newphong = $this->modelPhong->layPhongMoiNhat();
         require_once './views/home.php';
     }
-    public function phong()
-    {
+    public function phong() {
         require_once './views/phong.php';
     }
-    public function dichvu()
-    {
 
+    public function dichvu() {
         require_once './views/dichvu.php';
     }
 
 
-    public function chiTietSanPham($id)
-    {
-        $sanPham = $this->modelSanPham->GetDetailSanPham($id);
+    public function chiTietPhong() {
+        // $Phong = $this->modelPhong->GetDetailPhong($id);
 
-        $listAnhSanPham = $this->modelSanPham->GetListAnhSanPham($id);
+        // $listAnhPhong = $this->modelPhong->GetListAnhPhong($id);
 
-        $listBinhLuan = $this->modelSanPham->GetBinhLuanFromSanPham($id);
+        // $listBinhLuan = $this->modelPhong->GetBinhLuanFromPhong($id);
 
-        $listSanPhamCungDanhMuc = $this->modelSanPham->getListSanPhamDanhMuc($sanPham['danh_muc_id']);
-
-        if ($sanPham) {
-            require_once './views/detailSanPham.php';
-        } else {
-            header("location: " . BASE_URL);
-            exit();
-        }
+        // $listPhongCungDanhMuc = $this->modelPhong->getListPhongDanhMuc($Phong['danh_muc_id']);
+        require_once './views/chitietPhong.php';
     }
 
-    function formLogin()
-    {
+    function formLogin() {
         require_once './views/auth/formLogin.php';
         deleteSessionError();
     }
 
-    function postLogin()
-    {
+    function postLogin() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
             $pass = $_POST['password'];
@@ -97,16 +83,16 @@ class HomeController
                 $san_pham_id = $_POST['san_pham_id'];
                 $so_luong = $_POST['so_luong'];
 
-                $checkSanPham = false;
+                $checkPhong = false;
                 foreach ($chiTietGioHang as $detail) {
                     if ($detail['san_pham_id'] == $san_pham_id) {
                         $newSoLuong = $detail['so_luong'] + $so_luong;
                         $this->modelGioHang->updateSoLuong($gioHang['id'], $san_pham_id, $newSoLuong);
-                        $checkSanPham = true;
+                        $checkPhong = true;
                         break;
                     }
                 }
-                if (!$checkSanPham) {
+                if (!$checkPhong) {
                     $this->modelGioHang->addDetailGioHang($gioHang['id'], $san_pham_id, $so_luong);
                 }
                 require_once './views/gioHang.php';
@@ -124,14 +110,23 @@ class HomeController
         }
     }
 
-    function lienhe()
-    {
+    function lienhe() {
         require_once  './views/lienhe.php';
     }
-    function gioithieu()
-    {
+
+    function gioithieu() {
         require_once './views/gioithieu.php';
     }
-    
+
+    // public function search()
+    // {
+    //     $search = isset($_POST['search']) ? trim($_POST['search']) : '';
+        
+    //     if (!empty($search)) {
+    //         $products = $this->modelPhong->search($search);
+    //     }
+        
+    //     require_once './views/timphong.php';
+    // }
 }
-}
+
