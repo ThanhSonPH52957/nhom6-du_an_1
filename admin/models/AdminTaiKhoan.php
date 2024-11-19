@@ -35,15 +35,12 @@
             return $stmt->fetch();
         }   
 
-        function UpdateQuanTri($id_quan_tri, $ho_ten, $so_dien_thoai, $email, $trang_thai) {
-            $sql = "update tai_khoans set ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, email = :email, trang_thai = :trang_thai where id = :id";
+        function UpdateTaiKhoan($id, $chucvu) {
+            $sql = "update tai_khoans set chuc_vu_id = :chucvu where id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
-            ':ho_ten' => $ho_ten,
-            ':so_dien_thoai' => $so_dien_thoai,
-            ':email' => $email,
-            ':trang_thai' => $trang_thai,
-            'id' => $id_quan_tri
+            'id' => $id,
+            'chucvu' => $chucvu
             ]);
 
             return true;

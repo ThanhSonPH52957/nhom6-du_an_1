@@ -65,10 +65,7 @@ match ($act) {
 
     //router quản lý tài khoản
     'listtaikhoan' => (new AdminTaiKhoanController()) -> danhSachTaiKhoan(),
-    'forminserttaikhoan' => (new AdminTaiKhoanController()) -> formInsertTaiKhoan(),
-    'inserttaikhoan' => (new AdminTaiKhoanController()) -> insertTaiKhoan(),
-    'formupdatetaikhoan' => (new AdminTaiKhoanController()) -> formUpdateTaiKhoan(),
-    'updatetaikhoan' => (new AdminTaiKhoanController()) -> updateTaiKhoan(),
+    'updatetaikhoan' => (new AdminTaiKhoanController()) -> updateTaiKhoan($_GET['id']),
 
     // //router quản lý tài khoản cá nhân
     // 'formupdatecanhan' => (new AdminTaiKhoanController()) -> formUpdateCaNhan(),
