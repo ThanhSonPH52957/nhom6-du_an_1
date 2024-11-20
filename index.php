@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 // Require file Common
 require_once './commons/env.php'; // Khai báo biến môi trường
@@ -9,7 +9,7 @@ require_once './controllers/HomeController.php';
 
 // Require toàn bộ file Models
 require_once './models/TaiKhoan.php';
-require_once './models/SanPham.php';
+require_once './models/Phong.php';
 require_once './models/GioHang.php';
 
 // Route
@@ -19,12 +19,21 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     // Trang chủ
-    '/' => (new HomeController()) -> home(),
-    'chitietsanpham' => (new HomeController()) -> chiTietSanPham($_GET['id']),
-    'themgiohang' => (new HomeController()) -> themGioHang(),
+    '/' => (new HomeController())->home(),
+    'phong' => (new HomeController())->phong(),
+    'datphong' => (new HomeController())->datphong(),
+    'timphong' => (new HomeController())->timKiemPhong(),
+    'dichvu' => (new HomeController())->dichvu(),
+    'chitietphong' => (new HomeController())->chiTietPhong(),
+    'themgiohang' => (new HomeController())->themGioHang(),
     // 'giohang' => (new HomeController()) -> gioHang(),
-    'login' => (new HomeController()) -> formLogin(),
-    'checklogin' => (new HomeController()) -> postLogin(),
-    'logout' => (new HomeController()) -> logout(),
+    'dangky' => (new HomeController())->dangKy(),
+    'dangnhap' => (new HomeController())->formLogin(),
+    'checklogin' => (new HomeController())->postLogin(),
+    'logout' => (new HomeController())->logout(),
+
+    // 'binhluan' => (new HomeController()) -> binhLuan(),
+    'lienhe' => (new homeController())->lienhe(),
+    'gioithieu' => (new HomeController())->gioithieu(),
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };

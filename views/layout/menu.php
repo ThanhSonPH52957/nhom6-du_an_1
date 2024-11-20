@@ -1,98 +1,134 @@
 <!-- Start Header Area -->
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+button{
+    margin: 0 6px;
+    padding: 2px 6px;
+    background-color: #ffc107;
+    border: none;
+    
+}
+form{
+    display: flex;
+}
+form input{
+    width: 100px;
+}
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+    }
+
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .logo img {
+        width: 60px;
+        height: auto;
+    }
+
+    .main-nav {
+        display: flex;
+        align-items: center;
+    }
+
+    .main-nav a {
+        text-decoration: none;
+        color: #000;
+        margin: 0 15px;
+        font-size: 16px;
+        position: relative;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        z-index: 1000;
+        min-width: 150px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        display: block;
+        padding: 10px;
+        color: #000;
+        text-decoration: none;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-box {
+        padding: 5px;
+        border: 1px solid #d1b536;
+        border-radius: 3px;
+        font-size: 14px;
+        margin-right: 15px;
+    }
+
+    .header-button {
+        text-decoration: none;
+        color: #000;
+        margin: 0 5px;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
+
+    .header-button:hover {
+        color: white;
+    }
+</style>
 <header class="header-area header-wide">
-        <!-- main header start -->
-        <div class="main-header d-none d-lg-block">
 
-            <!-- header middle area start -->
-            <div class="header-main-area sticky">
-                <div class="container">
-                    <div class="row align-items-center position-relative">
-
-                        <!-- start logo area -->
-                        <div class="col-lg-2">
-                            <div class="logo">
-                                <a href="<?= BASE_URL ?>">
-                                    <img src="assets/img/LOGO.png" alt="Brand Logo">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- start logo area -->
-
-                        <!-- main menu area start -->
-                        <div class="col-lg-6 position-static">
-                            <div class="main-menu-area">
-                                <div class="main-menu">
-                                    <!-- main menu navbar start -->
-                                    <nav class="desktop-menu">
-                                        <ul>
-                                            <li class="active"><a href="<?= BASE_URL ?>">Trang chủ</a></li>
-                                            
-                                            <li><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                                                    <li><a href="blog-list-left-sidebar.html">blog list left sidebar</a></li>
-                                                    <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                                                    <li><a href="blog-list-right-sidebar.html">blog list right sidebar</a></li>
-                                                    <li><a href="blog-grid-full-width.html">blog grid full width</a></li>
-                                                    <li><a href="blog-details.html">blog details</a></li>
-                                                    <li><a href="blog-details-left-sidebar.html">blog details left sidebar</a></li>
-                                                    <li><a href="blog-details-audio.html">blog details audio</a></li>
-                                                    <li><a href="blog-details-video.html">blog details video</a></li>
-                                                    <li><a href="blog-details-image.html">blog details image</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Giới thiệu</a></li>
-                                            <li><a href="#">Liên hệ</a></li>
-                                        </ul>
-                                    </nav>
-                                    <!-- main menu navbar end -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- main menu area end -->
-
-                        <!-- mini cart area start -->
-                        <div class="col-lg-4">
-                            <div class="header-right d-flex align-items-center justify-content-xl-between justify-content-lg-end">
-                                <div class="header-search-container">
-                                    <button class="search-trigger d-xl-none d-lg-block"><i class="pe-7s-search"></i></button>
-                                    <form class="header-search-box d-lg-none d-xl-block">
-                                        <input type="text" placeholder="Tìm kiếm sản phẩm" class="header-search-field">
-                                        <button class="header-search-btn"><i class="pe-7s-search"></i></button>
-                                    </form>
-                                </div>
-                                <div class="header-configure-area">
-                                    <ul class="nav justify-content-end">
-                                        <li class="user-hover">
-                                            <a href="#">
-                                                <i class="pe-7s-user"></i>
-                                            </a>
-                                            <ul class="dropdown-list">
-                                                <?php if(!isset($_SESSION['user_client'])) { ?>
-                                                    <li><a href="<?= BASE_URL . '?act=login' ?>">Đăng nhập</a></li>
-                                                <?php }else { ?>
-                                                    <li><a href="#">Tài khoản</a></li>
-                                                    <li><a href="<?= BASE_URL . '?act=logout' ?>">Đăng xuất</a></li>
-                                                <?php } ?>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="minicart-btn">
-                                                <i class="pe-7s-shopbag"></i>
-                                                <div class="notification">2</div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- mini cart area end -->
-
-                    </div>
+    <div class="header-container">
+        <a href="?act=/" class="logo">
+            <img src="./assets/img/logo/LOGO.png" alt="PH Management Logo">
+        </a>
+        <nav class="main-nav">
+            <a href="?act=/">Trang chủ</a>
+            <div class="dropdown">
+                <a href="?act=phong">Phòng</a>
+                <div class="dropdown-content">
+                    <a href="#">Phòng đơn</a>
+                    <a href="#">Phòng đôi</a>
+                    <a href="#">Phòng VIP</a>
                 </div>
             </div>
-            <!-- header middle area end -->
-        </div>
-        <!-- main header start -->
-    </header>
-    <!-- end Header Area -->
+            <a href="?act=dichvu">Dịch vụ</a>
+            <a href="?act=lienhe">Liên hệ</a>
+            <a href="?act=gioithieu">Giới thiệu</a>
+        </nav>
+        <div class="header-actions">
+            <form action="?act=timphong" method="Post">
+                <input  type="text" placeholder="Tìm kiếm" name="search" class="search-box">
+                <button type="submit" class="header-button"  >Tìm kiếm</button>
+            </form>
+<button>  <a href="?act=datphong" class="header-button">Đặt phòng</a></button>
+<button> <a href="?act=dangky" class="header-button">Đăng ký</a></button>     
+<button>  <a href="?act=dangnhap" class="header-button">Đăng nhập</a>
+</button>       
+ </div>
+    </div>
+</header>

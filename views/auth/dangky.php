@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng Ký</title>
+
+  <?php include './views/layout/menu.php'; ?>
+
   <style>
     /* Reset margin/padding */
     body, html {
@@ -13,18 +10,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Header Styles */
-    header {
-      background-color: #f8f9fa;
-      padding: 10px 20px;
-    }
-
-    header nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
     /* Main Layout Styles */
     .container {
       display: flex;
@@ -32,7 +17,6 @@
       justify-content: center;
       align-items: center;
       min-height: calc(100vh - 80px); /* Adjust height to fit content between header and footer */
-      background-color: #f4f4f4;
       padding: 20px;
     }
 
@@ -107,7 +91,7 @@
     .social-buttons button:hover {
       opacity: 0.8;
     }
-
+    
     /* Footer Styles */
     footer {
       background-color: #333;
@@ -132,17 +116,14 @@
       flex-direction: column;
     }
 
-    .container {
-      flex: 1; /* Đảm bảo phần nội dung chiếm toàn bộ chiều cao còn lại giữa header và footer */
-    }
+
   </style>
-</head>
 <body>
-  <?php include 'header.php'; ?>
+
   
   <main class="container">
     <h1>ĐĂNG KÝ</h1>
-    <p>Đã có tài khoản? <a href="dangNhap.php">Đăng nhập tại đây</a></p>
+    <p>Đã có tài khoản? <a href="?act=dangnhap">Đăng nhập tại đây</a></p>
     
     <form class="register-form" method="POST" action="">
       <input type="text" name="ho" placeholder="Họ" required>
@@ -164,6 +145,6 @@
     </div>
   </main>
   
-  <?php include 'footer.php'; ?>
+  <?php include './views/layout/footer.php'; ?>
 </body>
 </html>

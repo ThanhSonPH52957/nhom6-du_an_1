@@ -3,15 +3,18 @@
 
 
 <!-- Mirrored from htmldemo.net/corano/corano/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 29 Jun 2024 09:53:03 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Website bán thú cưng</title>
+    <title>PH Management</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/dog.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/LOGO.png">
 
     <!-- CSS
 	============================================ -->
@@ -32,7 +35,6 @@
     <!-- jquery UI css -->
     <link rel="stylesheet" href="assets/css/plugins/jqueryui.min.css">
     <!-- main style css -->
-    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
