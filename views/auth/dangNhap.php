@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng Ký</title>
+
   <style>
   /* Reset margin/padding */
 body, html {
@@ -30,7 +25,6 @@ header nav {
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Chiều cao toàn màn hình */
-  background-color: #f4f4f4;
 }
 
 .register-form {
@@ -115,13 +109,15 @@ footer p {
   </style>
 </head>
 <body>
+<?php include './views/layout/menu.php'; ?>
+
 <div class="container">
   <h1>ĐĂNG NHẬP</h1>  
   <form class="register-form" method="POST" action="">
     <input type="text" name="emailsdt" placeholder="Email/Số điện thoại" required>
     <input type="password" name="password" placeholder="Mật khẩu" required>
     <button type="submit" class="btn-submit">Đăng nhập</button>
-    <p>Chưa có tài khoản? <a href="dangKy.php">Đăng ký tại đây</a></p>
+    <p>Chưa có tài khoản? <a href="?act=dangky">Đăng ký tại đây</a></p>
   </form>
   
   <p class="social-login-text">Hoặc đăng nhập bằng:</p>
@@ -137,6 +133,7 @@ footer p {
   </div>
 </div>
 
+<?php include './views/layout/footer.php'; ?>
 
 
 </body>
