@@ -116,7 +116,7 @@
 
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="<?= BASE_URL_ADMIN . '?act=checkloginadmin' ?>" class="h1"><b>SHOP </b>THÚ CƯNG</a>
+                <a href="<?= BASE_URL_ADMIN . '?act=checkloginadmin' ?>" class="h1"><b>ADMIN </b>PHManagement</a>
             </div>
             <div class="card-body">
                 <?php if(isset($_SESSION['error'])) { ?>
@@ -150,7 +150,7 @@
                     </div>
                 </form>
                 <p class="mb-1">
-                    <a href="forgot-password.html">Quên mật khẩu</a>
+                    <a href="#">Quên mật khẩu</a>
                 </p>
             </div>
 
