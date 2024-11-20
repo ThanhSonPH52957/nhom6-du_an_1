@@ -83,13 +83,9 @@
                 ]);
                 $login = $stmt -> fetch();
 
-                if($login && password_verify($pass, $login['mat_khau'])) {
+                if($login && $login['mat_khau'] == $pass) {
                     if ($login['chuc_vu_id'] == 1) {
-                        if ($login['trang_thai'] == 1){
-                            return $login['email'];
-                        } else {
-                            return 'Tài khoản bị cấm';
-                        }
+                        return $login['email'];
                     }else {
                         return "Tài khoản không có quyền đăng nhập";
                     }
