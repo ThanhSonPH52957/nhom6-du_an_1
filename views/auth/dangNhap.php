@@ -28,14 +28,17 @@ header nav {
 }
 
 .register-form {
-  width: 400px;
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto; 
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
 }
-
 .register-form h1 {
   text-align: center;
   color: #b3722b;
