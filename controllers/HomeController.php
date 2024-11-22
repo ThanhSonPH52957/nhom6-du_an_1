@@ -138,10 +138,12 @@ class HomeController
 
         require_once './views/timphong.php';
     }
-    public function dangky(){
+    public function dangky()
+    {
         require_once './views/auth/dangky.php';
     }
-    public function datphong(){
+    public function datphong()
+    {
         require_once './views/datphong.php';
     }
 }
