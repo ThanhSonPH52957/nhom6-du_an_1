@@ -16,12 +16,14 @@ class HomeController
 
     public function home()
     {
-        $newphong = $this->modelPhong->layPhongMoiNhat();
+        $newphong = $this->modelPhong->layPhongDon();
+        $newphong1 = $this->modelPhong->layPhongDoi();
+        $newphong2 = $this->modelPhong->layPhongVip();
         require_once './views/home.php';
     }
     public function phong()
     {
-        $newphong = $this->modelPhong->layPhongMoiNhat();
+        $newphong = $this->modelPhong->AddPhong();
         require_once './views/phong.php';
     }
 
