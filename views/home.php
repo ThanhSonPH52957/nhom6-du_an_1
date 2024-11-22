@@ -271,7 +271,7 @@ include_once "layout/menu.php";
         <div class="room">
             <h2>PHÒNG ĐƠN</h2>
             <div class="room1">
-                <?php foreach ($newphong as $key => $phong) { ?>
+                <?php foreach ($newphong as $key => $phong) : ?>
                     <a href="?act=chitietphong&id=" <?= $phong['id'] ?>>
                         <div class="room2">
                             <div class="room3">
@@ -292,13 +292,13 @@ include_once "layout/menu.php";
                             </div>
                         </div>
                     </a>
-                <?php } ?>
+                <?php endforeach ?>
             </div>
         </div>
         <div class="room">
             <h2>PHÒNG ĐÔI</h2>
             <div class="room1">
-                <?php foreach ($newphong1 as $key => $phong) { ?>
+                <?php foreach ($newphong1 as $key => $phong) : ?>
                     <a href="?act=chitietphong&id=" <?= $phong['id'] ?>>
                         <div class="room2">
                             <div class="room3">
@@ -319,7 +319,7 @@ include_once "layout/menu.php";
                             </div>
                         </div>
                     </a>
-                <?php } ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
