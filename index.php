@@ -35,4 +35,7 @@ match ($act) {
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),
     'gioithieu' => (new HomeController())->gioithieu(),
-    'binhluan' => (new HomeController()) -> binhLuan()};
+    'chitietPhong' => (new HomeController())->chitietPhong(),
+
+    // 'binhluan' => (new HomeController()) -> binhLuan()
+};
