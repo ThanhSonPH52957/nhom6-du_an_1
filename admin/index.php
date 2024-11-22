@@ -8,14 +8,14 @@ require_once '../commons/function.php'; // Hàm hỗ trợ
 require_once './controllers/AdminDanhMucController.php';
 require_once './controllers/AdminDichVuController.php';
 require_once './controllers/AdminPhongController.php';
-require_once './controllers/AdminDonHangController.php';
+require_once './controllers/AdminDatPhongController.php';
 require_once './controllers/AdminBaoCaoController.php';
 require_once './controllers/AdminTaiKhoanController.php';
 // Require toàn bộ file Models
 require_once './models/AdminPhong.php';
 require_once './models/AdminDanhMuc.php';
 require_once './models/AdminDichVu.php';
-require_once './models/AdminDonHang.php';
+require_once './models/AdminDatPhong.php';
 require_once './models/AdminTaiKhoan.php';
 
 // Route
@@ -57,8 +57,8 @@ match ($act) {
     'updatedichvu' => (new AdminDichVuController()) -> updateDichVu($_GET['id']),
     'deletedichvu' => (new AdminDichVuController()) -> deleteDichVu($_GET['id']),
 
-    // //router đơn hàng
-    // 'donhang' => (new AdminDonHangController()) -> danhSachDonHang(),
+    // router đặt phòng
+    'datphong' => (new AdminDatPhongController()) -> danhSachDatPhong(),
     // 'chitietdonhang' => (new AdminDonHangController()) -> chiTietDonHang($_GET['id_don_hang']),
     // 'formupdatedonhang' => (new AdminDonHangController()) -> formUpdateDonHang($_GET['id_don_hang']),
     // 'updatedonhang' => (new AdminDonHangController()) -> updateDonHang($_GET['id']),

@@ -1,6 +1,6 @@
 <?php 
 
-class AdminDonHang
+class AdminDatPhong
 {
     public $conn;
 
@@ -8,8 +8,13 @@ class AdminDonHang
         $this -> conn = connectDB();
     }
 
-    function getAllDonHang() {
-        $sql = 'select * from trang_thai_don_hangs inner join don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id';
+    function getAllDatPhong() {
+        $sql = 'select dat_phongs.*, trang_thai_dat_phongs.ten_trang_thai, tai_khoans.ho_ten, phongs.ten_phong, phuong_thuc_thanh_toans.ten_phuong_thuc
+        from dat_phongs
+        inner join trang_thai_dat_phongs on dat_phongs.trang_thai_id = trang_thai_dat_phongs.id
+        inner join tai_khoans on dat_phongs.tai_khoan_id = tai_khoans.id
+        inner join phongs on dat_phongs.phong_id = phongs.id
+        inner join phuong_thuc_thanh_toans on dat_phongs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id';
         $stmt = $this -> conn -> prepare($sql);
         $stmt -> execute();
         return $stmt->fetchAll();
