@@ -7,7 +7,6 @@
     }
 
     button {
-        margin: 0 6px;
         padding: 2px 6px;
         background-color: #ffc107;
         border: none;
