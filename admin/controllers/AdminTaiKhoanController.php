@@ -1,12 +1,12 @@
 <?php
     class AdminTaiKhoanController {
         public $modelTaiKhoan;
-        public $modelDonHang;
+        public $modelDatPhong;
         public $modelSanPham;
 
         function __construct() {
             $this -> modelTaiKhoan = new AdminTaiKhoan();
-            $this -> modelDonHang = new AdminDonHang();
+            $this -> modelDatPhong= new AdminDatPhong();
             // $this -> modelSanPham = new AdminSanPham();
         }
 

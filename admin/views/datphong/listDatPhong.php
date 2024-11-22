@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Quản lý danh sách đơn hàng</h1>
+            <h1>Quản lý danh sách đặt phòng</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -33,27 +33,29 @@
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Mã đơn hàng</th>
-                    <th>Tên người nhận</th>
-                    <th>Số điện thoại</th>
+                    <th>Tên người đặt</th>
+                    <th>Tên phòng</th>
                     <th>Ngày đặt</th>
-                    <th>Tổng tiền</th>
+                    <th>Check in</th>
+                    <th>Check out</th>
+                    <th>Phương thức thanh toán</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($alldonhang as  $key => $donhang) { ?>
+                    <?php foreach($alldatphong as $key => $datphong) { ?>
                   <tr>
                     <td><?= $key + 1 ?></td>
-                    <td><?= $donhang['ma_don_hang'] ?></td>
-                    <td><?= $donhang['ten_nguoi_nhan'] ?></td>
-                    <td><?= $donhang['sdt_nguoi_nhan'] ?></td>
-                    <td><?= $donhang['ngay_dat'] ?></td>
-                    <td><?= $donhang['tong_tien'] ?></td>
-                    <td><?= $donhang['ten_trang_thai'] ?></td>
-                    <td><a href="<?= BASE_URL_ADMIN.'?act=chitietdonhang&id_don_hang='.$donhang['id'] ?>"><button class="btn btn-warning">Chi tiết</button></a>
-                    <a href="<?= BASE_URL_ADMIN.'?act=formupdatedonhang&id_don_hang='.$donhang['id'] ?>"><button class="btn btn-warning">Chỉnh sửa</button></a>
+                    <td><?= $datphong['ho_ten'] ?></td>
+                    <td><?= $datphong['ten_phong'] ?></td>
+                    <td><?= $datphong['ngay_dat'] ?></td>
+                    <td><?= $datphong['check_in'] ?></td>
+                    <td><?= $datphong['check_out'] ?></td>
+                    <td><?= $datphong['ten_phuong_thuc'] ?></td>
+                    <td><?= $datphong['ten_trang_thai'] ?></td>
+                    <td><a href="<?= BASE_URL_ADMIN.'?act=chitietdatphong&id_don_hang='.$datphong['id'] ?>"><button class="btn btn-warning">Chi tiết</button></a>
+                    <a href="<?= BASE_URL_ADMIN.'?act=formupdatedatphong&id_don_hang='.$datphong['id'] ?>"><button class="btn btn-warning">Chỉnh sửa</button></a>
                     </td>
                   </tr>
                   <?php } ?>
@@ -61,11 +63,12 @@
                   <tfoot>
                   <tr>
                     <th>STT</th>
-                    <th>Mã đơn hàng</th>
-                    <th>Tên người nhận</th>
-                    <th>Số điện thoại</th>
+                    <th>Tên người đặt</th>
+                    <th>Tên phòng</th>
                     <th>Ngày đặt</th>
-                    <th>Tổng tiền</th>
+                    <th>Check in</th>
+                    <th>Check out</th>
+                    <th>Phương thức thanh toán</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>

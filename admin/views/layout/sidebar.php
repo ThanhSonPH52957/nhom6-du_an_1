@@ -48,7 +48,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= BASE_URL_ADMIN.'?act=donhang'?>" class="nav-link">
+            <a href="<?= BASE_URL_ADMIN.'?act=datphong'?>" class="nav-link">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
                Danh sách đặt phòng
