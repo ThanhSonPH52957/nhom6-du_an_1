@@ -12,6 +12,11 @@ class HomeController
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
     }
+    public function danhmucphong($idDanhmuc)
+    {
+        $data = $this->modelPhong->layDanhSachPhongTheoDanhMuc($idDanhmuc);
+        require_once './views/danhmucphong.php';
+    }
 
 
     public function home()

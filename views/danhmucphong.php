@@ -143,7 +143,7 @@
     <section>
         <div class="phong">
             <h3>
-                PHÒNG
+                <?= $data[0]['ten_danh_muc'] ?>
             </h3>
             <div class="phong1">
                 <p>Sắp xếp</p>
@@ -154,8 +154,8 @@
     <section>
         <div class="room">
             <div class="room1">
-                <?php foreach ($newphong as $key => $phong) { ?>
-                    <a href="?act=chitietphong&id=" <?= $phong['id_phong'] ?>>
+                <?php foreach ($data as $key => $phong) : ?>
+                    <a href="?act=chitietphong&id=" <?= $phong['id'] ?>>
                         <div class="room2">
                             <div class="room3">
                                 <img src="<?= $phong['hinh_anh'] ?>" alt="">
@@ -175,7 +175,7 @@
                             </div>
                         </div>
                     </a>
-                <?php } ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
