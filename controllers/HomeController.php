@@ -145,9 +145,18 @@ class HomeController
 
         require_once './views/timphong.php';
     }
+<<<<<<< HEAD
       public function dangky()
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+=======
+  public function dangky()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            echo "<pre>";
+    var_dump($_POST);
+    echo "</pre>";
+>>>>>>> 06b87812169075e0952e78c547cbce49930a391a
 
         $ho = trim($_POST["ho"]);
         $ten = trim($_POST["ten"]);

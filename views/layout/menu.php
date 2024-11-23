@@ -18,6 +18,15 @@ button.header-button{
     padding: 2px 6px;
     background-color: #ffc107;
     border: none;
+<<<<<<< HEAD
+=======
+}
+form{
+    display: flex;
+}
+form input{
+    width: 100px;
+>>>>>>> 06b87812169075e0952e78c547cbce49930a391a
 }
 
     form {
@@ -138,7 +147,12 @@ button.header-button{
 <button class="header-button">  <a href="?act=datphong" >Đặt phòng</a></button>
 <button class="header-button"> <a href="?act=dangky" >Đăng ký</a></button>     
 <button class="header-button">  <a href="?act=dangnhap" >Đăng nhập</a>
+<<<<<<< HEAD
             </button>
         </div>
+=======
+</button>       
+ </div>
+>>>>>>> 06b87812169075e0952e78c547cbce49930a391a
     </div>
 </header>
