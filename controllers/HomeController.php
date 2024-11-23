@@ -145,10 +145,61 @@ class HomeController
 
         require_once './views/timphong.php';
     }
-    public function dangky()
-    {
-        require_once './views/auth/dangky.php';
+      public function dangky()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $ho = trim($_POST["ho"]);
+        $ten = trim($_POST["ten"]);
+        $email = trim($_POST["email"]);
+        $sdt = trim($_POST["sdt"]);
+        $matkhau = password_hash(trim($_POST["matkhau"]), PASSWORD_BCRYPT); // Mã hóa mật khẩu
+
+        // Kiểm tra dữ liệu đầu vào
+        if (empty($ho) || empty($ten) || empty($email) || empty($sdt) || empty($matkhau)) {
+            $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin!";
+            require_once './views/auth/dangky.php';
+            return;
+        }
+
+        // Tạo kết nối cơ sở dữ liệu
+        try {
+            $conn = new mysqli('localhost', 'root', '', 'du_an_1');
+            if ($conn->connect_error) {
+                throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
+            }
+
+            // Chuẩn bị câu lệnh SQL
+            $sql = "INSERT INTO tai_khoan (ho, ten, email, sdt, matkhau) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
+            }
+
+            // Gán giá trị và thực thi câu lệnh
+            $stmt->bind_param("sssss", $ho, $ten, $email, $sdt, $matkhau);
+            if ($stmt->execute()) {
+                $_SESSION['success'] = "Đăng ký thành công!";
+                header("Location: " . BASE_URL_ADMIN . '?act=login');
+                exit();
+            } else {
+                throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
+        } finally {
+            // Đóng kết nối và giải phóng bộ nhớ
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
     }
+
+    require_once './views/auth/dangky.php';
+}
     public function datphong()
     {
         require_once './views/datphong.php';
