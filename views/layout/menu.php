@@ -1,107 +1,108 @@
 <!-- Start Header Area -->
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    button {
-        padding: 2px 6px;
-        background-color: #ffc107;
-        border: none;
+button {
+    margin: 0 6px;
+    padding: 2px 6px;
+    background-color: #ffc107;
+    border: none;
 
-    }
+}
 
-    form {
-        display: flex;
-    }
+form {
+    display: flex;
+}
 
-    form input {
-        width: 100px;
-    }
+form input {
+    width: 100px;
+}
 
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0 auto;
-    }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+}
 
-    .header-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 20px;
-        background-color: #fff;
-        border-bottom: 1px solid #ccc;
-    }
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
 
-    .logo img {
-        width: 60px;
-        height: auto;
-    }
+.logo img {
+    width: 60px;
+    height: auto;
+}
 
-    .main-nav {
-        display: flex;
-        align-items: center;
-    }
+.main-nav {
+    display: flex;
+    align-items: center;
+}
 
-    .main-nav a {
-        text-decoration: none;
-        color: #000;
-        margin: 0 15px;
-        font-size: 16px;
-        position: relative;
-    }
+.main-nav a {
+    text-decoration: none;
+    color: #000;
+    margin: 0 15px;
+    font-size: 16px;
+    position: relative;
+}
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #fff;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        z-index: 1000;
-        min-width: 150px;
-    }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    min-width: 150px;
+}
 
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
-    .dropdown-content a {
-        display: block;
-        padding: 10px;
-        color: #000;
-        text-decoration: none;
-        font-size: 14px;
-        white-space: nowrap;
-    }
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+}
 
-    .header-actions {
-        display: flex;
-        align-items: center;
-    }
+.header-actions {
+    display: flex;
+    align-items: center;
+}
 
-    .search-box {
-        padding: 5px;
-        border: 1px solid #d1b536;
-        border-radius: 3px;
-        font-size: 14px;
-        margin-right: 15px;
-    }
+.search-box {
+    padding: 5px;
+    border: 1px solid #d1b536;
+    border-radius: 3px;
+    font-size: 14px;
+    margin-right: 15px;
+}
 
-    .header-button {
-        text-decoration: none;
-        color: #000;
-        margin: 0 5px;
-        font-size: 16px;
-        transition: color 0.3s;
-    }
+.header-button {
+    text-decoration: none;
+    color: #000;
+    margin: 0 5px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
 
-    .header-button:hover {
-        color: white;
-    }
+.header-button:hover {
+    color: white;
+}
 </style>
 <header class="header-area header-wide">
 
