@@ -20,15 +20,26 @@ class AdminDatPhong
         return $stmt->fetchAll();
     }
 
-    function getAllTrangThai() {
-        $sql = 'select * from trang_thai_don_hangs';
+    function getDichVuFromId($id) {
+        $sql = 'select chi_tiet_hoa_dons.*, dich_vus.ten_dich_vu, dich_vus.gia_dich_vu
+        from chi_tiet_hoa_dons
+        inner join dich_vus on chi_tiet_hoa_dons.dich_vu_id = dich_vus.id
+        where chi_tiet_hoa_dons.dat_phong_id = :id';
         $stmt = $this -> conn -> prepare($sql);
-        $stmt -> execute();
+        $stmt -> execute([
+            ':id' => $id
+        ]);
         return $stmt->fetchAll();
     }
 
-    function getOneDonHang($id) {
-        $sql = 'select don_hangs.*, phuong_thuc_thanh_toans.ten_phuong_thuc, trang_thai_don_hangs.ten_trang_thai, tai_khoans.ho_ten, tai_khoans.email, tai_khoans.so_dien_thoai from don_hangs inner join trang_thai_don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id inner join tai_khoans on don_hangs.tai_khoan_id = tai_khoans.id inner join phuong_thuc_thanh_toans on don_hangs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id where don_hangs.id = :id';
+    function getOneDatPhong($id) {
+        $sql = 'select dat_phongs.*, phuong_thuc_thanh_toans.ten_phuong_thuc, trang_thai_dat_phongs.ten_trang_thai, tai_khoans.ho_ten, tai_khoans.email, tai_khoans.so_dien_thoai, phongs.ten_phong, phongs.gia_tien
+        from dat_phongs 
+        inner join trang_thai_dat_phongs on dat_phongs.trang_thai_id = trang_thai_dat_phongs.id 
+        inner join tai_khoans on dat_phongs.tai_khoan_id = tai_khoans.id 
+        inner join phuong_thuc_thanh_toans on dat_phongs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id
+        inner join phongs on phongs.id = dat_phongs.phong_id
+        where dat_phongs.id = :id';
         $stmt = $this -> conn -> prepare($sql);
         $stmt -> execute([
             ':id' => $id

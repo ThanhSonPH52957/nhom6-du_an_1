@@ -11,14 +11,27 @@
             require_once './views/datphong/listDatPhong.php';
         }
 
-        // function chiTietDatPhong($id) {
-        //     $donHang = $this -> modelDatPhong -> getOneDatPhong($id);
+        function chiTietDatPhong($id) {
+            $onedatphong = $this -> modelDatPhong -> getOneDatPhong($id);
+            $dichvu = $this -> modelDatPhong -> getDichVuFromId($id);
 
-        //     $sanPhamDonHang = $this -> modelDatPhong -> getListSpDatPhong($id);
+            $startDate = new DateTime($onedatphong['check_in']);
+            $endDate = new DateTime($onedatphong['check_out']);
+            $tinhsongay = $startDate->diff($endDate);
+            $songay = $tinhsongay->days;
 
-        //     $listTrangThai = $this -> modelDatPhong -> getAllTrangThai();
-        //     require_once './views/donhang/detailDonHang.php';
-        // }
+            $tienphong = $onedatphong['gia_tien']*$songay;
+            
+            $tiendichvu = 0;
+            foreach($dichvu as $dv) {
+                $tiendichvu += $dv['gia_dich_vu'];
+            }
+
+            $tongtien = $tienphong + $tiendichvu;
+
+            // $listTrangThai = $this -> modelDatPhong -> getAllTrangThai();
+            require_once './views/datphong/detailDatPhong.php';
+        }
 
         // function formUpdateDonHang($id) {
         //     $donHang = $this -> modelDonHang -> getOneDonHang($id);

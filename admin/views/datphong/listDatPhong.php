@@ -36,8 +36,6 @@
                     <th>Tên người đặt</th>
                     <th>Tên phòng</th>
                     <th>Ngày đặt</th>
-                    <th>Check in</th>
-                    <th>Check out</th>
                     <th>Phương thức thanh toán</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -50,12 +48,10 @@
                     <td><?= $datphong['ho_ten'] ?></td>
                     <td><?= $datphong['ten_phong'] ?></td>
                     <td><?= $datphong['ngay_dat'] ?></td>
-                    <td><?= $datphong['check_in'] ?></td>
-                    <td><?= $datphong['check_out'] ?></td>
                     <td><?= $datphong['ten_phuong_thuc'] ?></td>
                     <td><?= $datphong['ten_trang_thai'] ?></td>
-                    <td><a href="<?= BASE_URL_ADMIN.'?act=chitietdatphong&id_don_hang='.$datphong['id'] ?>"><button class="btn btn-warning">Chi tiết</button></a>
-                    <a href="<?= BASE_URL_ADMIN.'?act=formupdatedatphong&id_don_hang='.$datphong['id'] ?>"><button class="btn btn-warning">Chỉnh sửa</button></a>
+                    <td><a href="<?= BASE_URL_ADMIN.'?act=chitietdatphong&id='.$datphong['id'] ?>"><button class="btn btn-success">Chi tiết</button></a>
+                    <a href="<?= BASE_URL_ADMIN.'?act=formupdatedatphong&id='.$datphong['id'] ?>"><button class="btn btn-warning">Chỉnh sửa</button></a>
                     </td>
                   </tr>
                   <?php } ?>
@@ -66,8 +62,6 @@
                     <th>Tên người đặt</th>
                     <th>Tên phòng</th>
                     <th>Ngày đặt</th>
-                    <th>Check in</th>
-                    <th>Check out</th>
                     <th>Phương thức thanh toán</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
