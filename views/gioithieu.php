@@ -1,43 +1,43 @@
 <?php require_once 'layout/header.php'; ?>
 <?php require_once 'layout/menu.php'; ?>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+    }
 
-.breadcrumb {
-    padding: 10px;
-    background-color: #eee;
-    font-size: 14px;
-}
+    .breadcrumb {
+        padding: 10px;
+        background-color: #eee;
+        font-size: 14px;
+    }
 
-.breadcrumb a {
-    text-decoration: none;
-}
+    .breadcrumb a {
+        text-decoration: none;
+    }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-h1 {
-    text-align: center;
-}
+    h1 {
+        text-align: center;
+    }
 
-.hotel-image {
-    display: block;
-    max-width: 100%;
-    margin: 20px auto;
-    border: 1px solid #ddd;
-}
+    .hotel-image {
+        display: block;
+        max-width: 100%;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+    }
 </style>
 <main>
     <div class="breadcrumb">
-        <a href="?act=home">Trang chủ</a> > <span>Giới thiệu</span>
+        <a href="?act=/">Trang chủ</a> > <span>Giới thiệu</span>
     </div>
     </div>
     <section class="gioi-thieu">

@@ -155,8 +155,8 @@
         <div class="room">
             <div class="room1">
                 <?php foreach ($newphong as $key => $phong) { ?>
-                    <a href="?act=chitietphong&id=" <?= $phong['id_phong'] ?>>
-                        <div class="room2">
+                    <div class="room2">
+                        <a href="?act=chitietphong&id=<?= $phong['id'] ?>">
                             <div class="room3">
                                 <img src="<?= $phong['hinh_anh'] ?>" alt="">
                             </div>
@@ -171,12 +171,12 @@
                                     <p class="room6"><?= number_format($phong['gia_tien']) ?> đ</p>
                                     <p><?= $phong['ten_danh_muc'] ?></p>
                                 </div>
-                                <button>Đặt Phòng</button>
-                            </div>
-                        </div>
-                    </a>
-                <?php } ?>
+                        </a>
+                        <button>Đặt Phòng</button>
+                    </div>
             </div>
+        <?php } ?>
+        </div>
         </div>
     </section>
 </body>

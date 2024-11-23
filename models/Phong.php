@@ -18,7 +18,7 @@ class Phong
 
     public function layDanhSachPhongTheoDanhMuc($idDanhMuc)
     {
-        $sql = 'SELECT phongs.*, phongs.id AS id_phong, danh_muc_phongs.ten_danh_muc ,danh_muc_phongs.id
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
                 WHERE danh_muc_id = :idDanhMuc';
@@ -30,7 +30,7 @@ class Phong
 
     public function layChiTietPhong($id)
     {
-        $sql = 'SELECT phongs.*, phongs.id AS id_phong, danh_muc_phongs.ten_danh_muc 
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
                 WHERE phongs.id = :id';
@@ -51,7 +51,7 @@ class Phong
     }
     public function AddPhong()
     {
-        $sql = 'SELECT phongs.*, phongs.id AS id_phong , danh_muc_phongs.ten_danh_muc AS ten_danh_muc
+        $sql = 'SELECT phongs.* , danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id';
         $stmt = $this->conn->prepare($sql);
@@ -61,7 +61,7 @@ class Phong
 
     public function layPhongDon()
     {
-        $sql = 'SELECT phongs.*, phongs.id AS id_phong, danh_muc_phongs.ten_danh_muc 
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
                 WHERE danh_muc_id = 1
@@ -71,7 +71,7 @@ class Phong
     }
     public function layPhongDoi()
     {
-        $sql = 'SELECT phongs.*, phongs.id AS id_phong, danh_muc_phongs.ten_danh_muc 
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
                 WHERE danh_muc_id = 2
@@ -81,7 +81,7 @@ class Phong
     }
     public function layPhongVip()
     {
-        $sql = 'SELECT phongs.*, phongs.id AS id_phong, danh_muc_phongs.ten_danh_muc 
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
                 WHERE danh_muc_id = 4
