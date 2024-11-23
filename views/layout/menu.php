@@ -114,9 +114,9 @@
             <div class="dropdown">
                 <a href="?act=phong">Phòng</a>
                 <div class="dropdown-content">
-                    <a href="#">Phòng đơn</a>
-                    <a href="#">Phòng đôi</a>
-                    <a href="#">Phòng VIP</a>
+                    <a href="?act=danhmucphong&danh_muc_id=1">Phòng đơn</a>
+                    <a href="?act=danhmucphong&danh_muc_id=2">Phòng đôi</a>
+                    <a href="?act=danhmucphong&danh_muc_id=4">Phòng VIP</a>
                 </div>
             </div>
             <a href="?act=dichvu">Dịch vụ</a>

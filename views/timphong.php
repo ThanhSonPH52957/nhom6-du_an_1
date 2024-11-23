@@ -161,7 +161,7 @@
     </section>
     </ul>
 <?php else: ?>
-    <section class="h00">
+    <section class="h00" style="margin: 80px 0;">
         <h1>
             Không tìm thấy sản phẩm nào.
         </h1>

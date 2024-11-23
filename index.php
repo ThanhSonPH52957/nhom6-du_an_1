@@ -20,11 +20,12 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
+    'danhmucphong' => (new HomeController())->danhmucphong($_GET['danh_muc_id']),
     'phong' => (new HomeController())->phong(),
     'datphong' => (new HomeController())->datphong(),
     'timphong' => (new HomeController())->timKiemPhong(),
     'dichvu' => (new HomeController())->dichvu(),
-    'chitietphong' => (new HomeController())->chiTietPhong(),
+    'chitietphong' => (new HomeController())->chiTietPhong($_GET['id']),
     'themgiohang' => (new HomeController())->themGioHang(),
     // 'giohang' => (new HomeController()) -> gioHang(),
     'dangky' => (new HomeController())->dangKy(),
