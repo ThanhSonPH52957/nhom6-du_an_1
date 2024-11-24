@@ -147,12 +147,9 @@ form input{
 <button class="header-button">  <a href="?act=datphong" >Đặt phòng</a></button>
 <button class="header-button"> <a href="?act=dangky" >Đăng ký</a></button>     
 <button class="header-button">  <a href="?act=dangnhap" >Đăng nhập</a>
-<<<<<<< HEAD
             </button>
         </div>
-=======
 </button>       
  </div>
->>>>>>> 06b87812169075e0952e78c547cbce49930a391a
     </div>
 </header>

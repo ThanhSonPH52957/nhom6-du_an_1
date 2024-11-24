@@ -100,55 +100,50 @@ input[type="checkbox"] {
 }
 </style>
 
-    <div class="booking-container">
+    <form action="" method="POST">
+        <div class="booking-container">
         <h1>ĐẶT PHÒNG</h1>
         
         <div class="form-group">
             <div class="form-label">Họ và tên*</div>
-            <input type="text" placeholder="Nhập họ và tên" required>
+            <input type="text" placeholder="Nhập họ và tên" name="hoten" required>
 
             <div class="form-label">Số điện thoại*</div>
-            <input type="text" placeholder="Nhập số điện thoại" required>
+            <input type="text" placeholder="Nhập số điện thoại" name="sdt" required>
 
             <div class="form-label">Ngày/giờ check-in*</div>
-            <input type="datetime-local" id="checkin" required>
+            <input type="datetime-local" id="checkin" name="checkin" required>
 
             <div class="form-label">Ngày/giờ check-out*</div>
-            <input type="datetime-local" id="checkout" required>
+            <input type="datetime-local" id="checkout" name="checkout" required>
 
-            <div class="form-label">Loại phòng*</div>
-            <select required>
+            <div class="form-label" >Loại phòng*</div>
+            <select name="loaiphong" required>
                 <option>Phòng đơn tiêu chuẩn</option>
                 <option>Phòng đôi</option>
                 <option>Phòng VIP</option>
             </select>
 
             <div class="form-label full-width">Ghi chú cho tiếp tân</div>
-            <input type="text" class="full-width" placeholder="Nhập ghi chú" required>
+            <input type="text" class="full-width" placeholder="Nhập ghi chú" name="note">
         </div>
 
         <div class="form-group">
             <div class="form-label">Tổng số giờ ở:</div>
-            <input type="text" id="totalHours" placeholder="0 giờ" disabled>
+            <input type="text" id="totalHours" placeholder="0 giờ" name="total" disabled>
         </div>
 
-        <div class="room-info">
-            <div>Kích thước: 250spm</div>
-            <div>View: Trung tâm thành phố</div>
-            <div>Giường: 1 giường lớn</div>
-            <div>Bữa tối: có</div>
-            <div>Điều hòa: có</div>
-            <div>Bữa sáng: có</div>
-            <div>Wifi: có</div>
-            <div>Vé free khu vui chơi: có</div>
-        </div>
+ <div class="room-info">
+    <div>
+        <label>
+            <input type="checkbox" name="dich_vu" value="co" checked>
+        </label>
+    </div>
 
-        <div class="room-images">
-            <img src="1731581846Pexels Photo by Engin Akyurt.png" alt="Room Image 1">
-            <img src="1731581846Pexels Photo by Engin Akyurt.png" alt="Room Image 2">
-            <img src="1731581846Pexels Photo by Engin Akyurt.png" alt="Room Image 3">
-            <img src="1731581846Pexels Photo by Engin Akyurt.png" alt="Room Image 4">
-        </div>
+
+</div>
+
+
 
         <div class="total-price">
             <label><input type="checkbox" required> Tôi xác nhận đã đọc và xác thực thông tin đặt phòng</label>
@@ -157,6 +152,7 @@ input[type="checkbox"] {
 
         <button class="submit-btn" type="submit" style="background-color: yellow">ĐẶT PHÒNG</button>
     </div>
+    </form>
 
     <script>
         document.getElementById('checkin').addEventListener('change', calculateHours);
