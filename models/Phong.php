@@ -39,6 +39,29 @@ class Phong
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function layPhongLienQuan($id, $idhientai)
+    {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                WHERE phongs.danh_muc_id = :id and  phongs.id != :idhientai';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id, ':idhientai' => $idhientai]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function layPhongTotNhat($idhientai)
+    {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
+                FROM phongs 
+                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
+                WHERE phongs.danh_muc_id = 4 and  phongs.id != :idhientai
+                ORDER BY phongs.id DESC LIMIT 4';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':idhientai' => $idhientai]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     public function layDanhSachBinhLuanTheoPhong($idPhong)
     {
         $sql = 'SELECT binh_luans.*, tai_khoans.ho_ten 
@@ -87,18 +110,6 @@ class Phong
                 WHERE danh_muc_id = 4
                 ORDER BY danh_muc_id  DESC LIMIT 4';
         $stmt = $this->conn->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function layPhongLienQuan($idDanhMuc, $idHienTai)
-    {
-        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
-                FROM phongs 
-                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
-                WHERE danh_muc_id = :idDanhMuc AND phongs.id != :idHienTai 
-                LIMIT 4';
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':idDanhMuc' => $idDanhMuc, ':idHienTai' => $idHienTai]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

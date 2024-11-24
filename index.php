@@ -25,7 +25,6 @@ match ($act) {
     'datphong' => (new HomeController())->datphong(),
     'timphong' => (new HomeController())->timKiemPhong(),
     'dichvu' => (new HomeController())->dichvu(),
-    'chitietphong' => (new HomeController())->chiTietPhong($_GET['id']),
     'themgiohang' => (new HomeController())->themGioHang(),
     // 'giohang' => (new HomeController()) -> gioHang(),
     'dangky' => (new HomeController())->dangKy(),
@@ -36,7 +35,6 @@ match ($act) {
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),
     'gioithieu' => (new HomeController())->gioithieu(),
-    'chitietPhong' => (new HomeController())->chitietPhong(),
-
+    'chitietphong' => (new HomeController())->chitietPhong(),
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };
