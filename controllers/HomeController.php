@@ -40,6 +40,11 @@ class HomeController
 
     public function chiTietPhong()
     {
+        $id = $_GET['id'] ?? '';
+
+        $data = $this->modelPhong->layChiTietPhong($id);
+        $data1 = $this->modelPhong->layPhongLienQuan($data['danh_muc_id'], $data['id']);
+        $data2 = $this->modelPhong->layPhongTotNhat($data['id']);
         // $Phong = $this->modelPhong->GetDetailPhong($id);
 
         // $listAnhPhong = $this->modelPhong->GetListAnhPhong($id);
@@ -145,18 +150,9 @@ class HomeController
 
         require_once './views/timphong.php';
     }
-<<<<<<< HEAD
-      public function dangky()
-{
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-=======
   public function dangky()
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
->>>>>>> 06b87812169075e0952e78c547cbce49930a391a
 
         $ho = trim($_POST["ho"]);
         $ten = trim($_POST["ten"]);
@@ -211,6 +207,55 @@ class HomeController
 }
     public function datphong()
     {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+// Kiểm tra nếu giá trị tồn tại trước khi dùng trim
+$hoten = isset($_POST["hoten"]) ? trim($_POST["hoten"]) : '';
+$sdt = isset($_POST["sdt"]) ? trim($_POST["sdt"]) : '';
+$checkin = isset($_POST["checkin"]) ? trim($_POST["checkin"]) : '';
+$checkout = isset($_POST["checkout"]) ? trim($_POST["checkout"]) : '';
+$loaiphong = isset($_POST["loaiphong"]) ? trim($_POST["loaiphong"]) : '';
+$note = isset($_POST["note"]) ? trim($_POST["note"]) : '';
+$total = isset($_POST["total"]) ? trim($_POST["total"]) : '';
+$dichvu = isset($_POST["dichvu"]) ? trim($_POST["dichvu"]) : '';  // Dịch vụ (checkbox)
+
+
+        // Tạo kết nối cơ sở dữ liệu
+        try {
+            $conn = new mysqli('localhost', 'root', '', 'du_an_1');
+            if ($conn->connect_error) {
+                throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
+            }
+
+            // Chuẩn bị câu lệnh SQL
+            $sql = "INSERT INTO dat_phongs (hoten, sdt, check_in, check_out, loaiphong, note, total, dichvu) VALUES ('$hoten', '$sdt', '$checkin', '$checkout', '$loaiphong', '$note', '$total', '$dichvu')";
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
+            }
+
+            // Gán giá trị và thực thi câu lệnh
+            $stmt->bind_param("sssss", $hoten, $sdt, $checkin, $checkout, $note, $total, $dichvu);
+            if ($stmt->execute()) {
+                $_SESSION['success'] = "Đăng ký thành công!";
+                header("Location: " . BASE_URL_ADMIN . '?act=login');
+                exit();
+            } else {
+                throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
+        } finally {
+            // Đóng kết nối và giải phóng bộ nhớ
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+
         require_once './views/datphong.php';
     }
 }
