@@ -40,6 +40,11 @@ class HomeController
 
     public function chiTietPhong()
     {
+        $id = $_GET['id'] ?? '';
+
+        $data = $this->modelPhong->layChiTietPhong($id);
+        $data1 = $this->modelPhong->layPhongLienQuan($data['danh_muc_id'], $data['id']);
+        $data2 = $this->modelPhong->layPhongTotNhat($data['id']);
         // $Phong = $this->modelPhong->GetDetailPhong($id);
 
         // $listAnhPhong = $this->modelPhong->GetListAnhPhong($id);
