@@ -31,6 +31,7 @@ match ($act) {
     'dangnhap' => (new HomeController())->formLogin(),
     'checklogin' => (new HomeController())->postLogin(),
     'logout' => (new HomeController())->logout(),
+    'binhluan' => (new HomeController())->addbinhluan(),
 
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),

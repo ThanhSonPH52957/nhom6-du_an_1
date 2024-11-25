@@ -123,4 +123,45 @@ class Phong
         $stmt->execute([':tuKhoa' => '%' . $tuKhoa . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function addBinhluan($noidung, $id_phong, $id_tai_khoan)
+    {
+        $sql = "INSERT INTO binhluan (id_phong,$id_tai_khoan,$noidung)
+        VALUES (:id_phong,:id_tai_khoan,:noidung)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':id_phong' => $id_phong ?? null,
+            ':id' => $id_tai_khoan ?? null,
+            ':nguoidung' => $noidung ?? null,
+        ]);
+    }
+    public function listBinhluan($id_phong)
+    {
+        $sql = "
+                SELECT * FROM binhluan
+                INNER JOIN phongs ON phongs.id = binhluan.id_phong
+                INNER JOIN tai_khoans ON tai_khoans.id = binhluan.id_tai_khoan 
+                WHERE binhluan.id_phong = :id_phong ;
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id_phong' => $id_phong]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getBinhLuanChiTiet($id_phong)
+    {
+        $sql = 'SELECT binhluan.noidung, tai_khoans.ho_ten 
+            FROM binhluan
+            INNER JOIN tai_khoans ON binhluan.id_tai_khoan = tai_khoans.id 
+            WHERE binhluan.id_phong = :id_phong
+            ';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id_phong' => $id_phong]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function all()
+    {
+        $sql = "SELECT * FROM binhluan";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

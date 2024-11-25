@@ -41,10 +41,10 @@ class HomeController
     public function chiTietPhong()
     {
         $id = $_GET['id'] ?? '';
-
         $data = $this->modelPhong->layChiTietPhong($id);
         $data1 = $this->modelPhong->layPhongLienQuan($data['danh_muc_id'], $data['id']);
         $data2 = $this->modelPhong->layPhongTotNhat($data['id']);
+        $binhluans = $this->modelPhong->getBinhLuanChiTiet($data['id']);
         // $Phong = $this->modelPhong->GetDetailPhong($id);
 
         // $listAnhPhong = $this->modelPhong->GetListAnhPhong($id);
@@ -157,5 +157,19 @@ class HomeController
     public function datphong()
     {
         require_once './views/datphong.php';
+    }
+    public function addbinhluan()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_phong = $_POST['id_phong'];
+            $noidung = $_POST['noidung'];
+            $id_tai_khoan = $_SESSION['id_tai_khoan'] ?? "";
+        }
+        if (empty($id_tai_khoan)) {
+            header("location:index.php?act=login");
+            exit;
+        }
+        ($this->modelPhong)->addBinhluan($noidung, $id_phong, $id_tai_khoan);
+        header('location:' . BASE_URL_ADMIN . ' ?act=chitietphong&id=' . $id_phong);
     }
 }
