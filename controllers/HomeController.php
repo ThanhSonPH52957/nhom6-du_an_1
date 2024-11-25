@@ -150,111 +150,120 @@ class HomeController
 
         require_once './views/timphong.php';
     }
-  public function dangky()
-{
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-        $ho = trim($_POST["ho"]);
-        $ten = trim($_POST["ten"]);
-        $email = trim($_POST["email"]);
-        $sdt = trim($_POST["sdt"]);
-        $matkhau = password_hash(trim($_POST["matkhau"]), PASSWORD_BCRYPT); // Mã hóa mật khẩu
-
-        // Kiểm tra dữ liệu đầu vào
-        if (empty($ho) || empty($ten) || empty($email) || empty($sdt) || empty($matkhau)) {
-            $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin!";
-            require_once './views/auth/dangky.php';
-            return;
+    public function dangky()
+    {
+        // Kiểm tra nếu session chưa được khởi tạo, thì mới gọi session_start
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
 
-        // Tạo kết nối cơ sở dữ liệu
-        try {
-            $conn = new mysqli('localhost', 'root', '', 'du_an_1');
-            if ($conn->connect_error) {
-                throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $ho_ten = trim($_POST["ho"] . ' ' . $_POST["ten"]); // Họ và tên
+            $email = trim($_POST["email"]);
+            $so_dien_thoai = trim($_POST["sdt"]);
+            $matkhau = password_hash(trim($_POST["matkhau"]), PASSWORD_BCRYPT); // Mã hóa mật khẩu
+
+            // Kiểm tra dữ liệu đầu vào
+            if (empty($ho_ten) || empty($email) || empty($so_dien_thoai) || empty($matkhau)) {
+                $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin!";
+                require_once './views/auth/dangky.php';
+                return;
             }
 
-            // Chuẩn bị câu lệnh SQL
-            $sql = "INSERT INTO tai_khoan (ho, ten, email, sdt, matkhau) VALUES (?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
-            }
+            // Kết nối cơ sở dữ liệu
+            try {
+                $conn = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                if ($conn->connect_error) {
+                    throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
+                }
 
-            // Gán giá trị và thực thi câu lệnh
-            $stmt->bind_param("sssss", $ho, $ten, $email, $sdt, $matkhau);
-            if ($stmt->execute()) {
-                $_SESSION['success'] = "Đăng ký thành công!";
-                header("Location: " . BASE_URL_ADMIN . '?act=login');
-                exit();
-            } else {
-                throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
-            }
-        } catch (Exception $e) {
-            $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
-        } finally {
-            // Đóng kết nối và giải phóng bộ nhớ
-            if (isset($stmt)) {
-                $stmt->close();
-            }
-            if (isset($conn)) {
-                $conn->close();
+                // Chuẩn bị câu lệnh SQL chèn dữ liệu vào bảng tai_khoans
+                $sql = "INSERT INTO tai_khoans (ho_ten, email, so_dien_thoai, mat_khau, chuc_vu_id) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                if (!$stmt) {
+                    throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
+                }
+
+                // Gán giá trị và thực thi câu lệnh
+                $chuc_vu_id = 1;  // Bạn có thể thay đổi giá trị này nếu cần thiết
+                $stmt->bind_param("ssssi", $ho_ten, $email, $so_dien_thoai, $matkhau, $chuc_vu_id);
+                if ($stmt->execute()) {
+                    // Lưu thông báo thành công vào session
+                    $_SESSION['success'] = "Đăng ký thành công!";
+
+                    // Chuyển hướng tới trang đăng nhập
+                    header("Location: " . BASE_URL_ADMIN . '?act=dangnhap');
+                    exit(); // Dừng mã sau khi chuyển hướng
+                } else {
+                    throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
+                }
+            } catch (Exception $e) {
+                // Xử lý lỗi nếu có
+                $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
+            } finally {
+                // Đóng kết nối và giải phóng bộ nhớ
+                if (isset($stmt)) {
+                    $stmt->close();
+                }
+                if (isset($conn)) {
+                    $conn->close();
+                }
             }
         }
+
+        // Gọi lại form đăng ký nếu không phải phương thức POST
+        require_once './views/auth/dangky.php';
     }
-
-    require_once './views/auth/dangky.php';
-}
     public function datphong()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-// Kiểm tra nếu giá trị tồn tại trước khi dùng trim
-$hoten = isset($_POST["hoten"]) ? trim($_POST["hoten"]) : '';
-$sdt = isset($_POST["sdt"]) ? trim($_POST["sdt"]) : '';
-$checkin = isset($_POST["checkin"]) ? trim($_POST["checkin"]) : '';
-$checkout = isset($_POST["checkout"]) ? trim($_POST["checkout"]) : '';
-$loaiphong = isset($_POST["loaiphong"]) ? trim($_POST["loaiphong"]) : '';
-$note = isset($_POST["note"]) ? trim($_POST["note"]) : '';
-$total = isset($_POST["total"]) ? trim($_POST["total"]) : '';
-$dichvu = isset($_POST["dichvu"]) ? trim($_POST["dichvu"]) : '';  // Dịch vụ (checkbox)
+            // Kiểm tra nếu giá trị tồn tại trước khi dùng trim
+            $hoten = isset($_POST["hoten"]) ? trim($_POST["hoten"]) : '';
+            $sdt = isset($_POST["sdt"]) ? trim($_POST["sdt"]) : '';
+            $checkin = isset($_POST["checkin"]) ? trim($_POST["checkin"]) : '';
+            $checkout = isset($_POST["checkout"]) ? trim($_POST["checkout"]) : '';
+            $loaiphong = isset($_POST["loaiphong"]) ? trim($_POST["loaiphong"]) : '';
+            $note = isset($_POST["note"]) ? trim($_POST["note"]) : '';
+            $total = isset($_POST["total"]) ? trim($_POST["total"]) : '';
+            $dichvu = isset($_POST["dichvu"]) ? trim($_POST["dichvu"]) : '';  // Dịch vụ (checkbox)
 
 
-        // Tạo kết nối cơ sở dữ liệu
-        try {
-            $conn = new mysqli('localhost', 'root', '', 'du_an_1');
-            if ($conn->connect_error) {
-                throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
-            }
+            // Tạo kết nối cơ sở dữ liệu
+            try {
+                $conn = new mysqli('localhost', 'root', '', 'du_an_1');
+                if ($conn->connect_error) {
+                    throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
+                }
 
-            // Chuẩn bị câu lệnh SQL
-            $sql = "INSERT INTO dat_phongs (hoten, sdt, check_in, check_out, loaiphong, note, total, dichvu) VALUES ('$hoten', '$sdt', '$checkin', '$checkout', '$loaiphong', '$note', '$total', '$dichvu')";
-            $stmt = $conn->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
-            }
+                // Chuẩn bị câu lệnh SQL
+                $sql = "INSERT INTO dat_phongs (hoten, sdt, check_in, check_out, loaiphong, note, total, dichvu) VALUES ('$hoten', '$sdt', '$checkin', '$checkout', '$loaiphong', '$note', '$total', '$dichvu')";
+                $stmt = $conn->prepare($sql);
+                if (!$stmt) {
+                    throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
+                }
 
-            // Gán giá trị và thực thi câu lệnh
-            $stmt->bind_param("sssss", $hoten, $sdt, $checkin, $checkout, $note, $total, $dichvu);
-            if ($stmt->execute()) {
-                $_SESSION['success'] = "Đăng ký thành công!";
-                header("Location: " . BASE_URL_ADMIN . '?act=login');
-                exit();
-            } else {
-                throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
-            }
-        } catch (Exception $e) {
-            $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
-        } finally {
-            // Đóng kết nối và giải phóng bộ nhớ
-            if (isset($stmt)) {
-                $stmt->close();
-            }
-            if (isset($conn)) {
-                $conn->close();
+                // Gán giá trị và thực thi câu lệnh
+                $stmt->bind_param("sssss", $hoten, $sdt, $checkin, $checkout, $note, $total, $dichvu);
+                if ($stmt->execute()) {
+                    $_SESSION['success'] = "Đăng ký thành công!";
+                    header("Location: " . BASE_URL_ADMIN . '?act=login');
+                    exit();
+                } else {
+                    throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
+                }
+            } catch (Exception $e) {
+                $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
+            } finally {
+                // Đóng kết nối và giải phóng bộ nhớ
+                if (isset($stmt)) {
+                    $stmt->close();
+                }
+                if (isset($conn)) {
+                    $conn->close();
+                }
             }
         }
-    }
 
         require_once './views/datphong.php';
     }

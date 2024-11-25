@@ -6,28 +6,20 @@
         box-sizing: border-box;
     }
 
-button{
-    margin: 0px;
-    padding: 2px 6px;
-    background-color: #ffc107;
-    border: none;
-    
-}
-button.header-button{
-     margin: 0 6px;
-    padding: 2px 6px;
-    background-color: #ffc107;
-    border: none;
-<<<<<<< HEAD
-=======
-}
-form{
-    display: flex;
-}
-form input{
-    width: 100px;
->>>>>>> 06b87812169075e0952e78c547cbce49930a391a
-}
+    button {
+        margin: 0px;
+        padding: 2px 6px;
+        background-color: #ffc107;
+        border: none;
+
+    }
+
+    button.header-button {
+        margin: 0 6px;
+        padding: 2px 6px;
+        background-color: #ffc107;
+        border: none;
+    }
 
     form {
         display: flex;
@@ -144,12 +136,9 @@ form input{
                 <input type="text" placeholder="Tìm kiếm" name="search" class="search-box">
                 <button type="submit" class="header-button">Tìm kiếm</button>
             </form>
-<button class="header-button">  <a href="?act=datphong" >Đặt phòng</a></button>
-<button class="header-button"> <a href="?act=dangky" >Đăng ký</a></button>     
-<button class="header-button">  <a href="?act=dangnhap" >Đăng nhập</a>
-            </button>
+            <button class="header-button"> <a href="?act=datphong">Đặt phòng</a></button>
+            <button class="header-button"> <a href="?act=dangky">Đăng ký</a></button>
+            <button class="header-button"> <a href="?act=dangnhap">Đăng nhập</a></button>
         </div>
-</button>       
- </div>
     </div>
 </header>

@@ -159,6 +159,43 @@ l
     .footer-policies ul li a:hover {
         text-decoration: underline;
     }
+
+    .footer-payment {
+        text-align: center;
+        /* Căn giữa nội dung */
+        margin: 20px 0;
+        /* Khoảng cách trên và dưới */
+    }
+
+    .footer-payment p {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        /* Khoảng cách dưới tiêu đề */
+    }
+
+    .payment-logos {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* 4 cột đều nhau */
+        gap: 15px;
+        /* Khoảng cách giữa các hình ảnh */
+        justify-items: center;
+        /* Căn giữa từng hình */
+    }
+
+    .payment-logos img {
+        max-width: 80px;
+        /* Đặt kích thước tối đa của hình ảnh */
+        height: auto;
+        transition: transform 0.3s ease;
+        /* Hiệu ứng khi hover */
+    }
+
+    .payment-logos img:hover {
+        transform: scale(1.1);
+        /* Phóng to nhẹ khi hover */
+    }
 </style>
 <footer>
 

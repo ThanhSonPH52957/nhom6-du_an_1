@@ -9,6 +9,8 @@
     }
 
     .breadcrumb {
+        max-width: 1200px;
+        margin: 0 auto;
         padding: 10px;
         background-color: #eee;
         font-size: 14px;
@@ -16,6 +18,12 @@
 
     .breadcrumb a {
         text-decoration: none;
+        margin-right: 5px;
+
+    }
+
+    .breadcrumb span {
+        margin-left: 5px;
     }
 
     .container {
