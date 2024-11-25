@@ -10,6 +10,8 @@
     }
 
     .breadcrumb {
+        max-width: 1200px;
+        margin: 0 auto;
         padding: 10px;
         background-color: #eee;
         font-size: 14px;
@@ -17,6 +19,12 @@
 
     .breadcrumb a {
         text-decoration: none;
+        margin-right: 5px;
+
+    }
+
+    .breadcrumb span {
+        margin-left: 5px;
     }
 
     .contact {
@@ -113,10 +121,14 @@
     }
 
     .map iframe {
-        margin: 20px 0;
-        width: 100%;
-        height: 400px;
-        border: 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px;
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
     }
 
     .contact-form button:hover {
