@@ -48,7 +48,7 @@
                   <tr>
                     <td><?= $key + 1 ?></td>
                     <td><?= $phong['ten_phong'] ?></td>
-                    <td><img src="<?= BASE_URL.$phong['hinh_anh']?>" style="width: 100px" alt="" onerror="this.onerror=null; this.src='https://media.tenor.com/7hxGGOtU2MoAAAAM/karyl-kyaru.gif'"></td>
+                    <td><img src="<?= BASE_URL_ADMIN.$phong['hinh_anh']?>" style="width: 100px" alt="" onerror="this.onerror=null; this.src='https://media.tenor.com/7hxGGOtU2MoAAAAM/karyl-kyaru.gif'"></td>
                     <td><?= $phong['gia_tien'] ?></td>
                     <td><?= $phong['mo_ta'] ?></td>
                     <td><?= $phong['ten_danh_muc'] ?></td>

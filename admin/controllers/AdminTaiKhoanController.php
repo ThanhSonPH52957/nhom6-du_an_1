@@ -73,11 +73,9 @@
                 $confirm_pass = $_POST['confirm_pass'];
 
                 $user = $this -> modelTaiKhoan -> getOneTaiKhoanFromEmail($_SESSION['user_admin']);
-
-                $checkPass = password_verify($old_pass, $user['mat_khau']);
-
+                
                 $errors = [];
-                if(!$checkPass) {
+                if($user['mat_khau'] != $old_pass) {
                     $errors['old_pass'] = 'Mật khẩu người dùng không đúng';
                 }
 
@@ -99,8 +97,7 @@
 
                 $_SESSION['error'] = $errors;
                 if(!$errors) {
-                    $hashPass = password_hash($new_pass, PASSWORD_BCRYPT);
-                    $status = $this -> modelTaiKhoan -> resetPassword($user['id'], $hashPass);
+                    $status = $this -> modelTaiKhoan -> resetPassword($user['id'], $new_pass);
                     if ($status) {
                         $_SESSION['success'] = "Đổi mật khẩu thành công";
                         $_SESSION['flash'] = true;

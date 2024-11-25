@@ -116,7 +116,7 @@
 
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="<?= BASE_URL_ADMIN . '?act=checkloginadmin' ?>" class="h1"><b>ADMIN </b>PHManagement</a>
+                <a href="#" class="h1"><b>ADMIN </b>PHManagement</a>
             </div>
             <div class="card-body">
                 <?php if(isset($_SESSION['error'])) { ?>

@@ -9,25 +9,26 @@ require_once './controllers/AdminDanhMucController.php';
 require_once './controllers/AdminDichVuController.php';
 require_once './controllers/AdminPhongController.php';
 require_once './controllers/AdminDatPhongController.php';
-require_once './controllers/AdminBaoCaoController.php';
 require_once './controllers/AdminTaiKhoanController.php';
+require_once './controllers/AdminDashboardController.php';
 // Require toàn bộ file Models
 require_once './models/AdminPhong.php';
 require_once './models/AdminDanhMuc.php';
 require_once './models/AdminDichVu.php';
 require_once './models/AdminDatPhong.php';
 require_once './models/AdminTaiKhoan.php';
+require_once './models/AdminDashboard.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
 
-// if($act !== 'loginadmin' && $act !== 'checkloginadmin' && $act !== 'logoutadmin') {
-//     checkLoginAdmin();
-// }
+if($act !== 'loginadmin' && $act !== 'checkloginadmin' && $act !== 'logoutadmin') {
+    checkLoginAdmin();
+}
 // Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
 
 match ($act) {
-    '/' => (new AdminBaoCaoController()) -> home(),
+    '/' => (new AdminDashboardController()) -> home(),
 
     //router danh mục
     'danhmuc' => (new AdminDanhMucController()) -> danhSachDanhMuc(),
@@ -43,7 +44,7 @@ match ($act) {
     'insertphong' => (new AdminPhongController()) -> insertPhong(),
     'formupdatephong' => (new AdminPhongController()) -> formUpdatePhong($_GET['id']),
     'updatephong' => (new AdminPhongController()) -> updatePhong(),
-    // 'updatealbumanhphong' => (new AdminPhongController()) -> updateAlbumPhong(),
+    'updatealbumanhphong' => (new AdminPhongController()) -> updateAlbumPhong(),
     'deletephong' => (new AdminPhongController()) -> deletePhong($_GET['id']),
 
     //router quản lý bình luận
@@ -60,17 +61,17 @@ match ($act) {
     // router đặt phòng
     'datphong' => (new AdminDatPhongController()) -> danhSachDatPhong(),
     'chitietdatphong' => (new AdminDatPhongController()) -> chiTietDatPhong($_GET['id']),
-    // 'formupdatedonhang' => (new AdminDonHangController()) -> formUpdateDonHang($_GET['id_don_hang']),
-    // 'updatedonhang' => (new AdminDonHangController()) -> updateDonHang($_GET['id']),
+    'formupdatedatphong' => (new AdminDatPhongController()) -> formUpdateDatPhong($_GET['id']),
+    'updatedatphong' => (new AdminDatPhongController()) -> updateDatPhong($_GET['id']),
 
     //router quản lý tài khoản
     'listtaikhoan' => (new AdminTaiKhoanController()) -> danhSachTaiKhoan(),
     'updatetaikhoan' => (new AdminTaiKhoanController()) -> updateTaiKhoan($_GET['id']),
 
     // //router quản lý tài khoản cá nhân
-    // 'formupdatecanhan' => (new AdminTaiKhoanController()) -> formUpdateCaNhan(),
-    // // 'updatecanhan' => (new AdminTaiKhoanController()) -> updateCaNhan(),
-    // 'updatematkhaucanhan' => (new AdminTaiKhoanController()) -> updateMatKhauCaNhan(),
+    'formupdatecanhan' => (new AdminTaiKhoanController()) -> formUpdateCaNhan(),
+    // 'updatecanhan' => (new AdminTaiKhoanController()) -> updateCaNhan(),
+    'updatematkhaucanhan' => (new AdminTaiKhoanController()) -> updateMatKhauCaNhan(),
 
     // //route auth
     'loginadmin' => (new AdminTaiKhoanController()) -> formLogin(),

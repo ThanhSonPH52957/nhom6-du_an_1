@@ -47,24 +47,19 @@ class AdminDatPhong
         return $stmt->fetch();
     }
 
-    function getListSpDonHang($id) {
-        $sql = 'select chi_tiet_don_hangs.*, san_phams.ten_san_pham from chi_tiet_don_hangs inner join san_phams on chi_tiet_don_hangs.san_pham_id = san_phams.id where chi_tiet_don_hangs.don_hang_id = :id';
-        $stmt = $this -> conn -> prepare($sql);
-        $stmt -> execute([
-            ':id' => $id
-        ]);
-        return $stmt->fetchAll();
-    }
+    // function getListSpDonHang($id) {
+    //     $sql = 'select chi_tiet_don_hangs.*, san_phams.ten_san_pham from chi_tiet_don_hangs inner join san_phams on chi_tiet_don_hangs.san_pham_id = san_phams.id where chi_tiet_don_hangs.don_hang_id = :id';
+    //     $stmt = $this -> conn -> prepare($sql);
+    //     $stmt -> execute([
+    //         ':id' => $id
+    //     ]);
+    //     return $stmt->fetchAll();
+    // }
 
-    function UpdateDonHang($id, $ten_nguoi_nhan, $sdt_nguoi_nhan, $email_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $trang_thai_id){
-        $sql = "update don_hangs set ten_nguoi_nhan = :ten_nguoi_nhan, sdt_nguoi_nhan = :sdt_nguoi_nhan, email_nguoi_nhan = :email_nguoi_nhan, dia_chi_nguoi_nhan = :dia_chi_nguoi_nhan, ghi_chu = :ghi_chu, trang_thai_id = :trang_thai_id where id = :id";
+    function UpdateDatPhong($id, $trang_thai_id){
+        $sql = "update dat_phongs set trang_thai_id = :trang_thai_id where id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            ':ten_nguoi_nhan' => $ten_nguoi_nhan,
-            ':sdt_nguoi_nhan' => $sdt_nguoi_nhan,
-            ':email_nguoi_nhan' => $email_nguoi_nhan,
-            ':dia_chi_nguoi_nhan' => $dia_chi_nguoi_nhan,
-            ':ghi_chu' => $ghi_chu,
             ':trang_thai_id' => $trang_thai_id,
             'id' => $id
         ]);
@@ -72,12 +67,52 @@ class AdminDatPhong
         return true;
     }
 
-    function getOneDonHangFromKhachHang($id) {
-        $sql = 'select * from trang_thai_don_hangs inner join don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id where don_hangs.tai_khoan_id = :id';
+    // function getOneDonHangFromKhachHang($id) {
+    //     $sql = 'select * from trang_thai_don_hangs inner join don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id where don_hangs.tai_khoan_id = :id';
+    //     $stmt = $this -> conn -> prepare($sql);
+    //     $stmt -> execute([
+    //         ':id' => $id
+    //     ]);
+    //     return $stmt->fetchAll();
+    // }
+
+    function getAllTrangThai() {
+        $sql = 'select * from trang_thai_dat_phongs';
         $stmt = $this -> conn -> prepare($sql);
-        $stmt -> execute([
-            ':id' => $id
-        ]);
+        $stmt -> execute();
         return $stmt->fetchAll();
+    }
+
+    public function getDoanhThuTheoNgay() {
+        try {
+            // Thay 'ngay_dat' bằng tên cột chứa ngày của bạn
+            $sql = "SELECT DATE(ngay_dat) AS `date`, SUM(tong_tien) AS total FROM dat_phongs GROUP BY DATE(ngay_dat) ORDER BY DATE(ngay_dat)";
+    
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Database query failed: " . $e->getMessage();
+            return [];
+        }
+    }
+
+    function getSLDatPhong() {
+        $sql = 'SELECT COUNT(*) FROM dat_phongs';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchColumn(); // fetchColumn() lấy giá trị duy nhất từ COUNT(*)
+        return strval($result); // Chuyển thành chuỗi
+    }
+    
+    public function loadDatPhong_5() {
+        $sql = "SELECT dat_phongs.*, phuong_thuc_thanh_toans.ten_phuong_thuc, trang_thai_dat_phongs.ten_trang_thai 
+        FROM dat_phongs 
+        inner join trang_thai_dat_phongs on dat_phongs.trang_thai_id = trang_thai_dat_phongs.id 
+        inner join phuong_thuc_thanh_toans on dat_phongs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id
+        ORDER BY dat_phongs.id DESC LIMIT 5"; // Hoặc thay 'id' bằng trường phù hợp
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
