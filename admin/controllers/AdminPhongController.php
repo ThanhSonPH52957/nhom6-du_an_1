@@ -148,63 +148,63 @@
             }
         }
 
-        // function updateAlbumPhong() {
-        //     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        //         $san_pham_id = $_POST['san_pham_id']??'';
-        //         //Lấy danh sách ảnh hiện tại của sản phẩm
-        //         $listanhphongcurrent = $this -> modelPhong -> getListAnhPhong($san_pham_id);
+        function updateAlbumPhong() {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $phong_id = $_POST['phong_id']??'';
+                //Lấy danh sách ảnh hiện tại của sản phẩm
+                $listanhphongcurrent = $this -> modelPhong -> getListAnhPhong($phong_id);
 
-        //         //Xử lý các ảnh được gửi vào form
-        //         $img_arr = $_FILES['img_arr'];
-        //         $img_delete = isset($_POST['img_delete']) ? explode(',', $_POST['img_delete']) : [];
-        //         $current_img_ids = $_POST['current_img_ids'] ?? [];
+                //Xử lý các ảnh được gửi vào form
+                $img_arr = $_FILES['img_arr'];
+                $img_delete = isset($_POST['img_delete']) ? explode(',', $_POST['img_delete']) : [];
+                $current_img_ids = $_POST['current_img_ids'] ?? [];
 
-        //         //Khai báo mảng để lưu ảnh thêm mới hoặc thay thế ảnh cũ
-        //         $upload_File = [];
+                //Khai báo mảng để lưu ảnh thêm mới hoặc thay thế ảnh cũ
+                $upload_File = [];
 
-        //         //Upload ảnh mới hoặc thay thế ảnh cũ
-        //         foreach($img_arr['name'] as $key => $value) {
-        //             if($img_arr['error'][$key] == UPLOAD_ERR_OK) {
-        //                 $new_file = uploadFileAlbum($img_arr, './uploads/', $key);
-        //                 if($new_file) {
-        //                     $upload_File[] = [
-        //                         'id' => $current_img_ids[$key] ?? null,
-        //                         'file' => $new_file
-        //                     ]; 
-        //                 }
-        //             }
-        //         }
+                //Upload ảnh mới hoặc thay thế ảnh cũ
+                foreach($img_arr['name'] as $key => $value) {
+                    if($img_arr['error'][$key] == UPLOAD_ERR_OK) {
+                        $new_file = uploadFileAlbum($img_arr, './uploads/', $key);
+                        if($new_file) {
+                            $upload_File[] = [
+                                'id' => $current_img_ids[$key] ?? null,
+                                'file' => $new_file
+                            ]; 
+                        }
+                    }
+                }
 
-        //         //Lưu ảnh mới vào db và xóa ảnh cũ nếu có
-        //         foreach($upload_File as $file_info) {
-        //             if($file_info['id']) {
-        //                 $old_file = $this -> modelPhong -> getDetailAnhPhong($file_info['id'])['link_hinh_anh'];
+                //Lưu ảnh mới vào db và xóa ảnh cũ nếu có
+                foreach($upload_File as $file_info) {
+                    if($file_info['id']) {
+                        $old_file = $this -> modelPhong -> getDetailAnhPhong($file_info['id'])['link_hinh_anh'];
                     
-        //             //Cập nhật ảnh cũ
-        //             $this -> modelPhong -> updateAlbumPhong($file_info['id'], $file_info['file']);
-        //             //Xóa ảnh cũ
-        //             deleteFile($old_file);
+                    //Cập nhật ảnh cũ
+                    $this -> modelPhong -> updateAlbumPhong($file_info['id'], $file_info['file']);
+                    //Xóa ảnh cũ
+                    deleteFile($old_file);
 
-        //             } else {
-        //                 $this -> modelPhong -> insertAlbumAnhPhong($san_pham_id, $file_info['file']);
-        //             }
-        //         }
+                    } else {
+                        $this -> modelPhong -> insertAlbumAnhPhong($phong_id, $file_info['file']);
+                    }
+                }
 
-        //         //Xử lí xóa ảnh
-        //         foreach($listanhphongcurrent as $anhSP){
-        //             $anh_id = $anhSP['id'];
-        //             if(in_array($anh_id, $img_delete)) {
-        //                 //Xóa ảnh trong db
-        //                 $this -> modelPhong -> destroyAnhPhong($anh_id);
+                //Xử lí xóa ảnh
+                foreach($listanhphongcurrent as $anhSP){
+                    $anh_id = $anhSP['id'];
+                    if(in_array($anh_id, $img_delete)) {
+                        //Xóa ảnh trong db
+                        $this -> modelPhong -> destroyAnhPhong($anh_id);
 
-        //                 //Xóa file
-        //                 deleteFile($anhSP['link_hinh_anh']);
-        //             }
-        //         }
-        //         header("location:".BASE_URL_ADMIN.'?act=formupdatephong&id='.$san_pham_id);
-        //         exit();
-        //     }
-        // }
+                        //Xóa file
+                        deleteFile($anhSP['link_hinh_anh']);
+                    }
+                }
+                header("location:".BASE_URL_ADMIN.'?act=formupdatephong&id='.$phong_id);
+                exit();
+            }
+        }
 
         function deletePhong($id) {
             $this -> modelPhong -> DeleteAlbumPhong($id);

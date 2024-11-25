@@ -26,10 +26,7 @@
       <!-- left column -->
       <div class="col-md-3">
         <div class="text-center">
-          <img src="<?= BASE_URL . $thongtin['anh_dai_dien'] ?>" style="width: 100px" class="avatar img-circle" alt="avatar" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png'">
-          <h6 class="mt-2">Họ tên: <?= $thongtin['ho_ten'] ?></h6>
-
-          <input type="file" class="form-control">
+          <img src="" style="width: 100px" class="avatar img-circle" alt="avatar" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png'">
         </div>
       </div>
 
@@ -42,42 +39,25 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">Họ tên:</label>
             <div class="col-lg-8">
-              <input class="form-control" name="ho_ten" type="text" value="Jane">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Last name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" value="Bishop">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Company:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" value="">
+              <input class="form-control" name="ho_ten" type="text" value="<?= $thongtin['ho_ten']?>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Email:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="janesemail@gmail.com">
+              <input class="form-control" type="text" value="<?= $thongtin['email']?>">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label">Time Zone:</label>
+            <label class="col-lg-3 control-label">Số điện thoại:</label>
             <div class="col-lg-8">
-              <div class="ui-select">
-                <select id="user_time_zone" class="form-control">
-                  <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                  <option value="Alaska">(GMT-09:00) Alaska</option>
-                  <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                  <option value="Arizona">(GMT-07:00) Arizona</option>
-                  <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                  <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                  <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                  <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                </select>
-              </div>
+              <input class="form-control" type="text" value="<?= $thongtin['so_dien_thoai']?>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Địa chỉ:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="<?= $thongtin['dia_chi']?>">
             </div>
           </div>
           <div class="form-group">

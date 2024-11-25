@@ -90,7 +90,7 @@ class AdminPhong
         return true;
     }
 
-    function getDetailAnhSanPham($id)
+    function getDetailAnhPhong($id)
     {
         $sql = 'select * from hinh_anh_phongs where id = :id';
         $stmt = $this->conn->prepare($sql);
@@ -100,7 +100,7 @@ class AdminPhong
         return $stmt->fetch();
     }
 
-    function updateAlbumSanPham($id, $new_file)
+    function updateAlbumPhong($id, $new_file)
     {
         $sql = "update hinh_anh_san_phams set link_hinh_anh = :new_file where id = :id";
         $stmt = $this->conn->prepare($sql);
@@ -112,9 +112,9 @@ class AdminPhong
         return true;
     }
 
-    function destroyAnhSanPham($id)
+    function destroyAnhPhong($id)
     {
-        $sql = 'delete from hinh_anh_san_phams where id = :id';
+        $sql = 'delete from album_anh_phongs where id = :id';
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             ':id' => $id
@@ -170,5 +170,20 @@ class AdminPhong
         $stmt->execute([]);
 
         return true;
+    }
+
+    function getSlPhong() {
+        $sql = 'SELECT COUNT(*) FROM phongs';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchColumn(); // fetchColumn() lấy giá trị duy nhất từ COUNT(*)
+        return strval($result);
+    }
+
+    public function loadPhong_5() {
+        $sql = "SELECT phongs.*, danh_muc_phongs.ten_danh_muc FROM phongs INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id ORDER BY id DESC LIMIT 5";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

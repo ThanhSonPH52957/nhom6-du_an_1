@@ -106,5 +106,13 @@
             ]);
             return $stmt -> fetch();
         }
+
+        function getSlThanhVien() {
+            $sql = 'SELECT COUNT(*) FROM tai_khoans WHERE chuc_vu_id = 2';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchColumn(); // fetchColumn() lấy giá trị duy nhất từ COUNT(*)
+            return strval($result);
+        }
     }
 ?>
