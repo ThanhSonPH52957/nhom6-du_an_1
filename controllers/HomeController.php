@@ -267,18 +267,33 @@ class HomeController
 
         require_once './views/datphong.php';
     }
-    public function addbinhluan()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id_phong = $_POST['id_phong'];
-            $noidung = $_POST['noidung'];
-            $id_tai_khoan = $_SESSION['id_tai_khoan'] ?? "";
-        }
+public function addbinhluan()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id_phong = $_POST['id_phong'];
+        $noidung = $_POST['noidung'];
+        $id_tai_khoan = $_SESSION['id_tai_khoan'] ?? null;
+
         if (empty($id_tai_khoan)) {
-            header("location:index.php?act=login");
+            // Hiển thị thông báo và chuyển hướng đến trang đăng nhập
+            echo '<script>
+                    alert("Bạn cần đăng nhập để bình luận!");
+                    window.location.href = "index.php?act=dangnhap";
+                  </script>';
             exit;
         }
-        ($this->modelPhong)->addBinhluan($noidung, $id_phong, $id_tai_khoan);
-        header('location:' . BASE_URL_ADMIN . ' ?act=chitietphong&id=' . $id_phong);
+
+        // Thêm bình luận nếu đã đăng nhập
+        $this->modelPhong->addBinhluan($noidung, $id_phong, $id_tai_khoan);
+
+        // Chuyển hướng về chi tiết phòng
+        header('location:' . BASE_URL_ADMIN . '?act=chitietphong&id=' . $id_phong);
+        exit;
+    } else {
+        // Chuyển hướng về trang chủ nếu không phải POST
+        header("location:index.php");
+        exit;
     }
+}
+
 }

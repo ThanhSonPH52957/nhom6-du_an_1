@@ -69,12 +69,19 @@ include_once "layout/menu.php";
         position: relative;
     }
 
-    .img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        object-position: center;
-    }
+    .slideshow-container {
+  width: 100%;        
+  height: 500px;      
+  overflow: hidden;    
+  position: relative; 
+}
+
+.slideshow-container img {
+  width: 100%;         
+  height: 100%;       
+  object-fit: cover;   
+}
+
 
     .title {
         display: flex;
@@ -250,10 +257,35 @@ include_once "layout/menu.php";
     }
 </style>
 <section>
-    <div class="img1">
-        <img class="img" src="https://cdn.pixabay.com/photo/2017/03/09/06/30/pool-2128578_640.jpg" alt="">
-    </div>
-</section>
+    <div class="slideshow-container">
+        <div class="slide">
+            <img src="https://cdn.pixabay.com/photo/2017/03/09/06/30/pool-2128578_640.jpg" alt="Image 1">
+        </div>
+        <div class="slide">
+            <img src="https://media-cdn-v2.laodong.vn/storage/newsportal/2017/8/28/551691/Du-Lich_1.jpg" alt="Image 2">
+        </div>
+        <div class="slide">
+            <img src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2017/8/28/551691/Du-Lich_6.jpg" alt="Image 3">
+        </div>
+    </div></section>
+    <script>
+        let slideIndex = 0;
+
+function showSlides() {
+    const slides = document.querySelectorAll(".slide");
+    slides.forEach(slide => slide.style.display = "none");
+    slideIndex++;
+    if (slideIndex > slides.length) {
+        slideIndex = 1;
+    }
+    slides[slideIndex - 1].style.display = "block";
+    setTimeout(showSlides, 3000);
+}
+
+// Bắt đầu slideshow
+showSlides();
+
+    </script>
 <section>
     <div class="title">
         <div class="title1">
