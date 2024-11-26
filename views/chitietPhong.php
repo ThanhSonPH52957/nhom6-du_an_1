@@ -395,7 +395,7 @@
                 <div class="chitiet2">
                     <div class="chitiet7">
                         <p> <?= $data['ten_phong'] ?></p>
-                        <button>Ðặt phòng</button>
+                        <a href="?act=datphong&id=<?= $data['id'] ?> "><button>Ðặt phòng</button></a>
                     </div>
                     <div class="chi">
                     </div>
@@ -477,7 +477,7 @@
                                         <p><?= $phong['ten_danh_muc'] ?></p>
                                     </div>
                             </a>
-                            <button>Đặt Phòng</button>
+                            <a href="?act=datphong&id=<?= $phong['id'] ?>"><button>Đặt Phòng</button></a>
                         </div>
                 </div>
             <?php endforeach ?>

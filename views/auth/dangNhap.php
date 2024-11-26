@@ -101,8 +101,8 @@
 
     <div class="container">
         <h1>ĐĂNG NHẬP</h1>
-        <form class="register-form" method="POST" action="">
-            <input type="text" name="emailsdt" placeholder="Email/Số điện thoại" required>
+        <form class="register-form" method="POST" action="<?= '?act=checklogin' ?>">
+            <input type="text" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Mật khẩu" required>
             <button type="submit" class="btn-submit">Đăng nhập</button>
             <p>Chưa có tài khoản? <a href="?act=dangky">Đăng ký tại đây</a></p>
