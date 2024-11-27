@@ -248,8 +248,6 @@ include_once "layout/menu.php";
     .vip {
         margin: 50px 0;
     }
-
-
     .vip h2 {
         text-align: center;
         font-size: 38px;
