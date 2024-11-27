@@ -1,3 +1,5 @@
+<?php include './views/layout/header.php'; ?>
+
 <?php include './views/layout/menu.php'; ?>
 
 <style>

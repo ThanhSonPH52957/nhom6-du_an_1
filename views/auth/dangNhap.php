@@ -1,3 +1,8 @@
+<?php include './views/layout/header.php'  ?>
+
+<?php include './views/layout/menu.php'; ?>
+
+
 <style>
     /* Reset margin/padding */
     body,
@@ -95,10 +100,6 @@
 </head>
 
 <body>
-    <?php include './views/layout/header.php'  ?>
-
-    <?php include './views/layout/menu.php'; ?>
-
     <div class="container">
         <h1>ĐĂNG NHẬP</h1>
         <form class="register-form" method="POST" action="<?= '?act=checklogin' ?>">
@@ -121,9 +122,6 @@
         </div>
     </div>
 
-    <?php include './views/layout/footer.php'; ?>
-
 
 </body>
-
-</html>
+<?php include './views/layout/footer.php'; ?>

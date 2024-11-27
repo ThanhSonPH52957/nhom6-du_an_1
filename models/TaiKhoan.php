@@ -19,20 +19,15 @@ class TaiKhoan
             $login = $stmt->fetch();
 
             if ($login && $pass == $login['mat_khau']) {
-                if ($login['chuc_vu_id'] == 1) {
-                    return true;
-                } else {
-                    return "Tài khoản không có quyền đăng nhập";
-                }
+                return $login['email'];
             } else {
                 return "Sai thông tin tài khoản hoặc mật khẩu";
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
             return false;
         }
     }
-
     function getTaiKhoanFromEmail($email)
     {
         $sql = 'select * from tai_khoans where email = :email';
