@@ -57,7 +57,7 @@ class HomeController
 
     function formLogin()
     {
-        require_once './views/auth/dangnhap.php';
+        require_once './views/auth/dangNhap.php';
         deleteSessionError();
     }
 
@@ -78,7 +78,7 @@ class HomeController
 
                 $_SESSION['flash'] = true;
 
-                header("Location: " . BASE_URL_ADMIN . '?act=login');
+                header("Location: " . BASE_URL_ADMIN . '?act=dangnhap');
                 exit();
             }
         }
@@ -275,7 +275,7 @@ class HomeController
             $id_tai_khoan = $_SESSION['id_tai_khoan'] ?? "";
         }
         if (empty($id_tai_khoan)) {
-            header("location:index.php?act=login");
+            header("location:index.php?act=dangnhap");
             exit;
         }
         ($this->modelPhong)->addBinhluan($noidung, $id_phong, $id_tai_khoan);
