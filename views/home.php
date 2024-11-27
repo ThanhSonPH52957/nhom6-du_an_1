@@ -71,7 +71,7 @@ include_once "layout/menu.php";
 
     .slideshow-container {
   width: 100%;        
-  height: 500px;      
+  height: 501px;      /*sửa só lẻ cho có change */ 
   overflow: hidden;    
   position: relative; 
 }
