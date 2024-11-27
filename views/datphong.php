@@ -3,7 +3,6 @@
 <style>
     /* Reset CSS */
     body {
-        margin: 0;
         font-family: Arial, sans-serif;
     }
 
@@ -12,7 +11,6 @@
         margin: 20px auto;
         padding: 20px;
         border-radius: 8px;
-        background-color: #f9f9f9;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
@@ -36,11 +34,6 @@
     input[type="text"],
     input[type="datetime-local"],
     select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
         font-size: 14px;
     }
 
@@ -117,9 +110,11 @@
             <div class="form-label">Ngày/giờ check-out*</div>
             <input type="date" id="checkout" name="checkout" required>
 
-            <div class="form-label">Tên phòng</div>
+            <div class="form-label">Loại phòng*</div>
             <select name="loaiphong" required>
-                <option></option>
+                <option>Phòng đơn tiêu chuẩn</option>
+                <option>Phòng đôi</option>
+                <option>Phòng VIP</option>
             </select>
 
             <div class="form-label full-width">Ghi chú cho tiếp tân</div>
@@ -140,9 +135,6 @@
 
 
         </div>
-
-
-
         <div class="total-price">
             <label><input type="checkbox" required> Tôi xác nhận đã đọc và xác thực thông tin đặt phòng</label>
             <span>950.000đ</span>

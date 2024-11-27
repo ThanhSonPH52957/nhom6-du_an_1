@@ -3,28 +3,36 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        line-height: 1.6;
         margin: 0;
         padding: 0;
-        background-color: #f9f9f9;
+    }
+
+    .breadcrumb-wrapper {
+        width: 100%;
+        /* Nền breadcrumb phủ toàn bộ chiều ngang */
+        background-color: #eee;
+        /* Màu nền */
     }
 
     .breadcrumb {
-        max-width: 1200px;
+        max-width: auto;
+        /* Giới hạn chiều rộng nội dung */
         margin: 0 auto;
+        /* Căn giữa nội dung */
         padding: 10px;
-        background-color: #eee;
         font-size: 14px;
+        background-color: #eee;
+        width: 100%;
     }
 
     .breadcrumb a {
         text-decoration: none;
-        margin-right: 5px;
-
+        margin-right: 1px;
+        /* Thêm màu chữ nếu cần */
     }
 
     .breadcrumb span {
-        margin-left: 5px;
+        margin-left: 155px;
     }
 
     .contact {
@@ -113,6 +121,7 @@
     .contact-info h2 {
         font-size: 20px;
         margin-bottom: 20px;
+        color: #fff;
     }
 
     .contact-info p {
@@ -147,7 +156,7 @@
 </style>
 <main>
     <div class="breadcrumb">
-        <a href="?act=home">Trang chủ</a> > <span>Liên hệ</span>
+        <span><a href="?act=/">Trang chủ</a> > Liên hệ</span>
     </div>
 
     <section class="contact">
@@ -171,7 +180,7 @@
             </div>
             <div class="contact-info">
                 <h2>Thông tin</h2>
-                <p>70 Lữ Gia, Phường 15, Quận 11, Thành phố Hồ Chí Minh</p>
+                <p>75 P. Nguyễn Đình Chiểu, Lê Đại Hành, Hai Bà Trưng, Hà Nội</p>
                 <p>1900 6750</p>
                 <p>support@sapo.com</p>
                 <p>Mở cửa 24/24</p>
@@ -181,7 +190,7 @@
 
     <section class="map">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.652547689599!2d106.642176074821!3d10.762935492319095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752eb4317814db%3A0x4891db5c2cb82890!2zNzAgTC4gTMO7IEdpYSwgUGjGsOG7nW5nIDE1LCBRdeG6rW4gMTEsIEjDsmMgQ2jDrSBNaW5o!5e0!3m2!1svi!2s!4v1699793167383!5m2!1svi!2s"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9206.230740806255!2d105.84498048640776!3d21.011813786366496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abac801ded7f%3A0x40c83151f5546b14!2sHOME%20Hanoi%20-%20HOME%20Vietnamese%20Restaurant!5e0!3m2!1sen!2s!4v1732684593409!5m2!1sen!2s"
             width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
         </iframe>

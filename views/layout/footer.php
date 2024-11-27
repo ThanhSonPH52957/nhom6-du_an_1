@@ -1,6 +1,6 @@
 <!-- Scroll to top start -->
 <!-- Scroll to Top End -->
-l
+
 <!-- footer area start -->
 <style>
     footer {
@@ -51,6 +51,16 @@ l
         display: block;
         font-weight: bold;
         margin-bottom: 8px;
+    }
+
+    .footer-info h3 {
+        line-height: 1.6;
+        color: #ffffff;
+
+    }
+
+    .footer-subscribe {
+        margin-top: 10px;
     }
 
     .footer-subscribe form {
@@ -108,14 +118,36 @@ l
         max-width: 300px;
     }
 
-    .footer-about h3 {
-        text-align: center;
-    }
 
     .footer-about p {
         text-align: center;
         line-height: 1.6;
         color: #ffffff;
+    }
+
+    .footer-about ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        color: white;
+
+    }
+
+    .footer-about li {
+        color: white;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+    }
+
+    .footer-about p {
+        font-style: italic;
+        color: #ffffff;
+        margin-top: -5px;
+
+    }
+    .footer-news {
+        margin-left: 50px;
     }
 
     .footer-news ul {
@@ -133,77 +165,54 @@ l
     .footer-news p {
         font-style: italic;
         color: #ffffff;
-        margin-top: -5px;
+        margin-top: 1px;
     }
 
-    .footer-about p {
-        color: #ffffff;
-        margin-top: -5px;
-    }
-
-    .footer-policies ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .footer-policies ul li {
-        margin-bottom: 8px;
-    }
-
-    .footer-policies ul li a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    .footer-policies ul li a:hover {
-        text-decoration: underline;
+    .footer-policies {
+        text-align: center;
+        margin-top: 40px;
     }
 
     .footer-payment {
         text-align: center;
-        /* Căn giữa nội dung */
         margin: 20px 0;
-        /* Khoảng cách trên và dưới */
+        margin-top: 5px;
     }
 
     .footer-payment p {
         font-size: 16px;
         font-weight: bold;
         margin-bottom: 10px;
-        /* Khoảng cách dưới tiêu đề */
+        margin-top: 10px;
     }
 
     .payment-logos {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        /* 4 cột đều nhau */
-        gap: 15px;
-        /* Khoảng cách giữa các hình ảnh */
         justify-items: center;
-        /* Căn giữa từng hình */
     }
 
     .payment-logos img {
-        max-width: 80px;
-        /* Đặt kích thước tối đa của hình ảnh */
-        height: auto;
+        width: 500px;
+        /* Đặt chiều rộng cố định */
+        height: 200px;
+        /* Đặt chiều cao cố định để đảm bảo kích thước bằng nhau */
+        object-fit: contain;
+        /* Đảm bảo hình ảnh không bị méo */
         transition: transform 0.3s ease;
-        /* Hiệu ứng khi hover */
-    }
-
-    .payment-logos img:hover {
-        transform: scale(1.1);
-        /* Phóng to nhẹ khi hover */
+        /* Hiệu ứng hover */
     }
 </style>
 <footer>
 
     <div class="footer-container">
         <div class="footer-info">
-            <p><strong>Hotline hỗ trợ</strong> 0793962005</p>
-            <p><strong>Email hỗ trợ</strong> <a href="mailto:support@sapo.vn"
-                    style="color: #ffffff;">support@sapo.vn</a></p>
+            <h3>PH Management</h3>
+            <p>Nằm ở trung tâm thành phố và nhiều thành phố khác. Chúng tôi cung cấp chỗ nghỉ thanh lịch và đầy
+                phong
+                cách với truy cập Wifi miễn phí trong các khu vực chung. Khách sạn có lễ tân 24 giờ, hồ bơi
+                trong nhà,
+                trung tâm thể dục và bãi đỗ xe miễn phí trong khuôn viên.</p>
+
         </div>
 
         <div class="footer-subscribe">
@@ -216,22 +225,19 @@ l
 
         <div class="footer-payment">
             <p><strong>Hình thức thanh toán</strong></p>
-            <img src="./assets/img/logo/mastercard.png" alt="Mastercard">
-            <img src="./assets/img/logo/visa.png" alt="Visa">
-            <img src="./assets/img/logo/jcb.png" alt="JCB">
-            <img src="./assets/img/logo/onepay.png" alt="OnePay">
-            <img src="./assets/img/logo/payoo.png" alt="Payoo">
-            <img src="./assets/img/logo/vietcombank.png" alt="Vietcombank">
-            <img src="./assets/img/logo/standardchartered.png" alt="Standard Chartered">
-            <img src="./assets/img/logo/citimart.png" alt="Citimart">
+            <div class="payment-logos">
+                <img src="./assets/img/logo/icon.png" alt="Icon">
+            </div>
         </div>
         <div class="footer-about">
-            <h3>PH Management</h3>
-            <p>Nằm ở trung tâm thành phố và nhiều thành phố khác. Chúng tôi cung cấp chỗ nghỉ thanh lịch và đầy
-                phong
-                cách với truy cập Wifi miễn phí trong các khu vực chung. Khách sạn có lễ tân 24 giờ, hồ bơi
-                trong nhà,
-                trung tâm thể dục và bãi đỗ xe miễn phí trong khuôn viên.</p>
+            <h3>Chính sách</h3>
+            <ul>
+                <li><a href="#">Chính sách nhận phòng</a></li>
+                <li><a href="#">Chính sách trả phòng</a></li>
+                <li><a href="#">Chính sách thanh toán</a></li>
+                <li><a href="#">Chính sách bảo mật</a></li>
+            </ul>
+
         </div>
 
         <div class="footer-news">
@@ -247,13 +253,10 @@ l
         </div>
 
         <div class="footer-policies">
-            <h3>Chính sách</h3>
-            <ul>
-                <li><a href="#">Chính sách nhận phòng</a></li>
-                <li><a href="#">Chính sách trả phòng</a></li>
-                <li><a href="#">Chính sách thanh toán</a></li>
-                <li><a href="#">Chính sách bảo mật</a></li>
-            </ul>
+            <p><strong>Hotline hỗ trợ</strong> 0793962005</p>
+            <p><strong>Email hỗ trợ</strong> <a href="mailto:support@sapo.vn"
+                    style="color: #ffffff;">support@sapo.vn</a></p>
+
         </div>
     </div>
 </footer>

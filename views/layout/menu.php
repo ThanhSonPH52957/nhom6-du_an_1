@@ -6,32 +6,8 @@
         box-sizing: border-box;
     }
 
-    button {
-        margin: 0px;
-        padding: 2px 6px;
-        background-color: #ffc107;
-        border: none;
-
-    }
-
-    button.header-button {
-        margin: 0 6px;
-        padding: 2px 6px;
-        background-color: #ffc107;
-        border: none;
-    }
-
-    form {
-        display: flex;
-    }
-
-    form input {
-        width: 100px;
-    }
-
     body {
         font-family: Arial, sans-serif;
-        margin: 0 auto;
     }
 
     .header-container {
@@ -40,7 +16,11 @@
         justify-content: space-between;
         padding: 10px 20px;
         background-color: #fff;
-        border-bottom: 1px solid #ccc;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px;
+        font-size: 14px;
+
     }
 
     .logo img {
@@ -51,14 +31,19 @@
     .main-nav {
         display: flex;
         align-items: center;
+        gap: 20px;
     }
 
     .main-nav a {
         text-decoration: none;
         color: #000;
-        margin: 0 15px;
         font-size: 16px;
         position: relative;
+        transition: color 0.3s;
+    }
+
+    .main-nav a:hover {
+        color: #ffc107;
     }
 
     .dropdown-content {
@@ -83,12 +68,12 @@
         color: #000;
         text-decoration: none;
         font-size: 14px;
-        white-space: nowrap;
     }
 
     .header-actions {
         display: flex;
         align-items: center;
+        gap: 10px;
     }
 
     .search-box {
@@ -96,23 +81,33 @@
         border: 1px solid #d1b536;
         border-radius: 3px;
         font-size: 14px;
-        margin-right: 15px;
     }
 
     .header-button {
         text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        background-color: #ffc107;
         color: #000;
-        margin: 0 5px;
-        font-size: 16px;
-        transition: color 0.3s;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
     }
 
     .header-button:hover {
-        color: white;
+        background-color: #e0a800;
+        color: #fff;
+    }
+
+    .header-button a {
+        text-decoration: none;
+        color: inherit;
     }
 </style>
-<header class="header-area header-wide">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+<header class="header-area header-wide">
     <div class="header-container">
         <a href="?act=/" class="logo">
             <img src="./assets/img/logo/LOGO.png" alt="PH Management Logo">
@@ -132,13 +127,15 @@
             <a href="?act=gioithieu">Giới thiệu</a>
         </nav>
         <div class="header-actions">
-            <form action="?act=timphong" method="Post">
+            <form action="?act=timphong" method="POST" style="display: flex; align-items: center;">
                 <input type="text" placeholder="Tìm kiếm" name="search" class="search-box">
-                <button type="submit" class="header-button">Tìm kiếm</button>
+                <button type="submit" class="header-button">
+                    <i class="fas fa-search"></i>
+                </button>
             </form>
-            <button class="header-button"> <a href="?act=datphong">Đặt phòng</a></button>
-            <button class="header-button"> <a href="?act=dangky">Đăng ký</a></button>
-            <button class="header-button"> <a href="?act=dangnhap">Đăng nhập</a></button>
+            <button class="header-button"><a href="?act=datphong">Đặt phòng</a></button>
+            <button class="header-button"><a href="?act=dangky">Đăng ký</a></button>
+            <button class="header-button"><a href="?act=dangnhap">Đăng nhập</a></button>
         </div>
     </div>
 </header>
