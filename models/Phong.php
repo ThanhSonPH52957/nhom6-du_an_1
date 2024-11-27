@@ -7,6 +7,13 @@ class Phong
     {
         $this->conn = connectDB();
     }
+    public function album($id_phong)
+    {
+        $sql = "SELECT * FROM album_anh_phongs WHERE phong_id = :id_phong";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id_phong' => $id_phong]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function layDanhSachHinhAnhTheoPhong($id)
     {

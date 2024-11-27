@@ -45,6 +45,7 @@ class HomeController
         $data1 = $this->modelPhong->layPhongLienQuan($data['danh_muc_id'], $data['id']);
         $data2 = $this->modelPhong->layPhongTotNhat($data['id']);
         $binhluans = $this->modelPhong->getBinhLuanChiTiet($data['id']);
+        $image = $this->modelPhong->album($data['id']);
         // $Phong = $this->modelPhong->GetDetailPhong($id);
 
         // $listAnhPhong = $this->modelPhong->GetListAnhPhong($id);

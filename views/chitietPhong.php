@@ -88,8 +88,10 @@
 
         .chitiet8 {
             text-align: start;
+            height: 180px;
             width: 860px;
             line-height: 27px;
+            overflow: auto;
         }
 
         .chi3 {
@@ -169,18 +171,24 @@
         }
 
         .pi textarea {
-            width: 100%;
+            width: 80%;
             background-color: #dddddd;
             color: #666666;
-            padding: 1em;
+            padding: 5px;
             border-radius: 10px;
             border: 2px solid transparent;
             outline: none;
+
             font-family: 'Heebo', sans-serif;
             font-weight: 500;
             font-size: 15px;
             line-height: 1.4;
             transition: all 0.2s;
+        }
+
+        .pi textarea::placeholder {
+            padding: 5px 2px;
+            font-size: 20px;
         }
 
         .pi textarea:hover {
@@ -196,10 +204,10 @@
         }
 
         .pi button {
-            margin-left: 50px;
+            width: 20%;
+            margin-left: 10px;
             background-color: #dddddd;
             color: #666666;
-            padding: 0px 10px;
             border-radius: 10px;
             border: 2px solid transparent;
             font-family: 'Heebo', sans-serif;
@@ -269,7 +277,7 @@
             align-items: center;
             background-color: gainsboro;
             border-radius: 8px;
-            margin: 25px 0px;
+            margin: 15px 0px;
         }
 
         .phong1 p {
@@ -377,19 +385,63 @@
         a {
             text-decoration: none;
         }
+
+        .slider {
+            position: relative;
+            max-width: 1250px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            /* Tính tổng chiều rộng theo số nhóm */
+        }
+
+        .slides img {
+            width: 50%;
+            flex: 0 0 50%;
+            height: auto;
+        }
+
+        .nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .nav button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
     </style>
     <section>
         <div class="phong">
-            <h3>
+            <h5>
                 CHI TIẾT PHÒNG
-            </h3>
+                </h3>
 
         </div>
     </section>
     <section>
         <div class="">
-            <div class="chitiet">
-                <img src="<?= $data['hinh_anh'] ?>" alt="">
+            <div class="slider">
+                <div class="slides">
+                    <?php foreach ($image as $images): ?>
+                        <img src="<?php echo $images['link_hinh_anh']; ?>" alt="Image">
+                    <?php endforeach; ?>
+                </div>
+                <div class="nav">
+                    <button id="prev">❮</button>
+                    <button id="next">❯</button>
+                </div>
             </div>
             <div class="chitiet1">
                 <div class="chitiet2">
@@ -413,7 +465,7 @@
                                     <p>Phòng: <span class="chi8"><?= $data['ten_danh_muc'] ?></span></p>
                                 </div>
                             </div>
-                            <p class="chitiet8">Các phòng trang nhã và dãy phòng trang nghiêm của chúng tôi gợi nhớ về một thời đại đã qua. Mỗi tính năng như đường cong, thảm sang trọng, trần nhà cao, phòng tắm lát đá cẩm thạch, thiết bị làm sạch và nhiều không gian đều được bố trí một cách chu đáo để gọi cho riêng bạn. Tông màu nâu phong phú và gỗ sồi tự nhiên tạo nên những khu bảo tồn yên tĩnh và yên tĩnh, được tôn lên một cách tuyệt vời bởi đồ nội thất trang nhã.</p>
+                            <p class="chitiet8"><?= $data['motact'] ?></p>
                             <div class="add-comment">
                                 <form class="pi" method="POST" action="index.php?act=binhluan">
                                     <input type="hidden" name="id_phong" value="<?= $data['id'] ?>">
@@ -484,6 +536,29 @@
             </div>
         </div>
     </section>
+    <script>
+        let currentIndex = 0; // gia tri bang 0
+        const slides = document.querySelector('.slides');
+        const totalGroups = Math.ceil(slides.querySelectorAll('img').length / 2); // Số nhóm ảnh (2 ảnh mỗi nhóm)
+
+        document.getElementById('next').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalGroups;
+            updateSlider();
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalGroups) % totalGroups;
+            updateSlider();
+        });
+
+        function updateSlider() {
+            if (slides.querySelectorAll('img').length % 2 === 0) {
+                slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+            } else if (slides.querySelectorAll('img').length % 2 !== 0) {
+                slides.style.transform = `translateX(-${currentIndex * 50}%)`;
+            }
+        }
+    </script>
 
 </body>
 
