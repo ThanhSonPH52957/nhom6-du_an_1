@@ -143,11 +143,19 @@ class HomeController
     public function timKiemPhong()
     {
         $search = isset($_POST['search']) ? trim($_POST['search']) : '';
-
-        if (!empty($search)) {
+        $check_in = isset($_POST['check_in']) ? trim($_POST['check_in']) : '';
+        $check_out = isset($_POST['check_out']) ? trim($_POST['check_out']) : '';
+        if (!empty($search) && !empty($check_in) && !empty($check_out)) {
+            // Tìm kiếm kết hợp từ khóa và ngày
+            $products = $this->modelPhong->timKiemPhongTheoNgayVaTen($search, $check_in, $check_out);
+        } elseif (!empty($search)) {
+            // Tìm kiếm chỉ theo từ khóa
             $products = $this->modelPhong->timKiemPhong($search);
         }
-
+        // elseif (!empty($check_in) && !empty($check_out)) {
+        //     // Tìm kiếm chỉ theo ngày
+        //     $products = $this->modelPhong->timKiemPhongTheoNgay($check_in, $check_out);
+        // }
         require_once './views/timphong.php';
     }
     public function dangky()

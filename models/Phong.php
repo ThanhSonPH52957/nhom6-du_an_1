@@ -120,14 +120,39 @@ class Phong
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function timKiemPhong($tuKhoa)
+    public function timKiemPhong($search)
     {
         $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
                 FROM phongs 
                 INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
-                WHERE phongs.ten_phong LIKE :tuKhoa OR danh_muc_phongs.ten_danh_muc LIKE :tuKhoa';
+                WHERE phongs.ten_phong LIKE :search OR danh_muc_phongs.ten_danh_muc LIKE :search ';
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':tuKhoa' => '%' . $tuKhoa . '%']);
+        $stmt->execute([':search' => '%' . $search . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function timKiemPhongTheoNgayVaTen($search, $check_in, $check_out)
+    {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc
+            FROM phongs
+            INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
+            LEFT JOIN dat_phongs ON phongs.id = dat_phongs.phong_id
+            WHERE (phongs.ten_phong LIKE :search OR danh_muc_phongs.ten_danh_muc LIKE :search)
+            AND (
+                dat_phongs.phong_id IS NULL 
+                -- Điều kiện này kiểm tra các phòng chưa từng được đặt (không có bản ghi trong dat_phongs).
+                OR NOT (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in)
+                -- dat_phongs.check_in < :checkout: Ngày nhận phòng trong hệ thống nhỏ hơn ngày trả phòng
+                -- dat_phongs.check_out > :checkin: Ngày trả phòng trong hệ thống lớn hơn ngày nhận phòng 
+
+            )';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':search' => '%' . $search . '%',
+            ':check_in' => $check_in,
+            ':check_out' => $check_out
+        ]);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function addBinhluan($noidung, $id_phong, $id_tai_khoan)
