@@ -126,7 +126,7 @@ class HomeController
     {
         if (isset($_SESSION['user_client'])) {
             unset($_SESSION['user_client']);
-            header("location: " . BASE_URL_ADMIN . '?act=login');
+            header("location: " . BASE_URL_ADMIN . '?act=/');
         }
     }
 
@@ -270,15 +270,34 @@ class HomeController
     public function addbinhluan()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id_phong = $_POST['id_phong'];
-            $noidung = $_POST['noidung'];
-            $id_tai_khoan = $_SESSION['id_tai_khoan'] ?? "";
+            $id_phong = $_POST['id_phong'] ?? null; // Kiểm tra giá trị trước khi gán
+            $noidung = $_POST['nguoidung'] ?? null;  // Tránh lỗi undefined key
+            $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $email_khoan = $taikhoan['id'] ?? "";
+
+            if (empty($email_khoan)) { // Kiểm tra người dùng đã đăng nhập chưa
+                header("Location: ?act=dangnhap");
+                exit;
+            }
+
+            // Gọi hàm thêm bình luận
+            ($this->modelPhong)->addBinhluan($noidung, $id_phong, $email_khoan);
+
+            // Chuyển hướng về trang chi tiết phòng
+            header('Location: ' . BASE_URL_ADMIN . '?act=chitietphong&id=' . $id_phong);
         }
-        if (empty($id_tai_khoan)) {
-            header("location:index.php?act=dangnhap");
-            exit;
-        }
-        ($this->modelPhong)->addBinhluan($noidung, $id_phong, $id_tai_khoan);
-        header('location:' . BASE_URL_ADMIN . ' ?act=chitietphong&id=' . $id_phong);
     }
+    // public function add()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $masp = $_POST['masp'];
+    //         $nd = $_POST['nd'];
+    //         $mand = $_SESSION['mand'] ?? "";
+    //     }
+    //     if (empty($mand) ?? null) {
+    //         header("location:index.php?ctl=login");
+    //     }
+    //     (new Binhluan())->addBinhluan($nd ?? null, $masp ?? null, $mand ?? null);
+    //     header('location: ?ctl=chitiet&masp=' . $masp);
+    // }
 }

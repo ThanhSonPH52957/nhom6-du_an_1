@@ -467,7 +467,7 @@
                             </div>
                             <p class="chitiet8"><?= $data['motact'] ?></p>
                             <div class="add-comment">
-                                <form class="pi" method="POST" action="index.php?act=binhluan">
+                                <form class="pi" method="POST" action="?act=binhluan">
                                     <input type="hidden" name="id_phong" value="<?= $data['id'] ?>">
                                     <textarea name="nguoidung" placeholder="Nhập bình luận..." required></textarea>
                                     <button type="submit">Gửi</button>
