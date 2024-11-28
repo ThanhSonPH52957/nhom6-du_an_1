@@ -95,12 +95,46 @@ include_once "layout/menu.php";
             padding: 15px;
             color: #555;
         }
+
+        .w3-content {
+            max-width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        .mySlides {
+            width: 100vw;
+            height: 300px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            margin: 0 auto;
+        }
     </style>
-    <section>
-        <div class="img1">
-            <img class="img" src="https://cdn.pixabay.com/photo/2017/03/09/06/30/pool-2128578_640.jpg" alt="">
-        </div>
-    </section>
+    <div class="w3-content w3-section">
+        <img class="mySlides" src="https://onetouchmedia.vn/wp-content/uploads/2019/10/N.NT-31.jpg" style="width:100%; height:450px; ">
+        <img class="mySlides" src="https://images.pexels.com/photos/2507010/pexels-photo-2507010.jpeg" style="width:100%; height:450px; ">
+        <img class="mySlides" src="https://parisdelihotel.com/images/banner.jpg" style="width:100%; height:450px; ">
+    </div>
+
+    <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) {
+                myIndex = 1
+            }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 5000);
+        }
+    </script>
     <section>
         <div class="phong">
             <h3>

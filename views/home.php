@@ -285,19 +285,19 @@ include_once "layout/menu.php";
             myIndex = 1
         }
         x[myIndex - 1].style.display = "block";
-        setTimeout(carousel, 5000); // Change image every 2 seconds
+        setTimeout(carousel, 5000);
     }
 </script>
 <section>
     <div class="title">
         <div class="title1">
-            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQFaj7f7dOtxWXPMssbTyXAT7_mOQYme0JIzmg_J2tNEIsuAzL-"
+            <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/432346891.jpg?k=76795ac93d8a3fd23a4fd5993e74b9c7d0651465c331fca2c65580b8d0ff8889&o=&hp=1"
                 alt="">
         </div>
         <div class="title2">
             <h2>PH Management</h2>
             <p>Là khách sạn 5 sao đẳng cấp quốc tế, tọa lạc tại giao điểm của bốn quận chính, nơi được xem như trái tim
-                và trung tâm của TP. Hồ Chí Minh. Với hệ thống phòng tiêu chuẩn và phòng hạng sang thiết kế đẹp mắt và
+                và trung tâm của TP. Hà Nội. Với hệ thống phòng tiêu chuẩn và phòng hạng sang thiết kế đẹp mắt và
                 trang nhã được chú trọng tới từng chi tiết sẽ đem lại sự tiện nghi và thoải mái tối đa cho quý khách dù
                 là thời gian nghỉ ngơi thư giãn hay trong chuyến công tác...</p>
             <a href="?act=gioithieu"><button>Xem thêm</button></a>

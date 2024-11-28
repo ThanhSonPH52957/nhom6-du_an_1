@@ -132,13 +132,13 @@ class Phong
     }
     public function addBinhluan($noidung, $id_phong, $id_tai_khoan)
     {
-        $sql = "INSERT INTO binhluan (id_phong,$id_tai_khoan,$noidung)
+        $sql = "INSERT INTO binhluan (id_phong,id_tai_khoan,noidung)
         VALUES (:id_phong,:id_tai_khoan,:noidung)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             ':id_phong' => $id_phong ?? null,
-            ':id' => $id_tai_khoan ?? null,
-            ':nguoidung' => $noidung ?? null,
+            ':id_tai_khoan' => $id_tai_khoan ?? null,
+            ':noidung' => $noidung ?? null,
         ]);
     }
     public function listBinhluan($id_phong)
