@@ -8,12 +8,37 @@
     }
 
     .booking-container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 650px;
+        margin: 50px auto;
+        padding: 25px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .booking-container:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .booking-container::before {
+        content: '';
+        position: absolute;
+        top: -30%;
+        left: -30%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(0, 123, 255, 0.1));
+        z-index: -1;
+        transform: scale(1);
+        transition: transform 0.6s ease-in-out;
+    }
+
+    .booking-container:hover::before {
+        transform: scale(1.2);
     }
 
     h1 {
@@ -37,8 +62,6 @@
     input[type="datetime-local"],
     select {
         width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
         font-size: 14px;
@@ -113,11 +136,11 @@
 
             <div class="form-label">Tên phòng</div>
             <select name="phong_id" id="phong_id" required>
-            <?php
+                <?php
                 foreach ($phong as $row) {
-                    if((isset($old_data['phong_id']) && $row['id'] == $old_data['phong_id'])) {
+                    if ((isset($old_data['phong_id']) && $row['id'] == $old_data['phong_id'])) {
                         $selected = "selected";
-                    }elseif(!isset($old_data['phong_id']) && isset($id) && $row['id'] == $id) {
+                    } elseif (!isset($old_data['phong_id']) && isset($id) && $row['id'] == $id) {
                         $selected = "selected";
                     } else {
                         $selected = "";
@@ -145,9 +168,9 @@
             <select name="thanhtoan_id" id="" required>
                 <?php
                 foreach ($thanhtoan as $row) {
-                    if(isset($old_data['thanhtoan_id']) && $row['id'] == $old_data['thanhtoan_id']) {
+                    if (isset($old_data['thanhtoan_id']) && $row['id'] == $old_data['thanhtoan_id']) {
                         $selected = "selected";
-                    }else {
+                    } else {
                         $selected = "";
                     }
                     echo "<option value='{$row['id']}' {$selected}>{$row['ten_phuong_thuc']}</option>";
@@ -168,70 +191,69 @@
 <script>
     const rooms = <?= json_encode($phong); ?>;
     console.log(rooms);
-    
+
     const services = <?= json_encode($dichvu); ?>;
     console.log(services);
-    
-    document.addEventListener("DOMContentLoaded", function () {
-    const checkinField = document.getElementById("checkin");
-    const checkoutField = document.getElementById("checkout");
-    const roomField = document.getElementById("phong_id");
-    const servicesField = document.querySelectorAll("input[name='dichvu[]']");
-    const priceDisplay = document.createElement("p");
-    priceDisplay.style.fontWeight = "bold";
-    document.querySelector(".booking-container").appendChild(priceDisplay);
 
-    const getRoomPrice = (roomId) => {
-        const room = rooms.find(r => r.id == roomId);
-        return room ? parseFloat(room.gia_tien) : 0;
-    };
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkinField = document.getElementById("checkin");
+        const checkoutField = document.getElementById("checkout");
+        const roomField = document.getElementById("phong_id");
+        const servicesField = document.querySelectorAll("input[name='dichvu[]']");
+        const priceDisplay = document.createElement("p");
+        priceDisplay.style.fontWeight = "bold";
+        document.querySelector(".booking-container").appendChild(priceDisplay);
 
-    const getServicePrices = (selectedServiceIds) => {
-        return selectedServiceIds.reduce((total, serviceId) => {
-            const service = services.find(s => s.id == serviceId);
-            return total + (service ? parseFloat(service.gia_dich_vu) : 0);
-        }, 0);
-    };
+        const getRoomPrice = (roomId) => {
+            const room = rooms.find(r => r.id == roomId);
+            return room ? parseFloat(room.gia_tien) : 0;
+        };
 
-    const calculatePrice = () => {
-    const checkin = new Date(checkinField.value);
-    const checkout = new Date(checkoutField.value);
-    const roomId = roomField.value;
+        const getServicePrices = (selectedServiceIds) => {
+            return selectedServiceIds.reduce((total, serviceId) => {
+                const service = services.find(s => s.id == serviceId);
+                return total + (service ? parseFloat(service.gia_dich_vu) : 0);
+            }, 0);
+        };
 
-    const selectedServices = Array.from(servicesField)
-        .filter(service => service.checked)
-        .map(service => service.value);
+        const calculatePrice = () => {
+            const checkin = new Date(checkinField.value);
+            const checkout = new Date(checkoutField.value);
+            const roomId = roomField.value;
 
-    if (isNaN(checkin) || isNaN(checkout) || checkin >= checkout) {
-        document.getElementById("tong_tien").value = ""; // Xóa giá trị nếu ngày không hợp lệ
-        document.getElementById("tong_tien_raw").value = 0;
-        return;
-    }
+            const selectedServices = Array.from(servicesField)
+                .filter(service => service.checked)
+                .map(service => service.value);
 
-    const days = Math.max(1, Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24)));
-    const roomPrice = getRoomPrice(roomId);
-    const servicePrice = getServicePrices(selectedServices);
+            if (isNaN(checkin) || isNaN(checkout) || checkin >= checkout) {
+                document.getElementById("tong_tien").value = ""; // Xóa giá trị nếu ngày không hợp lệ
+                document.getElementById("tong_tien_raw").value = 0;
+                return;
+            }
 
-    const totalPrice = days * (roomPrice + servicePrice);
+            const days = Math.max(1, Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24)));
+            const roomPrice = getRoomPrice(roomId);
+            const servicePrice = getServicePrices(selectedServices);
 
-    // Gán giá trị hiển thị có định dạng vào input
-    document.getElementById("tong_tien").value = `${totalPrice.toLocaleString()} VND`;
+            const totalPrice = days * (roomPrice + servicePrice);
 
-    // Gán giá trị thực (không định dạng) vào hidden input
-    document.getElementById("tong_tien_raw").value = totalPrice;
-};
+            // Gán giá trị hiển thị có định dạng vào input
+            document.getElementById("tong_tien").value = `${totalPrice.toLocaleString()} VND`;
+
+            // Gán giá trị thực (không định dạng) vào hidden input
+            document.getElementById("tong_tien_raw").value = totalPrice;
+        };
 
 
 
-    checkinField.addEventListener("change", calculatePrice);
-    checkoutField.addEventListener("change", calculatePrice);
-    roomField.addEventListener("change", calculatePrice);
-    servicesField.forEach(service => service.addEventListener("change", calculatePrice));
+        checkinField.addEventListener("change", calculatePrice);
+        checkoutField.addEventListener("change", calculatePrice);
+        roomField.addEventListener("change", calculatePrice);
+        servicesField.forEach(service => service.addEventListener("change", calculatePrice));
 
-    calculatePrice();
-});
+        calculatePrice();
+    });
     // });
-
 </script>
 
 <?php require_once 'layout/footer.php'; ?>

@@ -60,6 +60,12 @@
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
         }
 
+        .room2:hover {
+            transform: scale(1.05);
+            transition: transform 0.5s ease-in-out;
+        }
+
+
         .room3 img {
             width: 300px;
             height: 170px;
@@ -113,7 +119,16 @@
             padding: 10px;
             font-size: 16px;
             color: #fff;
+
         }
+
+        .room2 .room4 button:hover {
+            outline: 2px solid red;
+            background-color: white;
+            color: red;
+
+        }
+
 
         .room1 {
             display: grid;

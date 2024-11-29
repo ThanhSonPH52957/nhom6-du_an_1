@@ -83,17 +83,29 @@ include_once "layout/menu.php";
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             text-align: center;
+
         }
 
         .card img {
             width: 100%;
             height: 180px;
             object-fit: cover;
+
         }
 
         .card p {
             padding: 15px;
             color: #555;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+            /* Tăng kích thước ảnh */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            /* Tăng kích thước thẻ khi hover */
         }
 
         .w3-content {

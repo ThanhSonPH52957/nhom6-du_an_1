@@ -22,6 +22,8 @@ include_once "layout/menu.php";
         height: 500px;
         object-fit: cover;
         object-position: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .title {
@@ -115,6 +117,13 @@ include_once "layout/menu.php";
         background-color: orange;
     }
 
+    .title2 button:hover {
+        background-color: #e0a800;
+        color: #fff;
+
+    }
+
+
     a {
         text-decoration: none;
     }
@@ -123,8 +132,24 @@ include_once "layout/menu.php";
         background-color: rgba(243, 243, 243, 1);
     }
 
-    .room2 {
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    .room7 .room2 button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .room7 .room2 button:hover {
+        outline: 2px solid red;
+        background-color: white;
+        color: red;
+    }
+
+    .room2:hover {
+        transform: scale(1.05);
+        transition: transform 0.5s ease-in-out;
     }
 
     .room3 img {
@@ -226,6 +251,13 @@ include_once "layout/menu.php";
         padding: 7px 7px;
         background-color: red;
         color: #fff;
+    }
+
+    .vip4 button:hover {
+        outline: 2px solid red;
+        background-color: white;
+        color: red;
+
     }
 
     .vip1 {

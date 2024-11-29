@@ -3,7 +3,7 @@
 // Biến môi trường, dùng chung toàn hệ thống
 // Khai báo dưới dạng HẰNG SỐ để không phải dùng $GLOBALS
 
-define('BASE_URL', 'http://localhost/clone/nhom6-du_an_1-6');
+define('BASE_URL', 'http://localhost/clone/nhom6-du_an_1-7');
 
 define('BASE_URL_ADMIN', '');
 define('DB_HOST', 'localhost');
