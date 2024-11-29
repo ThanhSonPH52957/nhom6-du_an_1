@@ -196,4 +196,66 @@ class Phong
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    function getAllDV() {
+        $sql = "SELECT * FROM dich_vus";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getAllTT() {
+        $sql = "SELECT * FROM phuong_thuc_thanh_toans";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function CheckRoom($phongid, $checkin, $checkout) {
+        $sql = "SELECT check_in, check_out 
+                FROM dat_phongs
+                WHERE phong_id = :room_id 
+                AND (check_in < :check_out AND check_out > :check_in)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':room_id' => $phongid,
+            ':check_in' => $checkin,
+            ':check_out' => $checkout
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan) {
+        $sql = "INSERT INTO dat_phongs (tai_khoan_id, phong_id, ngay_dat, check_in, check_out, tong_tien, phuong_thuc_thanh_toan_id, trang_thai_id)
+        VALUES (:tai_khoan_id, :phong_id, :ngay_dat, :check_in, :check_out, :tongtien, :phuong_thuc_thanh_toan_id, 1)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':tai_khoan_id' => $taikhoanid,
+            ':phong_id' => $phongid,
+            ':ngay_dat' => $today,
+            ':check_in' => $checkin,
+            ':check_out' => $checkout,
+            'tongtien' => $tongtien,
+            ':phuong_thuc_thanh_toan_id' => $thanhtoan
+        ]);
+    }
+
+    function GetDatPhong($phongid, $checkin) {
+        $sql = "select id from dat_phongs where phong_id = :phongid and check_in = :checkin";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':phongid' => $phongid,
+            ':checkin' => $checkin,
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function AddDichVu($datphongid, $dv) {
+        $sql = "insert into chi_tiet_hoa_dons (dat_phong_id, dich_vu_id) values (:datphongid, :dichvuid)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':datphongid' => $datphongid,
+            ':dichvuid' => $dv
+        ]);
+    }    
 }

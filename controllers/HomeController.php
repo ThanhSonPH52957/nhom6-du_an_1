@@ -84,43 +84,6 @@ class HomeController
             }
         }
     }
-    function themGioHang()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_SESSION['user_client'])) {
-                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
-
-                $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
-
-                if (!$gioHang) {
-                    $gioHangId = $this->modelGioHang->addGioHang($mail['id']);
-                    $gioHang = ['id' => $gioHangId];
-                    $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
-                } else {
-                    $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
-                }
-
-                $san_pham_id = $_POST['san_pham_id'];
-                $so_luong = $_POST['so_luong'];
-
-                $checkPhong = false;
-                foreach ($chiTietGioHang as $detail) {
-                    if ($detail['san_pham_id'] == $san_pham_id) {
-                        $newSoLuong = $detail['so_luong'] + $so_luong;
-                        $this->modelGioHang->updateSoLuong($gioHang['id'], $san_pham_id, $newSoLuong);
-                        $checkPhong = true;
-                        break;
-                    }
-                }
-                if (!$checkPhong) {
-                    $this->modelGioHang->addDetailGioHang($gioHang['id'], $san_pham_id, $so_luong);
-                }
-                require_once './views/gioHang.php';
-            } else {
-                require_once './views/auth/formLogin.php';
-            }
-        }
-    }
 
     function logout()
     {
@@ -222,59 +185,79 @@ class HomeController
         // Gọi lại form đăng ký nếu không phải phương thức POST
         require_once './views/auth/dangky.php';
     }
-    public function datphong()
+
+    public function formdatphong()
     {
+        if(isset($_SESSION['user_client'])) {
+            if(isset($_GET['id'])) {
+                $id = $_GET['id'];
+            }
+            $email = $_SESSION['user_client']; // Lấy email từ session
+
+            $errors = $_SESSION['errors'] ?? []; // Lấy lỗi từ session
+            $old_data = $_SESSION['old_data'] ?? []; // Lấy dữ liệu cũ từ session
+
+// Xóa session sau khi sử dụng
+            unset($_SESSION['errors'], $_SESSION['old_data']);
+        // Gọi model để lấy thông tin khách hàng
+            $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($email);
+            $phong = $this->modelPhong->AddPhong();
+            $dichvu = $this->modelPhong->getAllDV();
+            $thanhtoan = $this -> modelPhong -> getAllTT();
+            require_once './views/datphong.php';
+        } else {
+            require_once './views/auth/dangNhap.php';
+        }
+    }
+
+    function datphong() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            // Kiểm tra nếu giá trị tồn tại trước khi dùng trim
-            $hoten = isset($_POST["hoten"]) ? trim($_POST["hoten"]) : '';
-            $sdt = isset($_POST["sdt"]) ? trim($_POST["sdt"]) : '';
-            $checkin = isset($_POST["checkin"]) ? trim($_POST["checkin"]) : '';
-            $checkout = isset($_POST["checkout"]) ? trim($_POST["checkout"]) : '';
-            $loaiphong = isset($_POST["loaiphong"]) ? trim($_POST["loaiphong"]) : '';
-            $note = isset($_POST["note"]) ? trim($_POST["note"]) : '';
-            $total = isset($_POST["total"]) ? trim($_POST["total"]) : '';
-            $dichvu = isset($_POST["dichvu"]) ? trim($_POST["dichvu"]) : '';  // Dịch vụ (checkbox)
-
-
-            // Tạo kết nối cơ sở dữ liệu
-            try {
-                $conn = new mysqli('localhost', 'root', '', 'du_an_1');
-                if ($conn->connect_error) {
-                    throw new Exception("Kết nối cơ sở dữ liệu thất bại: " . $conn->connect_error);
+            if(isset($_POST['check'])) {
+                $phongid = $_POST['phong_id'];
+                $checkin = $_POST['checkin'];
+                $checkout = $_POST['checkout'];
+                $dichvu = $_POST['dichvu'] ?? '';
+                $thanhtoan = $_POST['thanhtoan_id'];
+                $today = date('Y-m-d');
+                $tongtien = $_POST['tongtien_raw'];
+                $checkroom = $this -> modelPhong -> CheckRoom($phongid, $checkin, $checkout);
+                $taikhoan = $this -> modelTaiKhoan -> getTaiKhoanFromEmail($_SESSION['user_client']);
+                $taikhoanid = $taikhoan['id'];
+                
+                $errors = [];
+                if (!empty($checkroom)) { // Kiểm tra nếu có bản ghi nào được trả về
+                    foreach ($checkroom as $room) {
+                        $errors['check'] = 'Phòng đã được đặt từ ngày ' . $room['check_in'] . ' đến ngày ' . $room['check_out'];
+                        break; // Thoát khỏi vòng lặp nếu chỉ cần thông báo lỗi từ bản ghi đầu tiên
+                    }
+                } elseif(strtotime($checkout) <= strtotime($checkin)) {
+                    $errors['check'] = 'Vui lòng nhập ngày hợp lệ.';
+                } elseif(strtotime($checkin) <= strtotime($today)) {
+                    $errors['check'] = 'Ngày check-in phải lớn hơn ngày hiện tại.';
                 }
 
-                // Chuẩn bị câu lệnh SQL
-                $sql = "INSERT INTO dat_phongs (hoten, sdt, check_in, check_out, loaiphong, note, total, dichvu) VALUES ('$hoten', '$sdt', '$checkin', '$checkout', '$loaiphong', '$note', '$total', '$dichvu')";
-                $stmt = $conn->prepare($sql);
-                if (!$stmt) {
-                    throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
-                }
-
-                // Gán giá trị và thực thi câu lệnh
-                $stmt->bind_param("sssss", $hoten, $sdt, $checkin, $checkout, $note, $total, $dichvu);
-                if ($stmt->execute()) {
-                    $_SESSION['success'] = "Đăng ký thành công!";
-                    header("Location: " . BASE_URL_ADMIN . '?act=login');
-                    exit();
+                if(empty($errors)) {
+                    $this -> modelPhong -> DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan);
+                    if(isset($dichvu)) {
+                        $getdatphong = $this -> modelPhong -> GetDatPhong($phongid, $checkin);
+                        $datphongid = $getdatphong['id'];
+                        foreach($dichvu as $dv) {
+                            $this -> modelPhong -> AddDichVu($datphongid, $dv);
+                        }
+                    }
+                    header("location: " . BASE_URL_ADMIN . '?act=/');
                 } else {
-                    throw new Exception("Thực thi câu lệnh thất bại: " . $stmt->error);
-                }
-            } catch (Exception $e) {
-                $_SESSION['error'] = "Đã xảy ra lỗi: " . $e->getMessage();
-            } finally {
-                // Đóng kết nối và giải phóng bộ nhớ
-                if (isset($stmt)) {
-                    $stmt->close();
-                }
-                if (isset($conn)) {
-                    $conn->close();
+                    $_SESSION['errors'] = $errors;
+                    $_SESSION['old_data'] = $_POST;
+
+                    // Quay lại trang form
+                    header("location: " . BASE_URL_ADMIN . '?act=formdatphong&id=' .$phongid);
+                    exit();
                 }
             }
         }
-
-        require_once './views/datphong.php';
     }
+
     public function addbinhluan()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

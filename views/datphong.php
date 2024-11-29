@@ -3,6 +3,7 @@
 <style>
     /* Reset CSS */
     body {
+        margin: 0;
         font-family: Arial, sans-serif;
     }
 
@@ -11,6 +12,7 @@
         margin: 20px auto;
         padding: 20px;
         border-radius: 8px;
+        background-color: #f9f9f9;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
@@ -34,6 +36,11 @@
     input[type="text"],
     input[type="datetime-local"],
     select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
         font-size: 14px;
     }
 
@@ -93,72 +100,138 @@
     }
 </style>
 
-<form action="" method="POST">
+<form action="?act=datphong" method="POST">
     <div class="booking-container">
         <h1>ĐẶT PHÒNG</h1>
 
         <div class="form-group">
-            <div class="form-label">Họ và tên*</div>
-            <input type="text" placeholder="Nhập họ và tên" name="hoten" required>
+            <div class="form-label">Họ tên*</div>
+            <input type="text" placeholder="Nhập họ và tên" value="<?= $taikhoan['ho_ten'] ?>" name="hoten" readonly>
 
             <div class="form-label">Số điện thoại*</div>
-            <input type="text" placeholder="Nhập số điện thoại" name="sdt" required>
+            <input type="text" placeholder="Nhập số điện thoại" value="<?= $taikhoan['so_dien_thoai'] ?>" name="sdt" readonly>
 
-            <div class="form-label">Ngày/giờ check-in*</div>
-            <input type="date" id="checkin" name="checkin" required>
-
-            <div class="form-label">Ngày/giờ check-out*</div>
-            <input type="date" id="checkout" name="checkout" required>
-
-            <div class="form-label">Loại phòng*</div>
-            <select name="loaiphong" required>
-                <option>Phòng đơn tiêu chuẩn</option>
-                <option>Phòng đôi</option>
-                <option>Phòng VIP</option>
+            <div class="form-label">Tên phòng</div>
+            <select name="phong_id" id="phong_id" required>
+            <?php
+                foreach ($phong as $row) {
+                    if((isset($old_data['phong_id']) && $row['id'] == $old_data['phong_id'])) {
+                        $selected = "selected";
+                    }elseif(!isset($old_data['phong_id']) && isset($id) && $row['id'] == $id) {
+                        $selected = "selected";
+                    } else {
+                        $selected = "";
+                    }
+                    echo "<option value='{$row['id']}' >{$row['ten_phong']}</option>";
+                }
+                ?>
             </select>
 
-            <div class="form-label full-width">Ghi chú cho tiếp tân</div>
-            <input type="text" class="full-width" placeholder="Nhập ghi chú" name="note">
-        </div>
+            <div class="form-label">Ngày check-in*</div>
+            <input type="date" id="checkin" name="checkin" value="<?= $old_data['checkin'] ?? '' ?>" required>
 
-        <div class="form-group">
-            <div class="form-label">Tổng số giờ ở:</div>
-            <input type="text" id="totalHours" placeholder="0 giờ" name="total" disabled>
-        </div>
+            <div class="form-label">Ngày check-out*</div>
+            <input type="date" id="checkout" name="checkout" value="<?= $old_data['checkout'] ?? '' ?>" required>
 
-        <div class="room-info">
-            <div>
+            <div class="form-label">Dịch vụ:</div> <br>
+            <?php foreach ($dichvu as $dv): ?>
                 <label>
-                    <input type="checkbox" name="dich_vu" value="co" checked>
+                    <input type="checkbox" name="dichvu[]" value="<?= $dv['id'] ?>"
+                        <?= isset($old_data['dichvu']) && in_array($dv['id'], $old_data['dichvu']) ? 'checked' : '' ?>>
+                    <?= $dv['ten_dich_vu'] ?>
                 </label>
-            </div>
-
-
+            <?php endforeach; ?><br>
+            <div class="form-label">Phương thức thanh toán</div>
+            <select name="thanhtoan_id" id="" required>
+                <?php
+                foreach ($thanhtoan as $row) {
+                    if(isset($old_data['thanhtoan_id']) && $row['id'] == $old_data['thanhtoan_id']) {
+                        $selected = "selected";
+                    }else {
+                        $selected = "";
+                    }
+                    echo "<option value='{$row['id']}' {$selected}>{$row['ten_phuong_thuc']}</option>";
+                }
+                ?>
+            </select>
+            <div class="form-label">Tổng tiền</div>
+            <input type="hidden" id="tong_tien_raw" name="tongtien_raw">
+            <input type="text" id="tong_tien" name="tongtien" readonly style="font-weight: bold; color: #d32f2f;">
         </div>
-        <div class="total-price">
-            <label><input type="checkbox" required> Tôi xác nhận đã đọc và xác thực thông tin đặt phòng</label>
-            <span>950.000đ</span>
-        </div>
-
-        <button class="submit-btn" type="submit" style="background-color: yellow">ĐẶT PHÒNG</button>
+        <?php if (isset($errors['check'])): ?>
+            <p class="text-danger"><?= $errors['check'] ?></p>
+        <?php endif; ?>
+        <button class="submit-btn" type="submit" style="background-color: yellow" name="check">Đặt phòng</button>
     </div>
 </form>
 
 <script>
-    document.getElementById('checkin').addEventListener('change', calculateHours);
-    document.getElementById('checkout').addEventListener('change', calculateHours);
+    const rooms = <?= json_encode($phong); ?>;
+    console.log(rooms);
+    
+    const services = <?= json_encode($dichvu); ?>;
+    console.log(services);
+    
+    document.addEventListener("DOMContentLoaded", function () {
+    const checkinField = document.getElementById("checkin");
+    const checkoutField = document.getElementById("checkout");
+    const roomField = document.getElementById("phong_id");
+    const servicesField = document.querySelectorAll("input[name='dichvu[]']");
+    const priceDisplay = document.createElement("p");
+    priceDisplay.style.fontWeight = "bold";
+    document.querySelector(".booking-container").appendChild(priceDisplay);
 
-    function calculateHours() {
-        const checkin = new Date(document.getElementById('checkin').value);
-        const checkout = new Date(document.getElementById('checkout').value);
+    const getRoomPrice = (roomId) => {
+        const room = rooms.find(r => r.id == roomId);
+        return room ? parseFloat(room.gia_tien) : 0;
+    };
 
-        if (checkin && checkout && checkout > checkin) {
-            const diffMs = checkout - checkin; // milliseconds
-            const diffHours = Math.floor(diffMs / (1000 * 60 * 60)); // hours
-            document.getElementById('totalHours').value = `${diffHours} giờ`;
-        } else {
-            document.getElementById('totalHours').value = '0 giờ';
-        }
+    const getServicePrices = (selectedServiceIds) => {
+        return selectedServiceIds.reduce((total, serviceId) => {
+            const service = services.find(s => s.id == serviceId);
+            return total + (service ? parseFloat(service.gia_dich_vu) : 0);
+        }, 0);
+    };
+
+    const calculatePrice = () => {
+    const checkin = new Date(checkinField.value);
+    const checkout = new Date(checkoutField.value);
+    const roomId = roomField.value;
+
+    const selectedServices = Array.from(servicesField)
+        .filter(service => service.checked)
+        .map(service => service.value);
+
+    if (isNaN(checkin) || isNaN(checkout) || checkin >= checkout) {
+        document.getElementById("tong_tien").value = ""; // Xóa giá trị nếu ngày không hợp lệ
+        document.getElementById("tong_tien_raw").value = 0;
+        return;
     }
+
+    const days = Math.max(1, Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24)));
+    const roomPrice = getRoomPrice(roomId);
+    const servicePrice = getServicePrices(selectedServices);
+
+    const totalPrice = days * (roomPrice + servicePrice);
+
+    // Gán giá trị hiển thị có định dạng vào input
+    document.getElementById("tong_tien").value = `${totalPrice.toLocaleString()} VND`;
+
+    // Gán giá trị thực (không định dạng) vào hidden input
+    document.getElementById("tong_tien_raw").value = totalPrice;
+};
+
+
+
+    checkinField.addEventListener("change", calculatePrice);
+    checkoutField.addEventListener("change", calculatePrice);
+    roomField.addEventListener("change", calculatePrice);
+    servicesField.forEach(service => service.addEventListener("change", calculatePrice));
+
+    calculatePrice();
+});
+    // });
+
 </script>
+
 <?php require_once 'layout/footer.php'; ?>

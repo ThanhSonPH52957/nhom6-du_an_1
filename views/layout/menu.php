@@ -133,7 +133,7 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <button class="header-button"><a href="?act=datphong">Đặt phòng</a></button>
+            <button class="header-button"><a href="?act=formdatphong">Đặt phòng</a></button>
             <div class="dropdown">
                 <?php if (isset($_SESSION['user_client'])) : ?>
                     <div class="header-4">
