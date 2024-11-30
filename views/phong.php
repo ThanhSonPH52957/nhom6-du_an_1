@@ -162,6 +162,63 @@
             display: block;
             margin: 0 auto;
         }
+
+        .dat3 {
+            display: flex;
+            flex-direction: row;
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px 14px;
+        }
+
+        .dat1 .form-label1 {
+            padding: 2px;
+            margin-right: 5px;
+        }
+
+        .dat .form-label1 {
+            padding: 2px;
+            margin-right: 5px;
+        }
+
+        .dat1 {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .dat {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .dat2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            background-color: #fff;
+            border: 2px solid gainsboro;
+            margin: 0 20px;
+        }
+
+        .dat2 img {
+            margin: 0 20px;
+        }
+
+        .dat3 button {
+            width: 100px;
+        }
+
+        .dat3 .search-box {
+            width: 250px;
+
+        }
+
+        .dat4 {
+            margin-top: -100px;
+            margin-bottom: 10px;
+        }
     </style>
     <div class="w3-content w3-section">
         <img class="mySlides" src="https://onetouchmedia.vn/wp-content/uploads/2019/10/N.NT-31.jpg" style="width:100%; height:450px; ">
@@ -187,6 +244,25 @@
             setTimeout(carousel, 5000);
         }
     </script>
+    <section class="dat4">
+        <form action="?act=timphong" method="POST" class="dat3">
+            <input type=" text" placeholder="Từ Khóa (Phòng)" name="search" class="search-box">
+            <div class="dat2">
+                <div class="dat1">
+                    <div class="form-label1">Check-in:</div>
+                    <input type="date" id="check_in" name="check_in" required>
+                </div>
+                <img src="./uploads/anh49.png" width="15px" alt="">
+                <div class="dat">
+                    <div class="form-label1">Check-out:</div>
+                    <input type="date" id="check_out" name="check_out" required>
+                </div>
+            </div>
+            <button type="submit" class="header-button">
+                Tìm Kiếm
+            </button>
+        </form>
+    </section>
     <section>
         <div class="phong">
             <h3>

@@ -12,6 +12,31 @@ class HomeController
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
     }
+    public function phongdat()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Kiểm tra người dùng đã đăng nhập bằng email
+        if (isset($_SESSION['user_client'])) {
+            $email = $_SESSION['user_client'];
+
+            // Lấy thông tin tài khoản dựa trên email
+            $user = $this->modelTaiKhoan->getUserByEmail($email);
+            $tai_khoan_id = $user['id'];
+            // Lấy danh sách phòng đã đặt
+            $data = $this->modelPhong->phongDat($tai_khoan_id);
+            var_dump($data);
+            // Hiển thị trang home
+            require_once './views/phongdat.php';
+        } else {
+            // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+            header("Location: /auth/dangNhap.php");
+            exit;
+        }
+    }
+
     public function danhmucphong($idDanhmuc)
     {
         $data = $this->modelPhong->layDanhSachPhongTheoDanhMuc($idDanhmuc);
@@ -114,11 +139,10 @@ class HomeController
         } elseif (!empty($search)) {
             // Tìm kiếm chỉ theo từ khóa
             $products = $this->modelPhong->timKiemPhong($search);
+        } elseif (!empty($check_in) && !empty($check_out)) {
+            // Tìm kiếm chỉ theo ngày
+            $products = $this->modelPhong->timKiemPhongTheoNgay($check_in, $check_out);
         }
-        // elseif (!empty($check_in) && !empty($check_out)) {
-        //     // Tìm kiếm chỉ theo ngày
-        //     $products = $this->modelPhong->timKiemPhongTheoNgay($check_in, $check_out);
-        // }
         require_once './views/timphong.php';
     }
     public function dangky()
@@ -132,7 +156,7 @@ class HomeController
             $ho_ten = trim($_POST["ho"] . ' ' . $_POST["ten"]); // Họ và tên
             $email = trim($_POST["email"]);
             $so_dien_thoai = trim($_POST["sdt"]);
-            $matkhau = password_hash(trim($_POST["matkhau"]), PASSWORD_BCRYPT); // Mã hóa mật khẩu
+            $matkhau = trim($_POST["matkhau"]); // Mã hóa mật khẩu
 
             // Kiểm tra dữ liệu đầu vào
             if (empty($ho_ten) || empty($email) || empty($so_dien_thoai) || empty($matkhau)) {
@@ -188,8 +212,8 @@ class HomeController
 
     public function formdatphong()
     {
-        if(isset($_SESSION['user_client'])) {
-            if(isset($_GET['id'])) {
+        if (isset($_SESSION['user_client'])) {
+            if (isset($_GET['id'])) {
                 $id = $_GET['id'];
             }
             $email = $_SESSION['user_client']; // Lấy email từ session
@@ -197,22 +221,23 @@ class HomeController
             $errors = $_SESSION['errors'] ?? []; // Lấy lỗi từ session
             $old_data = $_SESSION['old_data'] ?? []; // Lấy dữ liệu cũ từ session
 
-// Xóa session sau khi sử dụng
+            // Xóa session sau khi sử dụng
             unset($_SESSION['errors'], $_SESSION['old_data']);
-        // Gọi model để lấy thông tin khách hàng
+            // Gọi model để lấy thông tin khách hàng
             $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($email);
             $phong = $this->modelPhong->AddPhong();
             $dichvu = $this->modelPhong->getAllDV();
-            $thanhtoan = $this -> modelPhong -> getAllTT();
+            $thanhtoan = $this->modelPhong->getAllTT();
             require_once './views/datphong.php';
         } else {
             require_once './views/auth/dangNhap.php';
         }
     }
 
-    function datphong() {
+    function datphong()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if(isset($_POST['check'])) {
+            if (isset($_POST['check'])) {
                 $phongid = $_POST['phong_id'];
                 $checkin = $_POST['checkin'];
                 $checkout = $_POST['checkout'];
@@ -220,29 +245,29 @@ class HomeController
                 $thanhtoan = $_POST['thanhtoan_id'];
                 $today = date('Y-m-d');
                 $tongtien = $_POST['tongtien_raw'];
-                $checkroom = $this -> modelPhong -> CheckRoom($phongid, $checkin, $checkout);
-                $taikhoan = $this -> modelTaiKhoan -> getTaiKhoanFromEmail($_SESSION['user_client']);
+                $checkroom = $this->modelPhong->CheckRoom($phongid, $checkin, $checkout);
+                $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
                 $taikhoanid = $taikhoan['id'];
-                
+
                 $errors = [];
                 if (!empty($checkroom)) { // Kiểm tra nếu có bản ghi nào được trả về
                     foreach ($checkroom as $room) {
                         $errors['check'] = 'Phòng đã được đặt từ ngày ' . $room['check_in'] . ' đến ngày ' . $room['check_out'];
                         break; // Thoát khỏi vòng lặp nếu chỉ cần thông báo lỗi từ bản ghi đầu tiên
                     }
-                } elseif(strtotime($checkout) <= strtotime($checkin)) {
+                } elseif (strtotime($checkout) <= strtotime($checkin)) {
                     $errors['check'] = 'Vui lòng nhập ngày hợp lệ.';
-                } elseif(strtotime($checkin) <= strtotime($today)) {
+                } elseif (strtotime($checkin) <= strtotime($today)) {
                     $errors['check'] = 'Ngày check-in phải lớn hơn ngày hiện tại.';
                 }
 
-                if(empty($errors)) {
-                    $this -> modelPhong -> DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan);
-                    if(isset($dichvu)) {
-                        $getdatphong = $this -> modelPhong -> GetDatPhong($phongid, $checkin);
+                if (empty($errors)) {
+                    $this->modelPhong->DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan);
+                    if (isset($dichvu)) {
+                        $getdatphong = $this->modelPhong->GetDatPhong($phongid, $checkin);
                         $datphongid = $getdatphong['id'];
-                        foreach($dichvu as $dv) {
-                            $this -> modelPhong -> AddDichVu($datphongid, $dv);
+                        foreach ($dichvu as $dv) {
+                            $this->modelPhong->AddDichVu($datphongid, $dv);
                         }
                     }
                     header("location: " . BASE_URL_ADMIN . '?act=/');
@@ -251,7 +276,7 @@ class HomeController
                     $_SESSION['old_data'] = $_POST;
 
                     // Quay lại trang form
-                    header("location: " . BASE_URL_ADMIN . '?act=formdatphong&id=' .$phongid);
+                    header("location: " . BASE_URL_ADMIN . '?act=formdatphong&id=' . $phongid);
                     exit();
                 }
             }

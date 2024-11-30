@@ -221,7 +221,7 @@
                                     <p><?= $phong['ten_danh_muc'] ?></p>
                                 </div>
                         </a>
-                        <button>Đặt Phòng</button>
+                        <a href="?act=formdatphong&id=<?= $phong['id'] ?>"><button>Đặt Phòng</button></a>
                     </div>
             </div>
         <?php } ?>

@@ -32,7 +32,7 @@ match ($act) {
     'checklogin' => (new HomeController())->postLogin(),
     'logout' => (new HomeController())->logout(),
     'binhluan' => (new HomeController())->addbinhluan(),
-
+    'phongdat' => (new HomeController())->phongdat(),
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),
     'gioithieu' => (new HomeController())->gioithieu(),

@@ -45,8 +45,9 @@
         .chitiet7 button {
             padding: 5px 40px;
             font-size: 20px;
-            color: white;
+            color: black;
             margin: 0;
+            background-color: #FFCC66;
             margin-top: -12px;
         }
 
@@ -447,7 +448,7 @@
                 <div class="chitiet2">
                     <div class="chitiet7">
                         <p> <?= $data['ten_phong'] ?></p>
-                        <a href="?act=datphong&id=<?= $data['id'] ?> "><button>Ðặt phòng</button></a>
+                        <a href="?act=formdatphong&id=<?= $data['id'] ?> "><button>Ðặt phòng</button></a>
                     </div>
                     <div class="chi">
                     </div>
@@ -465,7 +466,7 @@
                                     <p>Phòng: <span class="chi8"><?= $data['ten_danh_muc'] ?></span></p>
                                 </div>
                             </div>
-                            <p class="chitiet8"><?= $data['motact'] ?></p>
+                            <p class="chitiet8"><?= $data['mo_ta'] ?></p>
                             <div class="add-comment">
                                 <form class="pi" method="POST" action="?act=binhluan">
                                     <input type="hidden" name="id_phong" value="<?= $data['id'] ?>">

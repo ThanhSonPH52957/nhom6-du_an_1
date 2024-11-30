@@ -14,6 +14,22 @@ class Phong
         $stmt->execute([':id_phong' => $id_phong]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function phongDat($tai_khoan_id)
+    {
+        $sql = "SELECT phongs.* ,dat_phongs.check_in,dat_phongs.check_out,dat_phongs.trang_thai_id
+        FROM phongs
+        INNER JOIN dat_phongs ON phongs.id = dat_phongs.phong_id
+        WHERE dat_phongs.tai_khoan_id = :tai_khoan_id
+        ";
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Trả về danh sách phòng dạng mảng kết hợp
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return [];
+        }
+    }
 
     public function layDanhSachHinhAnhTheoPhong($id)
     {
@@ -130,6 +146,25 @@ class Phong
         $stmt->execute([':search' => '%' . $search . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function timKiemPhongTheoNgay($check_in, $check_out)
+    {
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc
+            FROM phongs
+            INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
+            LEFT JOIN dat_phongs ON phongs.id = dat_phongs.phong_id
+            WHERE (
+                dat_phongs.phong_id IS NULL 
+                OR NOT (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in)
+            )';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':check_in' => $check_in,
+            ':check_out' => $check_out
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function timKiemPhongTheoNgayVaTen($search, $check_in, $check_out)
     {
         $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc
@@ -197,21 +232,24 @@ class Phong
         return $stmt->fetchAll();
     }
 
-    function getAllDV() {
+    function getAllDV()
+    {
         $sql = "SELECT * FROM dich_vus";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    function getAllTT() {
+    function getAllTT()
+    {
         $sql = "SELECT * FROM phuong_thuc_thanh_toans";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    function CheckRoom($phongid, $checkin, $checkout) {
+    function CheckRoom($phongid, $checkin, $checkout)
+    {
         $sql = "SELECT check_in, check_out 
                 FROM dat_phongs
                 WHERE phong_id = :room_id 
@@ -225,7 +263,8 @@ class Phong
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan) {
+    function DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan)
+    {
         $sql = "INSERT INTO dat_phongs (tai_khoan_id, phong_id, ngay_dat, check_in, check_out, tong_tien, phuong_thuc_thanh_toan_id, trang_thai_id)
         VALUES (:tai_khoan_id, :phong_id, :ngay_dat, :check_in, :check_out, :tongtien, :phuong_thuc_thanh_toan_id, 1)";
         $stmt = $this->conn->prepare($sql);
@@ -240,7 +279,8 @@ class Phong
         ]);
     }
 
-    function GetDatPhong($phongid, $checkin) {
+    function GetDatPhong($phongid, $checkin)
+    {
         $sql = "select id from dat_phongs where phong_id = :phongid and check_in = :checkin";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -250,12 +290,13 @@ class Phong
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function AddDichVu($datphongid, $dv) {
+    function AddDichVu($datphongid, $dv)
+    {
         $sql = "insert into chi_tiet_hoa_dons (dat_phong_id, dich_vu_id) values (:datphongid, :dichvuid)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             ':datphongid' => $datphongid,
             ':dichvuid' => $dv
         ]);
-    }    
+    }
 }
