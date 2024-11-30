@@ -27,7 +27,6 @@ class HomeController
             $tai_khoan_id = $user['id'];
             // Lấy danh sách phòng đã đặt
             $data = $this->modelPhong->phongDat($tai_khoan_id);
-            var_dump($data);
             // Hiển thị trang home
             require_once './views/phongdat.php';
         } else {
@@ -56,7 +55,6 @@ class HomeController
         $newphong = $this->modelPhong->AddPhong();
         require_once './views/phong.php';
     }
-
     public function dichvu()
     {
         require_once './views/dichvu.php';
@@ -133,6 +131,9 @@ class HomeController
         $search = isset($_POST['search']) ? trim($_POST['search']) : '';
         $check_in = isset($_POST['check_in']) ? trim($_POST['check_in']) : '';
         $check_out = isset($_POST['check_out']) ? trim($_POST['check_out']) : '';
+        $_SESSION['search'] = $search;
+        $_SESSION['check_in'] = $check_in;
+        $_SESSION['check_out'] = $check_out;
         if (!empty($search) && !empty($check_in) && !empty($check_out)) {
             // Tìm kiếm kết hợp từ khóa và ngày
             $products = $this->modelPhong->timKiemPhongTheoNgayVaTen($search, $check_in, $check_out);
