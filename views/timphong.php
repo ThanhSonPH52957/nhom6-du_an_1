@@ -38,6 +38,7 @@
 
     .room3 img {
         width: 300px;
+        height: 170px;
     }
 
     .room8 {

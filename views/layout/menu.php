@@ -143,7 +143,7 @@
                         <b><?php echo $_SESSION['user_client'] ?></b>
                         <div class="dropdown-content">
                             <a href="">Tài khoản</a>
-                            <a href="">Phòng đã đặt</a>
+                            <a href="?act=phongdat">Phòng đã đặt</a>
                             <a href="?act=logout">Đăng xuất</a>
                         </div>
                     </div>

@@ -145,7 +145,7 @@
                     } else {
                         $selected = "";
                     }
-                    echo "<option value='{$row['id']}' >{$row['ten_phong']}</option>";
+                    echo "<option value='{$row['id']}' $selected>{$row['ten_phong']}</option>";
                 }
                 ?>
             </select>
@@ -173,7 +173,7 @@
                     } else {
                         $selected = "";
                     }
-                    echo "<option value='{$row['id']}' {$selected}>{$row['ten_phuong_thuc']}</option>";
+                    echo "<option value='{$row['id']}' $selected>{$row['ten_phuong_thuc']}</option>";
                 }
                 ?>
             </select>
