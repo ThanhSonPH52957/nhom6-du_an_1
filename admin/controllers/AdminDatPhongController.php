@@ -20,12 +20,13 @@
             $tinhsongay = $startDate->diff($endDate);
             $songay = $tinhsongay->days;
 
-            $tienphong = $onedatphong['gia_tien']*$songay;
+            $tienphong = $onedatphong['gia_tien']*($songay + 1);
             
             $tiendichvu = 0;
             foreach($dichvu as $dv) {
                 $tiendichvu += $dv['gia_dich_vu'];
             }
+            $tongdichvu = $tiendichvu * ($songay + 1);
 
             $tongtien = $tienphong + $tiendichvu;
 

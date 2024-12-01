@@ -149,6 +149,9 @@
                 }
                 ?>
             </select>
+            
+            <div class="form-label">Giá phòng</div>
+            <input type="text" id="gia_phong" name="gia_phong" readonly style="font-weight: bold; color: green;">
 
             <div class="form-label">Ngày check-in*</div>
             <input type="date" id="checkin" name="checkin" value="<?= $_SESSION['check_in'] ?? '' ?>" required>
@@ -161,7 +164,7 @@
                 <label>
                     <input type="checkbox" name="dichvu[]" value="<?= $dv['id'] ?>"
                         <?= isset($old_data['dichvu']) && in_array($dv['id'], $old_data['dichvu']) ? 'checked' : '' ?>>
-                    <?= $dv['ten_dich_vu'] ?>
+                        <?= $dv['ten_dich_vu'] ?>: <?= number_format($dv['gia_dich_vu']) ?> VNĐ/ngày
                 </label>
             <?php endforeach; ?><br>
             <div class="form-label">Phương thức thanh toán</div>
@@ -195,6 +198,29 @@
     const services = <?= json_encode($dichvu); ?>;
     console.log(services);
 
+    document.addEventListener("DOMContentLoaded", function () {
+    const roomField = document.getElementById("phong_id");
+    const giaPhongInput = document.getElementById("gia_phong");
+
+    const getRoomPrice = (roomId) => {
+        const room = rooms.find(r => r.id == roomId);
+        return room ? parseFloat(room.gia_tien) : 0;
+    };
+
+    const displayRoomPrice = () => {
+        const roomId = roomField.value;
+        const roomPrice = getRoomPrice(roomId);
+        giaPhongInput.value = `${roomPrice.toLocaleString()} VND/ngày`;
+    };
+
+    // Hiển thị giá phòng ngay khi trang tải
+    displayRoomPrice();
+
+    // Lắng nghe sự kiện thay đổi phòng
+    roomField.addEventListener("change", displayRoomPrice);
+});
+
+
     document.addEventListener("DOMContentLoaded", function() {
         const checkinField = document.getElementById("checkin");
         const checkoutField = document.getElementById("checkout");
@@ -225,17 +251,17 @@
                 .filter(service => service.checked)
                 .map(service => service.value);
 
-            if (isNaN(checkin) || isNaN(checkout) || checkin >= checkout) {
+            if (isNaN(checkin) || isNaN(checkout) || checkin > checkout) {
                 document.getElementById("tong_tien").value = ""; // Xóa giá trị nếu ngày không hợp lệ
                 document.getElementById("tong_tien_raw").value = 0;
                 return;
             }
 
-            const days = Math.max(1, Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24)));
+            const days = Math.max(0, Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24)));
             const roomPrice = getRoomPrice(roomId);
             const servicePrice = getServicePrices(selectedServices);
 
-            const totalPrice = days * (roomPrice + servicePrice);
+            const totalPrice = (days + 1) * (roomPrice + servicePrice);
 
             // Gán giá trị hiển thị có định dạng vào input
             document.getElementById("tong_tien").value = `${totalPrice.toLocaleString()} VND`;

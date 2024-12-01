@@ -263,10 +263,10 @@ class Phong
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan)
+    function DatPhong($taikhoanid, $phongid, $today, $checkindp, $checkoutdp, $tongtien, $thanhtoan)
     {
-        $checkin = $_SESSION['check_in'] ?? '';
-        $checkout = $_SESSION['check_out'] ?? '';
+        $checkin = $_SESSION['check_in'] ?? $checkindp;
+        $checkout = $_SESSION['check_out'] ?? $checkoutdp;
         $phongid = $_POST['phong_id'];
         $sql = "INSERT INTO dat_phongs (tai_khoan_id, phong_id, ngay_dat, check_in, check_out, tong_tien, phuong_thuc_thanh_toan_id, trang_thai_id)
         VALUES (:tai_khoan_id, :phong_id, :ngay_dat, :check_in, :check_out, :tongtien, :phuong_thuc_thanh_toan_id, 1)";

@@ -240,32 +240,32 @@ class HomeController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['check'])) {
                 $phongid = $_POST['phong_id'];
-                $checkin = $_POST['checkin'];
-                $checkout = $_POST['checkout'];
+                $checkindp = $_POST['checkin'];
+                $checkoutdp = $_POST['checkout'];
                 $dichvu = $_POST['dichvu'] ?? '';
                 $thanhtoan = $_POST['thanhtoan_id'];
                 $today = date('Y-m-d');
                 $tongtien = $_POST['tongtien_raw'];
-                $checkroom = $this->modelPhong->CheckRoom($phongid, $checkin, $checkout);
+                $checkroom = $this->modelPhong->CheckRoom($phongid, $checkindp, $checkoutdp);
                 $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
                 $taikhoanid = $taikhoan['id'];
-
+                
                 $errors = [];
                 if (!empty($checkroom)) { // Kiểm tra nếu có bản ghi nào được trả về
                     foreach ($checkroom as $room) {
                         $errors['check'] = 'Phòng đã được đặt từ ngày ' . $room['check_in'] . ' đến ngày ' . $room['check_out'];
                         break; // Thoát khỏi vòng lặp nếu chỉ cần thông báo lỗi từ bản ghi đầu tiên
                     }
-                } elseif (strtotime($checkout) <= strtotime($checkin)) {
+                } elseif (strtotime($checkoutdp) < strtotime($checkindp)) {
                     $errors['check'] = 'Vui lòng nhập ngày hợp lệ.';
-                } elseif (strtotime($checkin) <= strtotime($today)) {
-                    $errors['check'] = 'Ngày check-in phải lớn hơn ngày hiện tại.';
+                } elseif (strtotime($checkindp) < strtotime($today)) {
+                    $errors['check'] = 'Ngày check-in phải lớn hơn hoặc bằng ngày hiện tại.';
                 }
 
                 if (empty($errors)) {
-                    $this->modelPhong->DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan);
+                    $this->modelPhong->DatPhong($taikhoanid, $phongid, $today, $checkindp, $checkoutdp, $tongtien, $thanhtoan);
                     if (isset($dichvu)) {
-                        $getdatphong = $this->modelPhong->GetDatPhong($phongid, $checkin);
+                        $getdatphong = $this->modelPhong->GetDatPhong($phongid, $checkindp);
                         $datphongid = $getdatphong['id'];
                         foreach ($dichvu as $dv) {
                             $this->modelPhong->AddDichVu($datphongid, $dv);
