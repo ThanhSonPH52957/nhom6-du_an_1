@@ -153,52 +153,44 @@ class Phong
 
     public function timKiemPhong($search)
     {
-        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc 
-                FROM phongs 
-                INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
-                WHERE phongs.ten_phong LIKE :search OR danh_muc_phongs.ten_danh_muc LIKE :search ';
+        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc
+            FROM phongs
+            INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
+            WHERE phongs.ten_phong LIKE :search OR danh_muc_phongs.ten_danh_muc LIKE :search';
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':search' => '%' . $search . '%']);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function timKiemPhongTheoNgay($check_in, $check_out)
     {
+
         $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc
             FROM phongs
-            INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
+            INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id 
             LEFT JOIN dat_phongs ON phongs.id = dat_phongs.phong_id
-            WHERE (
-                dat_phongs.phong_id IS NULL 
-                OR NOT (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in)
-            )';
+                WHERE NOT EXISTS (
+        SELECT 1 
+        FROM dat_phongs
+        WHERE dat_phongs.phong_id = phongs.id
+        AND (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in)
+--         dat_phongs.phong_id = phongs.id:
+-- Lấy các bản ghi trong dat_phongs ứng với phòng hiện tại (phongs.id).
+-- (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in):
+-- Điều kiện kiểm tra xem lịch đặt của phòng có giao với khoảng thời gian tìm kiếm:
+-- dat_phongs.check_in < :check_out: Ngày bắt đầu đặt phòng sớm hơn ngày kết thúc tìm kiếm.
+-- dat_phongs.check_out > :check_in: Ngày kết thúc đặt phòng muộn hơn ngày bắt đầu tìm kiếm.
+-- Nếu cả hai điều kiện đúng, lịch đặt này giao với khoảng tìm kiếm.
+-- Ý Nghĩa NOT EXISTS:
+
+-- Nếu tồn tại bất kỳ bản ghi đặt phòng nào thỏa mãn điều kiện giao lịch, phòng đó sẽ bị loại khỏi kết quả.
+-- e. :check_in và :check_out
+-- Các giá trị :check_in và :check_out được truyền từ hàm PHP để xác định khoảng thời gian tìm kiếm.
+    )';
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            ':check_in' => $check_in,
-            ':check_out' => $check_out
-        ]);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public function timKiemPhongTheoNgayVaTen($search, $check_in, $check_out)
-    {
-        $sql = 'SELECT phongs.*, danh_muc_phongs.ten_danh_muc
-            FROM phongs
-            INNER JOIN danh_muc_phongs ON phongs.danh_muc_id = danh_muc_phongs.id
-            LEFT JOIN dat_phongs ON phongs.id = dat_phongs.phong_id
-            WHERE (phongs.ten_phong LIKE :search OR danh_muc_phongs.ten_danh_muc LIKE :search)
-            AND (
-                dat_phongs.phong_id IS NULL 
-                -- Điều kiện này kiểm tra các phòng chưa từng được đặt (không có bản ghi trong dat_phongs).
-                OR NOT (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in)
-                -- dat_phongs.check_in < :checkout: Ngày nhận phòng trong hệ thống nhỏ hơn ngày trả phòng
-                -- dat_phongs.check_out > :checkin: Ngày trả phòng trong hệ thống lớn hơn ngày nhận phòng 
-
-            )';
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
-            ':search' => '%' . $search . '%',
             ':check_in' => $check_in,
             ':check_out' => $check_out
         ]);
@@ -280,9 +272,6 @@ class Phong
 
     function DatPhong($taikhoanid, $phongid, $today, $checkindp, $checkoutdp, $tongtien, $thanhtoan)
     {
-        $checkin = $_SESSION['check_in'] ?? $checkindp;
-        $checkout = $_SESSION['check_out'] ?? $checkoutdp;
-        $phongid = $_POST['phong_id'];
         $sql = "INSERT INTO dat_phongs (tai_khoan_id, phong_id, ngay_dat, check_in, check_out, tong_tien, phuong_thuc_thanh_toan_id, trang_thai_id)
         VALUES (:tai_khoan_id, :phong_id, :ngay_dat, :check_in, :check_out, :tongtien, :phuong_thuc_thanh_toan_id, 1)";
         $stmt = $this->conn->prepare($sql);
@@ -290,8 +279,8 @@ class Phong
             ':tai_khoan_id' => $taikhoanid,
             ':phong_id' => $phongid,
             ':ngay_dat' => $today,
-            ':check_in' => $checkin,
-            ':check_out' => $checkout,
+            ':check_in' => $checkindp,
+            ':check_out' => $checkoutdp,
             'tongtien' => $tongtien,
             ':phuong_thuc_thanh_toan_id' => $thanhtoan
         ]);

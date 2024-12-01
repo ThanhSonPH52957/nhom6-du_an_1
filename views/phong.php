@@ -246,7 +246,6 @@
     </script>
     <section class="dat4">
         <form action="?act=timphong" method="POST" class="dat3">
-            <input type=" text" placeholder="Từ Khóa (Phòng)" name="search" class="search-box">
             <div class="dat2">
                 <div class="dat1">
                     <div class="form-label1">Check-in:</div>
