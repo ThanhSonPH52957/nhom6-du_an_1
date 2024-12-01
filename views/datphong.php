@@ -151,10 +151,10 @@
             </select>
 
             <div class="form-label">Ngày check-in*</div>
-            <input type="date" id="checkin" name="checkin" value="<?= $old_data['checkin'] ?? '' ?>" required>
+            <input type="date" id="checkin" name="checkin" value="<?= $_SESSION['check_in'] ?? '' ?>" required>
 
             <div class="form-label">Ngày check-out*</div>
-            <input type="date" id="checkout" name="checkout" value="<?= $old_data['checkout'] ?? '' ?>" required>
+            <input type="date" id="checkout" name="checkout" value="<?= $_SESSION['check_out'] ?? '' ?>" required>
 
             <div class="form-label">Dịch vụ:</div> <br>
             <?php foreach ($dichvu as $dv): ?>
