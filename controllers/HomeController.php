@@ -12,6 +12,13 @@ class HomeController
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
     }
+    public function capNhatDonHang($id)
+    {
+        $this->modelPhong->huyDon($id);
+        header("Location: ?act=phongdat");
+    }
+
+
     public function phongdat()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -235,48 +242,72 @@ class HomeController
         }
     }
 
-    function datphong()
+    public function datphong()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['check'])) {
                 $phongid = $_POST['phong_id'];
-                $checkindp = $_POST['checkin'];
-                $checkoutdp = $_POST['checkout'];
+                $checkin = $_POST['checkin'] ?? '';
+                $checkout = $_POST['checkout'] ?? '';
                 $dichvu = $_POST['dichvu'] ?? '';
                 $thanhtoan = $_POST['thanhtoan_id'];
                 $today = date('Y-m-d');
                 $tongtien = $_POST['tongtien_raw'];
-                $checkroom = $this->modelPhong->CheckRoom($phongid, $checkindp, $checkoutdp);
+
+                // Kiểm tra xem giá trị check_in và check_out có hợp lệ hay không
+                if (empty($checkin) || empty($checkout)) {
+                    $_SESSION['errors']['check'] = 'Vui lòng nhập đầy đủ ngày check-in và check-out.';
+                    header("location: " . BASE_URL_ADMIN . '?act=formdatphong&id=' . $phongid);
+                    exit();
+                }
+
+                // Kiểm tra tình trạng phòng
+                $checkroom = $this->modelPhong->CheckRoom($phongid, $checkin, $checkout);
+
+                // Lấy thông tin tài khoản
                 $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
                 $taikhoanid = $taikhoan['id'];
-                
+
                 $errors = [];
+
+                // Kiểm tra phòng có trùng lịch không
                 if (!empty($checkroom)) { // Kiểm tra nếu có bản ghi nào được trả về
                     foreach ($checkroom as $room) {
                         $errors['check'] = 'Phòng đã được đặt từ ngày ' . $room['check_in'] . ' đến ngày ' . $room['check_out'];
                         break; // Thoát khỏi vòng lặp nếu chỉ cần thông báo lỗi từ bản ghi đầu tiên
                     }
-                } elseif (strtotime($checkoutdp) < strtotime($checkindp)) {
+                } elseif (strtotime($checkout) < strtotime($checkin)) {
                     $errors['check'] = 'Vui lòng nhập ngày hợp lệ.';
-                } elseif (strtotime($checkindp) < strtotime($today)) {
-                    $errors['check'] = 'Ngày check-in phải lớn hơn hoặc bằng ngày hiện tại.';
+                } elseif (strtotime($checkin) < strtotime($today)) {
+                    $errors['check'] = 'Ngày check-in phải lớn hơn ngày hiện tại.';
                 }
 
                 if (empty($errors)) {
-                    $this->modelPhong->DatPhong($taikhoanid, $phongid, $today, $checkindp, $checkoutdp, $tongtien, $thanhtoan);
+                    // Đặt phòng thành công
+                    $this->modelPhong->DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan);
+
+                    // Nếu có dịch vụ, thêm dịch vụ vào đơn đặt phòng
                     if (isset($dichvu)) {
-                        $getdatphong = $this->modelPhong->GetDatPhong($phongid, $checkindp);
+                        $getdatphong = $this->modelPhong->GetDatPhong($phongid, $checkin);
                         $datphongid = $getdatphong['id'];
                         foreach ($dichvu as $dv) {
                             $this->modelPhong->AddDichVu($datphongid, $dv);
                         }
                     }
+
+                    // Sau khi đặt phòng thành công, xóa check-in và check-out khỏi session
+                    unset($_SESSION['check_in']);
+                    unset($_SESSION['check_out']);
+
+                    // Chuyển hướng sau khi đặt phòng thành công
                     header("location: " . BASE_URL_ADMIN . '?act=/');
+                    exit(); // Dừng việc thực hiện thêm sau khi chuyển hướng
                 } else {
+                    // Nếu có lỗi, lưu lỗi vào session và quay lại form
                     $_SESSION['errors'] = $errors;
                     $_SESSION['old_data'] = $_POST;
 
-                    // Quay lại trang form
+                    // Quay lại trang form đặt phòng với lỗi
                     header("location: " . BASE_URL_ADMIN . '?act=formdatphong&id=' . $phongid);
                     exit();
                 }

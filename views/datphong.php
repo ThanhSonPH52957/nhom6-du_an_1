@@ -149,7 +149,7 @@
                 }
                 ?>
             </select>
-            
+
             <div class="form-label">Giá phòng</div>
             <input type="text" id="gia_phong" name="gia_phong" readonly style="font-weight: bold; color: green;">
 
@@ -164,7 +164,7 @@
                 <label>
                     <input type="checkbox" name="dichvu[]" value="<?= $dv['id'] ?>"
                         <?= isset($old_data['dichvu']) && in_array($dv['id'], $old_data['dichvu']) ? 'checked' : '' ?>>
-                        <?= $dv['ten_dich_vu'] ?>: <?= number_format($dv['gia_dich_vu']) ?> VNĐ/ngày
+                    <?= $dv['ten_dich_vu'] ?>: <?= number_format($dv['gia_dich_vu']) ?> VNĐ/ngày
                 </label>
             <?php endforeach; ?><br>
             <div class="form-label">Phương thức thanh toán</div>
@@ -198,27 +198,27 @@
     const services = <?= json_encode($dichvu); ?>;
     console.log(services);
 
-    document.addEventListener("DOMContentLoaded", function () {
-    const roomField = document.getElementById("phong_id");
-    const giaPhongInput = document.getElementById("gia_phong");
+    document.addEventListener("DOMContentLoaded", function() {
+        const roomField = document.getElementById("phong_id");
+        const giaPhongInput = document.getElementById("gia_phong");
 
-    const getRoomPrice = (roomId) => {
-        const room = rooms.find(r => r.id == roomId);
-        return room ? parseFloat(room.gia_tien) : 0;
-    };
+        const getRoomPrice = (roomId) => {
+            const room = rooms.find(r => r.id == roomId);
+            return room ? parseFloat(room.gia_tien) : 0;
+        };
 
-    const displayRoomPrice = () => {
-        const roomId = roomField.value;
-        const roomPrice = getRoomPrice(roomId);
-        giaPhongInput.value = `${roomPrice.toLocaleString()} VND/ngày`;
-    };
+        const displayRoomPrice = () => {
+            const roomId = roomField.value;
+            const roomPrice = getRoomPrice(roomId);
+            giaPhongInput.value = `${roomPrice.toLocaleString()} VND/ngày`;
+        };
 
-    // Hiển thị giá phòng ngay khi trang tải
-    displayRoomPrice();
+        // Hiển thị giá phòng ngay khi trang tải
+        displayRoomPrice();
 
-    // Lắng nghe sự kiện thay đổi phòng
-    roomField.addEventListener("change", displayRoomPrice);
-});
+        // Lắng nghe sự kiện thay đổi phòng
+        roomField.addEventListener("change", displayRoomPrice);
+    });
 
 
     document.addEventListener("DOMContentLoaded", function() {

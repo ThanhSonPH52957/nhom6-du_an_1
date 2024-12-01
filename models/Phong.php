@@ -7,6 +7,24 @@ class Phong
     {
         $this->conn = connectDB();
     }
+    public function capNhatTrangThaiPhong($phong_id, $trang_thai_id)
+    {
+        $sql = "UPDATE dat_phongs SET trang_thai_id = :trang_thai_id WHERE phong_id = :phong_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':trang_thai_id' => $trang_thai_id,
+            ':phong_id' => $phong_id
+        ]);
+
+        return $stmt->rowCount();
+    }
+    public function layTrangThai()
+    {
+        $sql = "SELECT id, ten_trang_thai FROM trang_thai";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function album($id_phong)
     {
         $sql = "SELECT * FROM album_anh_phongs WHERE phong_id = :id_phong";
@@ -16,20 +34,17 @@ class Phong
     }
     public function phongDat($tai_khoan_id)
     {
-        $sql = "SELECT phongs.* ,dat_phongs.check_in,dat_phongs.check_out,dat_phongs.trang_thai_id
-        FROM phongs
-        INNER JOIN dat_phongs ON phongs.id = dat_phongs.phong_id
-        WHERE dat_phongs.tai_khoan_id = :tai_khoan_id
-        ";
-        try {
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Trả về danh sách phòng dạng mảng kết hợp
-        } catch (PDOException $e) {
-            echo "Lỗi: " . $e->getMessage();
-            return [];
-        }
+        $sql = "SELECT dat_phongs.*, phongs.ten_phong, trang_thai_dat_phongs.ten_trang_thai
+            FROM dat_phongs
+            INNER JOIN phongs ON phongs.id = dat_phongs.phong_id
+            INNER JOIN trang_thai_dat_phongs ON dat_phongs.trang_thai_id = trang_thai_dat_phongs.id
+            WHERE dat_phongs.tai_khoan_id = :tai_khoan_id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function layDanhSachHinhAnhTheoPhong($id)
     {
@@ -300,6 +315,15 @@ class Phong
         return $stmt->execute([
             ':datphongid' => $datphongid,
             ':dichvuid' => $dv
+        ]);
+    }
+
+    function huyDon($id)
+    {
+        $sql = "update dat_phongs set trang_thai_id = 4 where id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $id
         ]);
     }
 }

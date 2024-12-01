@@ -110,6 +110,17 @@
 <body>
     <div class="container">
         <h2>Danh sách phòng đã đặt</h2>
+
+        <?php if (!empty($_SESSION['success'])): ?>
+            <p style="color: green;"><?= $_SESSION['success'] ?></p>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (!empty($_SESSION['error'])): ?>
+            <p style="color: red;"><?= $_SESSION['error'] ?></p>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
         <table border="1" width="100%">
             <thead>
                 <tr>
@@ -130,13 +141,12 @@
                             <td><?= htmlspecialchars($phong['ten_phong']) ?></td>
                             <td><?= formatDate($phong['check_in']) ?></td>
                             <td><?= formatDate($phong['check_out']) ?></td>
-                            <td><?= number_format($phong['gia_tien'], 0, ',', '.') ?> VNĐ</td>
-                            <td><?= htmlspecialchars($phong['trang_thai']) ?></td>
+                            <td><?= number_format($phong['tong_tien'], 0, ',', '.') ?> VNĐ</td>
+                            <td><?= htmlspecialchars($phong['ten_trang_thai']) ?></td> <!-- Hiển thị tên trạng thái -->
                             <td>
-                                <form action="?act=huyPhong" method="POST" onsubmit="return confirm('Bạn có chắc muốn hủy phòng này không?');">
-                                    <input type="hidden" name="phong_id" value="<?= $phong['id'] ?>">
-                                    <button type="submit" class="btn btn-danger">Hủy</button>
-                                </form>
+
+                                <a href="?act=capnhatdonhang&id=<?= $phong['id'] ?>"><button class="btn btn-primary">Cập nhật</button></a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -148,6 +158,9 @@
             </tbody>
         </table>
     </div>
+
+
+
 </body>
 
 </html>
