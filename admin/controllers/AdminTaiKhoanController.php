@@ -26,6 +26,17 @@
             header("Location: ".BASE_URL_ADMIN.'?act=listtaikhoan');
         }
 
+        function updateTTTaiKhoan($id) {
+            $onetaikhoan = $this -> modelTaiKhoan -> GetOneTaiKhoan($id);
+            if($onetaikhoan['trang_thai'] == 1) {
+                $trangthai = 2;
+            } else {
+                $trangthai = 1;
+            }
+            $this -> modelTaiKhoan -> UpdateTTTaiKhoan($id, $trangthai);
+            header("Location: ".BASE_URL_ADMIN.'?act=listtaikhoan');
+        }
+
         function formLogin() {
             require_once './views/auth/formLogin.php';
             deleteSessionError();

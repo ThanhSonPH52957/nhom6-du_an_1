@@ -36,6 +36,7 @@
                     <th>SĐT</th>
                     <th>Địa chỉ</th>
                     <th>Chức vụ</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
                   </thead>
@@ -48,18 +49,21 @@
                     <td><?= $listtk['so_dien_thoai'] ?></td>
                     <td><?= $listtk['dia_chi']?></td>
                     <td><?= $listtk['ten_chuc_vu'] ?></td>
-                    <td><a href="<?= BASE_URL_ADMIN.'?act=updatetaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi chức vụ</button></a></td>
+                    <td><?= ($listtk['trang_thai'] == 1) ? 'Hoạt động' : 'Ẩn' ?></td>
+                    <td><a href="<?= BASE_URL_ADMIN.'?act=updatetaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi chức vụ</button></a>
+                    <a href="<?= BASE_URL_ADMIN.'?act=updatetttaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi trạng thái</button></a></td>
                   </tr>
                   <?php } ?>
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>STT</th>
+                  <th>STT</th>
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>SĐT</th>
-                    <th>Trạng thái</th>
+                    <th>Địa chỉ</th>
                     <th>Chức vụ</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
                   </tfoot>

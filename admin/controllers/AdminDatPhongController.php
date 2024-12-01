@@ -28,7 +28,7 @@
             }
             $tongdichvu = $tiendichvu * ($songay + 1);
 
-            $tongtien = $tienphong + $tiendichvu;
+            $tongtien = $tienphong + $tongdichvu;
 
             // $listTrangThai = $this -> modelDatPhong -> getAllTrangThai();
             require_once './views/datphong/detailDatPhong.php';

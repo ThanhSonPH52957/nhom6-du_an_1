@@ -14,7 +14,7 @@ class AdminDatPhong
         inner join trang_thai_dat_phongs on dat_phongs.trang_thai_id = trang_thai_dat_phongs.id
         inner join tai_khoans on dat_phongs.tai_khoan_id = tai_khoans.id
         inner join phongs on dat_phongs.phong_id = phongs.id
-        inner join phuong_thuc_thanh_toans on dat_phongs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id';
+        inner join phuong_thuc_thanh_toans on dat_phongs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id order by dat_phongs.id desc';
         $stmt = $this -> conn -> prepare($sql);
         $stmt -> execute();
         return $stmt->fetchAll();
@@ -86,7 +86,17 @@ class AdminDatPhong
     public function getDoanhThuTheoNgay() {
         try {
             // Thay 'ngay_dat' bằng tên cột chứa ngày của bạn
-            $sql = "SELECT DATE(ngay_dat) AS `date`, SUM(tong_tien) AS total FROM dat_phongs GROUP BY DATE(ngay_dat) ORDER BY DATE(ngay_dat)";
+            $sql = "SELECT 
+    DATE(ngay_dat) AS `date`, 
+    SUM(tong_tien) AS total 
+FROM 
+    dat_phongs 
+WHERE 
+    trang_thai_id = 3 
+GROUP BY 
+    DATE(ngay_dat) 
+ORDER BY 
+    DATE(ngay_dat);";
     
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -114,5 +124,13 @@ class AdminDatPhong
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getDoanhThuTong() {
+        $sql = "SELECT SUM(tong_tien) FROM dat_phongs WHERE trang_thai_id = 3;";
+        $stmt = $this -> conn->prepare($sql);
+        $stmt->execute();
+        $totalDoanhThu = $stmt->fetchColumn(); // Lấy giá trị duy nhất
+        return $totalDoanhThu ?? 0;
     }
 }

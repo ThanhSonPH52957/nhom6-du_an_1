@@ -297,14 +297,14 @@
                                 <tr>
                                   <td><span class="text-muted">Mã đơn</span>
                                     <h5 class="fs-14 my-1 fw-medium">
-                                      <a href="apps-ecommerce-order-details.html" class="text-reset"><?= $order['id'] ?></a> <!-- Nếu có trường tên khách hàng -->
+                                      <a href="<?= BASE_URL_ADMIN ?>?act=chitietdatphong&id=<?= $order['id'] ?>" class="text-reset"><?= $order['id'] ?></a> <!-- Nếu có trường tên khách hàng -->
                                     </h5>
                                   </td>
                                   <td><span class="text-muted">Ngày đặt</span>
                                   <p class="mb-0"><?= formatDate($order['ngay_dat'])?></p> <!-- Nếu có trường tên sản phẩm -->
                                   </td>
-                                  <td><span class="text-muted">Phương thức thanh toán</span>
-                                    <p class="mb-0"><?= $order['ten_phuong_thuc']?></p> <!-- Gắn giá trị số lượng -->
+                                  <td><span class="text-muted">Tổng tiền</span>
+                                    <p class="mb-0"><?= $order['tong_tien']?> VNĐ</p> <!-- Gắn giá trị số lượng -->
                                   </td>
                                   <td>
                                     <span class="text-muted">Trạng thái</span>

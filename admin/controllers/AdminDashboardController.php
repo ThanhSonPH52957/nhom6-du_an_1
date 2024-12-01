@@ -14,10 +14,7 @@
         function home() {
             $alldatphong = $this -> modelDatPhong -> getAllDatPhong();
             
-            $tongdoanhthu = 0;
-            foreach($alldatphong as $dp) {
-                $tongdoanhthu += $dp['tong_tien'];
-            }
+            $tongdoanhthu = $this -> modelDatPhong -> getDoanhThuTong();
 
             $sldondp = $this -> modelDatPhong -> getSlDatPhong();
             $slthanhvien = $this -> modelTaiKhoan -> getSlThanhVien();

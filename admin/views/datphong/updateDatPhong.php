@@ -35,33 +35,26 @@
                                 <div class="form-group">
                                     <label>Tên người nhận</label>
                                     <input type="text" class="form-control" name="ten_nguoi_nhan" value="<?= $datphong['ho_ten'] ?>" readonly>
-                                    <?php if (isset($errors['ten_nguoi_nhan'])) { ?>
-                                        <p class="text-danger"><?= $errors['ten_nguoi_nhan'] ?></p>
-                                    <?php } ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Số điện thoại</label>
+                                    <label>Tên phòng</label>
                                     <input type="text" class="form-control" name="sdt_nguoi_nhan" value="<?= $datphong['ten_phong'] ?>" readonly>
-                                    <?php if (isset($errors['sdt_nguoi_nhan'])) { ?>
-                                        <p class="text-danger"><?= $errors['sdt_nguoi_nhan'] ?></p>
-                                    <?php } ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" name="email_nguoi_nhan" value="<?= $datphong['ngay_dat'] ?>" readonly>
-                                    <?php if (isset($errors['email_nguoi_nhan'])) { ?>
-                                        <p class="text-danger"><?= $errors['email_nguoi_nhan'] ?></p>
-                                    <?php } ?>
+                                    <label>Checkin</label>
+                                    <input type="text" class="form-control" name="email_nguoi_nhan" value="<?= formatDate($datphong['check_in']) ?>" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Địa chỉ</label>
-                                    <input type="text" class="form-control" name="dia_chi_nguoi_nhan" value="<?= $datphong['ten_phuong_thuc'] ?>" readonly>
-                                    <?php if (isset($errors['dia_chi_nguoi_nhan'])) { ?>
-                                        <p class="text-danger"><?= $errors['dia_chi_nguoi_nhan'] ?></p>
-                                    <?php } ?>
+                                    <label>Checkout</label>
+                                    <input type="text" class="form-control" name="dia_chi_nguoi_nhan" value="<?= formatDate($datphong['check_out']) ?>" readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Tổng tiền</label>
+                                    <input type="text" class="form-control" name="" value="<?= number_format($datphong['tong_tien']) ?> VNĐ" readonly>
                                 </div>
 
                                 <div class="form-group">

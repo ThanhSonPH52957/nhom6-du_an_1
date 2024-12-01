@@ -96,7 +96,7 @@
                       </tr>
                       <tr>
                         <th>Tiền dịch vụ:</th>
-                        <td><?= number_format($tiendichvu)?> VNĐ</td>
+                        <td><?= number_format($tongdichvu)?> VNĐ</td>
                       </tr>
                       <tr>
                         <th>Tổng tiền:</th>

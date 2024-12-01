@@ -46,6 +46,17 @@
             return true;
         }
 
+        function UpdateTTTaiKhoan($id, $trangthai) {
+            $sql = "update tai_khoans set trang_thai = :trangthai where id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+            'id' => $id,
+            'trangthai' => $trangthai
+            ]);
+
+            return true;
+        }
+
         function ResetPassword($id, $password) {
             $sql = "update tai_khoans set mat_khau = :mat_khau where id = :id";
             $stmt = $this->conn->prepare($sql);

@@ -35,7 +35,7 @@
         <hr>
         <h3>Thông tin cá nhân</h3>
 
-        <form action="<?= BASE_URL_ADMIN . '?act=updatecanhan' ?>" method="post">
+        <form action="#" method="post">
           <div class="form-group">
             <label class="col-lg-3 control-label">Họ tên:</label>
             <div class="col-lg-8">
