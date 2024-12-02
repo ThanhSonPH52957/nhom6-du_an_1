@@ -138,21 +138,21 @@ class HomeController
         $search = isset($_POST['search']) ? trim($_POST['search']) : '';
         $check_in = isset($_POST['check_in']) ? trim($_POST['check_in']) : '';
         $check_out = isset($_POST['check_out']) ? trim($_POST['check_out']) : '';
-        $_SESSION['search'] = $search;
-        $_SESSION['check_in'] = $check_in;
-        $_SESSION['check_out'] = $check_out;
-        if (!empty($search) && !empty($check_in) && !empty($check_out)) {
-            // Tìm kiếm kết hợp từ khóa và ngày
-            $products = $this->modelPhong->timKiemPhongTheoNgayVaTen($search, $check_in, $check_out);
-        } elseif (!empty($search)) {
-            // Tìm kiếm chỉ theo từ khóa
+
+        if (!empty($search)) {
+            // Tìm kiếm theo từ khóa
             $products = $this->modelPhong->timKiemPhong($search);
         } elseif (!empty($check_in) && !empty($check_out)) {
-            // Tìm kiếm chỉ theo ngày
+            // Tìm kiếm theo ngày
             $products = $this->modelPhong->timKiemPhongTheoNgay($check_in, $check_out);
+        } else {
+            $products = []; // Không có kết quả nếu không nhập gì
         }
+
+        // Gửi giá trị đã nhập lại sang view
         require_once './views/timphong.php';
     }
+
     public function dangky()
     {
         // Kiểm tra nếu session chưa được khởi tạo, thì mới gọi session_start
@@ -181,7 +181,7 @@ class HomeController
                 }
 
                 // Chuẩn bị câu lệnh SQL chèn dữ liệu vào bảng tai_khoans
-                $sql = "INSERT INTO tai_khoans (ho_ten, email, so_dien_thoai, mat_khau, chuc_vu_id) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO tai_khoans (ho_ten, email, so_dien_thoai, mat_khau, chuc_vu_id, trang_thai) VALUES (?, ?, ?, ?, ?, 1)";
                 $stmt = $conn->prepare($sql);
                 if (!$stmt) {
                     throw new Exception("Chuẩn bị câu lệnh thất bại: " . $conn->error);
@@ -294,11 +294,6 @@ class HomeController
                             $this->modelPhong->AddDichVu($datphongid, $dv);
                         }
                     }
-
-                    // Sau khi đặt phòng thành công, xóa check-in và check-out khỏi session
-                    unset($_SESSION['check_in']);
-                    unset($_SESSION['check_out']);
-
                     // Chuyển hướng sau khi đặt phòng thành công
                     header("location: " . BASE_URL_ADMIN . '?act=/');
                     exit(); // Dừng việc thực hiện thêm sau khi chuyển hướng

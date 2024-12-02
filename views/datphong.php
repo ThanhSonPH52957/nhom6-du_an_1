@@ -154,10 +154,10 @@
             <input type="text" id="gia_phong" name="gia_phong" readonly style="font-weight: bold; color: green;">
 
             <div class="form-label">Ngày check-in*</div>
-            <input type="date" id="checkin" name="checkin" value="<?= $_SESSION['check_in'] ?? '' ?>" required>
+            <input type="date" id="checkin" name="checkin" value="<?= $old_data['check_in'] ?? '' ?>" required>
 
             <div class="form-label">Ngày check-out*</div>
-            <input type="date" id="checkout" name="checkout" value="<?= $_SESSION['check_out'] ?? '' ?>" required>
+            <input type="date" id="checkout" name="checkout" value="<?= $old_data['check_out'] ?? '' ?>" required>
 
             <div class="form-label">Dịch vụ:</div> <br>
             <?php foreach ($dichvu as $dv): ?>
