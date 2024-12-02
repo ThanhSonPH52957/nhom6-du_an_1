@@ -175,18 +175,20 @@ class Phong
         FROM dat_phongs
         WHERE dat_phongs.phong_id = phongs.id
         AND (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in)
---         dat_phongs.phong_id = phongs.id:
--- Lấy các bản ghi trong dat_phongs ứng với phòng hiện tại (phongs.id).
--- (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in):
--- Điều kiện kiểm tra xem lịch đặt của phòng có giao với khoảng thời gian tìm kiếm:
--- dat_phongs.check_in < :check_out: Ngày bắt đầu đặt phòng sớm hơn ngày kết thúc tìm kiếm.
--- dat_phongs.check_out > :check_in: Ngày kết thúc đặt phòng muộn hơn ngày bắt đầu tìm kiếm.
--- Nếu cả hai điều kiện đúng, lịch đặt này giao với khoảng tìm kiếm.
--- Ý Nghĩa NOT EXISTS:
+        AND (dat_phongs.trang_thai_id != 4) 
+            -- Loại trừ trạng thái "hủy"
+        --         dat_phongs.phong_id = phongs.id:
+        -- Lấy các bản ghi trong dat_phongs ứng với phòng hiện tại (phongs.id).
+        -- (dat_phongs.check_in < :check_out AND dat_phongs.check_out > :check_in):
+        -- Điều kiện kiểm tra xem lịch đặt của phòng có giao với khoảng thời gian tìm kiếm:
+        -- dat_phongs.check_in < :check_out: Ngày bắt đầu đặt phòng sớm hơn ngày kết thúc tìm kiếm.
+        -- dat_phongs.check_out > :check_in: Ngày kết thúc đặt phòng muộn hơn ngày bắt đầu tìm kiếm.
+        -- Nếu cả hai điều kiện đúng, lịch đặt này giao với khoảng tìm kiếm.
+        -- Ý Nghĩa NOT EXISTS:
 
--- Nếu tồn tại bất kỳ bản ghi đặt phòng nào thỏa mãn điều kiện giao lịch, phòng đó sẽ bị loại khỏi kết quả.
--- e. :check_in và :check_out
--- Các giá trị :check_in và :check_out được truyền từ hàm PHP để xác định khoảng thời gian tìm kiếm.
+        -- Nếu tồn tại bất kỳ bản ghi đặt phòng nào thỏa mãn điều kiện giao lịch, phòng đó sẽ bị loại khỏi kết quả.
+        -- e. :check_in và :check_out
+        -- Các giá trị :check_in và :check_out được truyền từ hàm PHP để xác định khoảng thời gian tìm kiếm.
     )';
 
         $stmt = $this->conn->prepare($sql);

@@ -249,12 +249,12 @@
             <div class="dat2">
                 <div class="dat1">
                     <div class="form-label1">Check-in:</div>
-                    <input type="date" id="check_in" name="check_in" required>
+                    <input type="date" id="check_in" name="check_in" value="<?= $_POST['check_in'] ?? '' ?>" required>
                 </div>
                 <img src="./uploads/anh49.png" width="15px" alt="">
                 <div class="dat">
                     <div class="form-label1">Check-out:</div>
-                    <input type="date" id="check_out" name="check_out" required>
+                    <input type="date" id="check_out" name="check_out" value="<?= $_POST['check_out'] ?? '' ?>" required>
                 </div>
             </div>
             <button type="submit" class="header-button">
