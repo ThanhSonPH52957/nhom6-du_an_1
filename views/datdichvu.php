@@ -122,34 +122,34 @@
         padding: 15px;
         font-size: 16px;
     }
+
 </style>
 
 <form action="?act=datphong" method="POST">
     <div class="booking-container">
-        <h1>ĐẶT PHÒNG</h1>
+        <h1>ĐẶT DỊCH VỤ</h1>
 
         <div class="form-group">
-            <div class="form-label">Họ tên*</div>
-            <input type="text" placeholder="Nhập họ và tên" value="<?= $taikhoan['ho_ten'] ?>" name="hoten" readonly>
+            <div class="form-label">Phòng đã đặt:</div>
+            <input type="text" value="<?= $datphong['ten_phong'] ?>" name="" readonly>
 
-            <div class="form-label">Số điện thoại*</div>
-            <input type="text" placeholder="Nhập số điện thoại" value="<?= $taikhoan['so_dien_thoai'] ?>" name="sdt" readonly>
-
-            <div class="form-label">Tên phòng</div>
-            <select name="phong_id" id="phong_id" required>
+            <div class="form-label">Chọn ngày sử dụng dịch vụ:</div>
+            <select name="ngay_sd" id="ngay_sd" required>
                 <?php
-                foreach ($phong as $row) {
-                    if ((isset($old_data['phong_id']) && $row['id'] == $old_data['phong_id'])) {
-                        $selected = "selected";
-                    } elseif (!isset($old_data['phong_id']) && isset($id) && $row['id'] == $id) {
-                        $selected = "selected";
-                    } else {
-                        $selected = "";
-                    }
-                    echo "<option value='{$row['id']}' $selected>{$row['ten_phong']}</option>";
+                foreach ($danhSachNgay as $ngay) {
+                    echo "<option value='$ngay'>$ngay</option>";
                 }
                 ?>
             </select>
+
+            <div class="form-label">Dịch vụ:</div> <br>
+            <?php foreach ($dichvu as $dv): ?>
+                <label>
+                    <input type="checkbox" name="dichvu[]" value="<?= $dv['id'] ?>"
+                        <?= isset($old_data['dichvu']) && in_array($dv['id'], $old_data['dichvu']) ? 'checked' : '' ?>>
+                        <?= $dv['ten_dich_vu'] ?>: <?= number_format($dv['gia_dich_vu']) ?> VNĐ/ngày
+                </label>
+            <?php endforeach; ?><br>
 
             <div class="form-label">Giá phòng</div>
             <input type="text" id="gia_phong" name="gia_phong" readonly style="font-weight: bold; color: green;">
@@ -190,6 +190,20 @@
 
     const services = <?= json_encode($dichvu); ?>;
     console.log(services);
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const selectElement = document.getElementById('ngay_sd');
+
+    selectElement.addEventListener('mousewheel', function (event) {
+        const delta = event.deltaY || event.wheelDelta;
+        const isAtTop = this.scrollTop === 0;
+        const isAtBottom = this.scrollHeight - this.scrollTop === this.clientHeight;
+
+        if ((delta < 0 && isAtTop) || (delta > 0 && isAtBottom)) {
+            event.preventDefault(); // Ngăn cuộn trang
+        }
+    });
+});
 
     document.addEventListener("DOMContentLoaded", function() {
         const roomField = document.getElementById("phong_id");

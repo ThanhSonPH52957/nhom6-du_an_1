@@ -285,17 +285,7 @@ class HomeController
                 if (empty($errors)) {
                     // Đặt phòng thành công
                     $this->modelPhong->DatPhong($taikhoanid, $phongid, $today, $checkin, $checkout, $tongtien, $thanhtoan);
-
-                    // Nếu có dịch vụ, thêm dịch vụ vào đơn đặt phòng
-                    if (isset($dichvu)) {
-                        $getdatphong = $this->modelPhong->GetDatPhong($phongid, $checkin);
-                        $datphongid = $getdatphong['id'];
-                        foreach ($dichvu as $dv) {
-                            $this->modelPhong->AddDichVu($datphongid, $dv);
-                        }
-                    }
-                    // Chuyển hướng sau khi đặt phòng thành công
-                    header("location: " . BASE_URL_ADMIN . '?act=/');
+                    header("location: " . BASE_URL_ADMIN . '?act=phongdat');
                     exit(); // Dừng việc thực hiện thêm sau khi chuyển hướng
                 } else {
                     // Nếu có lỗi, lưu lỗi vào session và quay lại form
@@ -330,17 +320,22 @@ class HomeController
             header('Location: ' . BASE_URL_ADMIN . '?act=chitietphong&id=' . $id_phong);
         }
     }
-    // public function add()
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //         $masp = $_POST['masp'];
-    //         $nd = $_POST['nd'];
-    //         $mand = $_SESSION['mand'] ?? "";
-    //     }
-    //     if (empty($mand) ?? null) {
-    //         header("location:index.php?ctl=login");
-    //     }
-    //     (new Binhluan())->addBinhluan($nd ?? null, $masp ?? null, $mand ?? null);
-    //     header('location: ?ctl=chitiet&masp=' . $masp);
-    // }
+    
+    function formDichVu($id) {
+        $datphong = $this -> modelPhong -> GetDatPhongFromId($id);
+        $dichvu = $this -> modelPhong -> getAllDV();
+
+        $ngayBatDau = new DateTime($datphong['check_in']);
+        $ngayKetThuc = new DateTime($datphong['check_out']);
+        $ngayKetThuc->modify('+1 day');
+
+        while ($ngayBatDau < $ngayKetThuc) {
+            $danhSachNgay[] = $ngayBatDau->format('Y-m-d');
+            $ngayBatDau->modify('+1 day');
+        }
+    
+        // var_dump($danhSachNgay);die;
+        // var_dump($datphong);die;
+        require_once './views/datdichvu.php';
+    }
 }

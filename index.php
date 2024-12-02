@@ -38,6 +38,7 @@ match ($act) {
     'gioithieu' => (new HomeController())->gioithieu(),
     'chitietphong' => (new HomeController())->chitietPhong(),
     'phongdat' => (new HomeController())->phongdat(),
-    'capnhatdonhang' => (new HomeController())->capNhatDonHang($_GET['id'])
+    'capnhatdonhang' => (new HomeController())->capNhatDonHang($_GET['id']),
+    'formdatdichvu' => (new HomeController())->formDichVu($_GET['id'])
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };

@@ -258,9 +258,10 @@ class Phong
     function CheckRoom($phongid, $checkin, $checkout)
     {
         $sql = "SELECT check_in, check_out 
-                FROM dat_phongs
-                WHERE phong_id = :room_id 
-                AND (check_in < :check_out AND check_out > :check_in)";
+        FROM dat_phongs
+        WHERE phong_id = :room_id 
+          AND (check_in < :check_out AND check_out > :check_in)
+          AND trang_thai_id IN (1, 2)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             ':room_id' => $phongid,
@@ -286,13 +287,14 @@ class Phong
         ]);
     }
 
-    function GetDatPhong($phongid, $checkin)
+    function GetDatPhongFromId($id)
     {
-        $sql = "select id from dat_phongs where phong_id = :phongid and check_in = :checkin";
+        $sql = "select dat_phongs.*, phongs.ten_phong
+        from dat_phongs
+        inner join phongs on dat_phongs.phong_id = phongs.id where dat_phongs.id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            ':phongid' => $phongid,
-            ':checkin' => $checkin,
+            ':id' => $id
         ]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

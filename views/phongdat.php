@@ -144,9 +144,13 @@
                             <td><?= number_format($phong['tong_tien'], 0, ',', '.') ?> VNĐ</td>
                             <td><?= htmlspecialchars($phong['ten_trang_thai']) ?></td> <!-- Hiển thị tên trạng thái -->
                             <td>
-
-                                <a href="?act=capnhatdonhang&id=<?= $phong['id'] ?>"><button class="btn btn-primary">Cập nhật</button></a>
-
+                            <?php if ($phong['trang_thai_id'] == 3 || $phong['trang_thai_id'] == 4): ?>
+                                <button class="btn btn-success" disabled>Đặt dịch vụ</button>    
+                                <button class="btn btn-danger" disabled>Hủy</button>
+                                <?php else: ?>
+                                    <a href="?act=formdatdichvu&id=<?= $phong['id'] ?>"><button class="btn btn-success">Đặt dịch vụ</button></a>
+                                    <a href="?act=capnhatdonhang&id=<?= $phong['id'] ?>"><button class="btn btn-danger">Hủy</button></a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
