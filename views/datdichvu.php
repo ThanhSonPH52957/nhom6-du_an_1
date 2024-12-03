@@ -128,17 +128,10 @@
         <h1>ĐẶT DỊCH VỤ</h1> <br>
 
         <div class="form-group">
+            <input type="text" name="datphongid" value="<?= $datphong['id'] ?>" hidden>
+
             <div class="form-label">Phòng đã đặt:</div>
             <input type="text" value="<?= $datphong['ten_phong'] ?>" name="" readonly>
-
-            <div class="form-label">Chọn ngày sử dụng dịch vụ:</div>
-            <select name="ngay_sd" id="ngay_sd" required>
-                <?php
-                foreach ($danhSachNgay as $ngay) {
-                    echo "<option value='$ngay'>".formatDate($ngay)."</option>";
-                }
-                ?>
-            </select>
 
             <div class="form-label">Chọn ngày sử dụng dịch vụ:</div> <br>
             <?php foreach ($danhSachNgay as $ngay): ?>
@@ -171,10 +164,16 @@
             <input type="hidden" id="tong_tien_raw" name="tongtien_raw">
             <input type="text" id="tong_tien" name="tongtien" readonly style="font-weight: bold; color: #d32f2f;">
         </div>
-        <?php if (isset($errors['check'])): ?>
-            <p class="text-danger"><?= $errors['check'] ?></p>
-        <?php endif; ?>
-        <button class="submit-btn" type="submit" style="background-color: yellow" name="check">ĐẶT DỊCH VỤ</button>
+        <?php if (isset($_SESSION['errors']) && is_array($_SESSION['errors'])): ?>
+    <div class="alert alert-danger">
+        <?php foreach ($_SESSION['errors'] as $error): ?>
+            <p class="text-danger"><?= htmlspecialchars($error) ?></p>
+        <?php endforeach; ?>
+    </div>
+    <?php unset($_SESSION['errors']); // Xóa lỗi sau khi hiển thị ?>
+<?php endif; ?>
+<button class="submit-btn" type="submit" style="background-color: yellow" name="check">ĐẶT DỊCH VỤ</button>
+
     </div>
 </form>
 
@@ -213,11 +212,6 @@
             }
         });
 
-        // Trường hợp nếu không có ngày nào được chọn thì mặc định là 1 ngày
-        if (appliedDays === 0) {
-            appliedDays = 1;
-        }
-
         // Tính tổng tiền = Giá dịch vụ * Số ngày
         const totalPrice = totalServicePrice * appliedDays;
 
@@ -233,6 +227,7 @@
     // Tính toán ngay khi tải trang
     calculateTotalPrice();
 });
+
 
 </script>
 

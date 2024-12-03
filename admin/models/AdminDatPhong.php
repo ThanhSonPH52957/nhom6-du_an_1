@@ -86,18 +86,29 @@ class AdminDatPhong
     public function getDoanhThuTheoNgay() {
         try {
             // Thay 'ngay_dat' bằng tên cột chứa ngày của bạn
-            $sql = "SELECT 
-    DATE(ngay_dat) AS `date`, 
-    SUM(tong_tien) AS total 
-FROM 
-    dat_phongs 
-WHERE 
-    trang_thai_id = 3 
-GROUP BY 
-    DATE(ngay_dat) 
-ORDER BY 
-    DATE(ngay_dat);";
+            $sql = "SELECT DATE(ngay_dat) AS `date`, SUM(tong_tien) AS total 
+            FROM dat_phongs 
+            WHERE trang_thai_id = 3 GROUP BY DATE(ngay_dat) ORDER BY DATE(ngay_dat);";
     
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Database query failed: " . $e->getMessage();
+            return [];
+        }
+    }
+
+    public function getDoanhThuDVTheoNgay() {
+        try {
+            // Sử dụng DATE(ngay_sd) trong GROUP BY để đảm bảo truy vấn hợp lệ với chế độ ONLY_FULL_GROUP_BY
+            $sql = "SELECT DATE(chi_tiet_hoa_dons.ngay_sd) AS `date`, SUM(chi_tiet_hoa_dons.tien_dich_vu) AS total, dat_phongs.trang_thai_id 
+                    FROM chi_tiet_hoa_dons
+                    INNER JOIN dat_phongs ON chi_tiet_hoa_dons.dat_phong_id = dat_phongs.id
+                    WHERE dat_phongs.trang_thai_id = 3 
+                    GROUP BY DATE(chi_tiet_hoa_dons.ngay_sd) 
+                    ORDER BY DATE(chi_tiet_hoa_dons.ngay_sd);";
+        
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -126,11 +137,21 @@ ORDER BY
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getDoanhThuTong() {
+    function getDoanhThuTongPhong() {
         $sql = "SELECT SUM(tong_tien) FROM dat_phongs WHERE trang_thai_id = 3;";
         $stmt = $this -> conn->prepare($sql);
         $stmt->execute();
         $totalDoanhThu = $stmt->fetchColumn(); // Lấy giá trị duy nhất
         return $totalDoanhThu ?? 0;
+    }
+
+    function getDoanhThuTongDV() {
+        $sql = "SELECT chi_tiet_hoa_dons.*, dat_phongs.id, dat_phongs.trang_thai_id 
+                FROM chi_tiet_hoa_dons
+                INNER JOIN dat_phongs ON chi_tiet_hoa_dons.dat_phong_id = dat_phongs.id
+                WHERE dat_phongs.trang_thai_id = 3;";
+        $stmt = $this -> conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

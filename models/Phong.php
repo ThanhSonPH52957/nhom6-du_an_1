@@ -303,13 +303,15 @@ class Phong
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function AddDichVu($datphongid, $dv)
+    function AddDichVu($datphongid, $dv, $nd, $giadichvu)
     {
-        $sql = "insert into chi_tiet_hoa_dons (dat_phong_id, dich_vu_id) values (:datphongid, :dichvuid)";
+        $sql = "insert into chi_tiet_hoa_dons (dat_phong_id, dich_vu_id, ngay_sd, tien_dich_vu) values (:datphongid, :dichvuid, :ngaysd, :tiendv)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             ':datphongid' => $datphongid,
-            ':dichvuid' => $dv
+            ':dichvuid' => $dv,
+            ':ngaysd' => $nd,
+            ':tiendv' => $giadichvu
         ]);
     }
 
@@ -320,5 +322,27 @@ class Phong
         $stmt->execute([
             'id' => $id
         ]);
+    }
+
+    function CheckDV($id)
+    {
+        $sql = "SELECT dich_vu_id, ngay_sd, dich_vus.ten_dich_vu
+        FROM chi_tiet_hoa_dons
+        inner join dich_vus on chi_tiet_hoa_dons.dich_vu_id = dich_vus.id
+        WHERE dat_phong_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':id' => $id
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getGiaDichVu($dv) {
+        $sql = "SELECT gia_dich_vu FROM dich_vus where id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':id' => $dv
+        ]);
+        return $stmt->fetchColumn();
     }
 }

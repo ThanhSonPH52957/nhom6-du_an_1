@@ -4,13 +4,11 @@ class HomeController
 {
     public $modelPhong;
     public $modelTaiKhoan;
-    public $modelGioHang;
 
     function __construct()
     {
         $this->modelPhong = new Phong();
         $this->modelTaiKhoan = new TaiKhoan();
-        $this->modelGioHang = new GioHang();
     }
     public function capNhatDonHang($id)
     {
@@ -338,4 +336,46 @@ class HomeController
         // var_dump($datphong);die;
         require_once './views/datdichvu.php';
     }
+
+    function datDichVu() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['datphongid'];
+            $ngaydat = $_POST['ngay_sd']; // Mảng ngày
+            $dichvu = $_POST['dichvu']; // Mảng dịch vụ
+            $errors = [];
+            $checkdv = $this->modelPhong->CheckDV($id);
+    
+            // Kiểm tra nếu dịch vụ và ngày đã tồn tại
+            foreach ($dichvu as $serviceId) {
+                foreach ($ngaydat as $date) {
+                    foreach ($checkdv as $service) {
+                        if ($service['dich_vu_id'] == $serviceId && $service['ngay_sd'] == $date) {
+                            // Thêm thông báo lỗi khi phát hiện trùng lặp
+                            $errors[] = 'Dịch vụ "' . $service['ten_dich_vu'] . '" đã được đặt cho ngày ' . $date . '.';
+                        }
+                    }
+                }
+            }
+    
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                // Điều hướng trở lại form
+                header("Location: ?act=formdatdichvu&id=$id");
+                exit;
+            }
+    
+            // Nếu không có lỗi, thêm dịch vụ vào cơ sở dữ liệu
+            foreach ($ngaydat as $nd) {
+                foreach ($dichvu as $dv) {
+                    $giadichvu = $this -> modelPhong -> getGiaDichVu($dv);
+                    $this->modelPhong->AddDichVu($id, $dv, $nd, $giadichvu);
+                }
+            }
+    
+            // Chuyển hướng sau khi thêm thành công
+            header("Location: ?act=phongdat");
+            exit;
+        }
+    }
+    
 }
