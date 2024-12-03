@@ -291,9 +291,11 @@ class Phong
 
     function GetDatPhongFromId($id)
     {
-        $sql = "select dat_phongs.*, phongs.ten_phong
+        $sql = "select dat_phongs.*, phongs.ten_phong, phuong_thuc_thanh_toans.ten_phuong_thuc
         from dat_phongs
-        inner join phongs on dat_phongs.phong_id = phongs.id where dat_phongs.id = :id";
+        inner join phongs on dat_phongs.phong_id = phongs.id 
+        inner join phuong_thuc_thanh_toans on phuong_thuc_thanh_toans.id = dat_phongs.phuong_thuc_thanh_toan_id
+        where dat_phongs.id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             ':id' => $id

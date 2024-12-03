@@ -324,7 +324,7 @@ class HomeController
     function formDichVu($id) {
         $datphong = $this -> modelPhong -> GetDatPhongFromId($id);
         $dichvu = $this -> modelPhong -> getAllDV();
-
+        // var_dump(count($dichvu));die;
         $ngayBatDau = new DateTime($datphong['check_in']);
         $ngayKetThuc = new DateTime($datphong['check_out']);
         $ngayKetThuc->modify('+1 day');
