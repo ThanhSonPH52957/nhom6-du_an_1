@@ -15,18 +15,15 @@
             $onedatphong = $this -> modelDatPhong -> getOneDatPhong($id);
             $dichvu = $this -> modelDatPhong -> getDichVuFromId($id);
 
-            $startDate = new DateTime($onedatphong['check_in']);
-            $endDate = new DateTime($onedatphong['check_out']);
-            $tinhsongay = $startDate->diff($endDate);
-            $songay = $tinhsongay->days;
-
-            $tienphong = $onedatphong['gia_tien']*($songay + 1);
+            $tienphong = $onedatphong['tong_tien'];
             
             $tiendichvu = 0;
-            foreach($dichvu as $dv) {
-                $tiendichvu += $dv['gia_dich_vu'];
+            $tinhdv = $this -> modelDatPhong -> getTienDichVu($id);
+            
+            foreach($tinhdv as $dv) {
+                $tiendichvu += $dv['tien_dich_vu'];
             }
-            $tongdichvu = $tiendichvu * ($songay + 1);
+            $tongdichvu = $tiendichvu;
 
             $tongtien = $tienphong + $tongdichvu;
 

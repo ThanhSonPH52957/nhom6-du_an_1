@@ -47,6 +47,18 @@ class AdminDatPhong
         return $stmt->fetch();
     }
 
+    function getTienDichVu($id) {
+        $sql = 'select chi_tiet_hoa_dons.*, dat_phongs.id
+        from chi_tiet_hoa_dons 
+        inner join dat_phongs on dat_phongs.id = chi_tiet_hoa_dons.dat_phong_id 
+        where dat_phongs.id = :id';
+        $stmt = $this -> conn -> prepare($sql);
+        $stmt -> execute([
+            ':id' => $id
+        ]);
+        return $stmt->fetchAll();
+    }
+
     // function getListSpDonHang($id) {
     //     $sql = 'select chi_tiet_don_hangs.*, san_phams.ten_san_pham from chi_tiet_don_hangs inner join san_phams on chi_tiet_don_hangs.san_pham_id = san_phams.id where chi_tiet_don_hangs.don_hang_id = :id';
     //     $stmt = $this -> conn -> prepare($sql);

@@ -38,7 +38,7 @@ class Phong
             FROM dat_phongs
             INNER JOIN phongs ON phongs.id = dat_phongs.phong_id
             INNER JOIN trang_thai_dat_phongs ON dat_phongs.trang_thai_id = trang_thai_dat_phongs.id
-            WHERE dat_phongs.tai_khoan_id = :tai_khoan_id";
+            WHERE dat_phongs.tai_khoan_id = :tai_khoan_id order by dat_phong";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);
@@ -344,5 +344,17 @@ class Phong
             ':id' => $dv
         ]);
         return $stmt->fetchColumn();
+    }
+
+    function getTienDichVu($id) {
+        $sql = 'select chi_tiet_hoa_dons.*, dat_phongs.id
+        from chi_tiet_hoa_dons 
+        inner join dat_phongs on dat_phongs.id = chi_tiet_hoa_dons.dat_phong_id 
+        where dat_phongs.id = :id';
+        $stmt = $this -> conn -> prepare($sql);
+        $stmt -> execute([
+            ':id' => $id
+        ]);
+        return $stmt->fetchAll();
     }
 }
