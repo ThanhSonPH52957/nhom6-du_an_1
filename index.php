@@ -31,6 +31,7 @@ match ($act) {
     'checklogin' => (new HomeController())->postLogin(),
     'logout' => (new HomeController())->logout(),
     'binhluan' => (new HomeController())->addbinhluan(),
+    'chitiethoadon' => (new homeController())->chiTietDatPhong($_GET['id']),
     'phongdat' => (new HomeController())->phongdat(),
     // 'binhluan' => (new HomeController()) -> binhLuan(),
     'lienhe' => (new homeController())->lienhe(),
@@ -39,6 +40,6 @@ match ($act) {
     'phongdat' => (new HomeController())->phongdat(),
     'capnhatdonhang' => (new HomeController())->capNhatDonHang($_GET['id']),
     'formdatdichvu' => (new HomeController())->formDichVu($_GET['id']),
-    'datdichvu' => (new HomeController())-> datDichVu()
+    'datdichvu' => (new HomeController())->datDichVu()
     // 'binhluan' => (new HomeController()) -> binhLuan()
 };
