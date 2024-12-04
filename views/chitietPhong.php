@@ -222,14 +222,6 @@
             background-color: #eeeeee;
         }
 
-        .cmt {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            width: 100%;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
 
         .cmt h3 {
             margin-bottom: 20px;
@@ -249,6 +241,26 @@
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .add-comment {
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .cmt {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+            max-height: 200px;
+            /* Giới hạn chiều cao của phần bình luận */
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
         .comment .name {
             font-weight: bold;
             color: #007BFF;
@@ -259,9 +271,6 @@
             color: #555;
         }
 
-        .cmt {
-            margin-top: 20px;
-        }
 
         .cmt span {
             display: block;
@@ -457,7 +466,7 @@
                             <div class="chitiet9">
                                 <div class="chitiet3">
                                     <img src="https://bizweb.dktcdn.net/100/472/947/themes/888072/assets/people.png?1724559260757" alt="">
-                                    <p><?= $data['songuoi'] ?></p>
+
                                 </div>
                                 <div class="chi7">
                                     <p>Giá:<span><?= number_format($data['gia_tien']) ?> đ</span></p>
@@ -469,8 +478,10 @@
                             <p class="chitiet8"><?= $data['mo_ta'] ?></p>
                             <div class="add-comment">
                                 <form class="pi" method="POST" action="?act=binhluan">
+                                    <!-- Truyền id phòng vào hidden field -->
                                     <input type="hidden" name="id_phong" value="<?= $data['id'] ?>">
-                                    <textarea name="nguoidung" placeholder="Nhập bình luận..." required></textarea>
+                                    <!-- Thay đổi tên trường textarea từ nguoidung thành noidung -->
+                                    <textarea name="noidung" placeholder="Nhập bình luận..." required></textarea>
                                     <button type="submit">Gửi</button>
                                 </form>
                                 <div class="cmt">
@@ -483,6 +494,7 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
+
                         </div>
                         <div class="chitiet11">
                             <a href="#">

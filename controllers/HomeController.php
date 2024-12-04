@@ -10,6 +10,29 @@ class HomeController
         $this->modelPhong = new Phong();
         $this->modelTaiKhoan = new TaiKhoan();
     }
+    function chiTietDatPhong($id)
+    {
+        $onedatphong = $this->modelPhong->getOneDatPhong($id);
+        $dichvu = $this->modelPhong->getDichVuFromId($id);
+
+        $startDate = new DateTime($onedatphong['check_in']);
+        $endDate = new DateTime($onedatphong['check_out']);
+        $tinhsongay = $startDate->diff($endDate);
+        $songay = $tinhsongay->days;
+
+        $tienphong = $onedatphong['gia_tien'] * ($songay + 1);
+
+        $tiendichvu = 0;
+        foreach ($dichvu as $dv) {
+            $tiendichvu += $dv['gia_dich_vu'];
+        }
+        $tongdichvu = $tiendichvu * ($songay + 1);
+
+        $tongtien = $tienphong + $tongdichvu;
+
+        // $listTrangThai = $this -> modelDatPhong -> getAllTrangThai();
+        require_once './views/chitiethoadon.php';
+    }
     public function capNhatDonHang($id)
     {
         $this->modelPhong->huyDon($id);
@@ -133,22 +156,35 @@ class HomeController
 
     public function timKiemPhong()
     {
-        $search = isset($_POST['search']) ? trim($_POST['search']) : '';
-        $check_in = isset($_POST['check_in']) ? trim($_POST['check_in']) : '';
-        $check_out = isset($_POST['check_out']) ? trim($_POST['check_out']) : '';
+        $error = ''; // Khởi tạo biến lỗi
 
-        if (!empty($search)) {
-            // Tìm kiếm theo từ khóa
-            $products = $this->modelPhong->timKiemPhong($search);
-        } elseif (!empty($check_in) && !empty($check_out)) {
-            // Tìm kiếm theo ngày
-            $products = $this->modelPhong->timKiemPhongTheoNgay($check_in, $check_out);
-        } else {
-            $products = []; // Không có kết quả nếu không nhập gì
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $check_in = $_POST['check_in'] ?? null;
+            $check_out = $_POST['check_out'] ?? null;
+            $search = $_POST['search'] ?? '';
+            $today = date('Y-m-d');
+
+            $check_in = $check_in ? date('Y-m-d', strtotime($check_in)) : null;
+            $check_out = $check_out ? date('Y-m-d', strtotime($check_out)) : null;
+
+            if ($check_in && $check_out) {
+                if ($check_in < $today) {
+                    $error = 'Ngày check-in phải từ hôm nay trở đi!';
+                } elseif ($check_in >= $check_out) {
+                    $error = 'Ngày check-in phải trước ngày check-out!';
+                } else {
+                    $products = $this->modelPhong->timKiemPhongTheoNgay($check_in, $check_out);
+                    require_once './views/timphong.php';
+                    return;
+                }
+            } elseif ($search) {
+                $products = $this->modelPhong->timKiemPhong($search);
+                require_once './views/timphong.php';
+                return;
+            } else {
+                $error = 'Vui lòng nhập đầy đủ thông tin tìm kiếm!';
+            }
         }
-
-        // Gửi giá trị đã nhập lại sang view
-        require_once './views/timphong.php';
     }
 
     public function dangky()
@@ -301,27 +337,52 @@ class HomeController
     public function addbinhluan()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id_phong = $_POST['id_phong'] ?? null; // Kiểm tra giá trị trước khi gán
-            $noidung = $_POST['nguoidung'] ?? null;  // Tránh lỗi undefined key
-            $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
-            $email_khoan = $taikhoan['id'] ?? "";
+            $id_phong = $_POST['id_phong'] ?? null;
+            $noidung = $_POST['noidung'] ?? null;
 
-            if (empty($email_khoan)) { // Kiểm tra người dùng đã đăng nhập chưa
+            // Lấy thông tin tài khoản từ session
+            $taikhoan = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $id_tai_khoan = $taikhoan['id'] ?? null;
+
+            // Kiểm tra xem người dùng có đăng nhập không
+            if (empty($id_tai_khoan)) {
                 header("Location: ?act=dangnhap");
                 exit;
             }
 
-            // Gọi hàm thêm bình luận
-            ($this->modelPhong)->addBinhluan($noidung, $id_phong, $email_khoan);
+            // Kiểm tra quyền bình luận: Người dùng đã mua phòng chưa
+            try {
+                $daMua = $this->modelPhong->kiemTraMuaHang($id_tai_khoan, $id_phong);
+            } catch (PDOException $e) {
+                // Nếu có lỗi trong quá trình kiểm tra, log lỗi và thông báo cho người dùng
+                error_log("Error checking purchase: " . $e->getMessage());
+                echo "<script>alert('Đã xảy ra lỗi, vui lòng thử lại sau!'); window.history.back();</script>";
+                exit;
+            }
 
-            // Chuyển hướng về trang chi tiết phòng
-            header('Location: ' . BASE_URL_ADMIN . '?act=chitietphong&id=' . $id_phong);
+            // Nếu người dùng đã mua phòng, cho phép bình luận
+            if ($daMua) {
+                if (empty($noidung)) {
+                    echo "<script>alert('Nội dung bình luận không được để trống!'); window.history.back();</script>";
+                    exit;
+                }
+
+                // Thêm bình luận vào cơ sở dữ liệu
+                $this->modelPhong->addBinhluan($noidung, $id_phong, $id_tai_khoan);
+                header('Location: ?act=chitietphong&id=' . $id_phong); // Chuyển hướng về trang chi tiết phòng
+                exit;
+            } else {
+                // Nếu chưa mua phòng, thông báo lỗi
+                echo "<script>alert('Bạn phải đặt phòng trước khi bình luận!'); window.history.back();</script>";
+                exit;
+            }
         }
     }
-    
-    function formDichVu($id) {
-        $datphong = $this -> modelPhong -> GetDatPhongFromId($id);
-        $dichvu = $this -> modelPhong -> getAllDV();
+
+    function formDichVu($id)
+    {
+        $datphong = $this->modelPhong->GetDatPhongFromId($id);
+        $dichvu = $this->modelPhong->getAllDV();
         // var_dump(count($dichvu));die;
         $ngayBatDau = new DateTime($datphong['check_in']);
         $ngayKetThuc = new DateTime($datphong['check_out']);
@@ -331,20 +392,21 @@ class HomeController
             $danhSachNgay[] = $ngayBatDau->format('Y-m-d');
             $ngayBatDau->modify('+1 day');
         }
-    
+
         // var_dump($danhSachNgay);die;
         // var_dump($datphong);die;
         require_once './views/datdichvu.php';
     }
 
-    function datDichVu() {
+    function datDichVu()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['datphongid'];
             $ngaydat = $_POST['ngay_sd']; // Mảng ngày
             $dichvu = $_POST['dichvu']; // Mảng dịch vụ
             $errors = [];
             $checkdv = $this->modelPhong->CheckDV($id);
-    
+
             // Kiểm tra nếu dịch vụ và ngày đã tồn tại
             foreach ($dichvu as $serviceId) {
                 foreach ($ngaydat as $date) {
@@ -356,26 +418,25 @@ class HomeController
                     }
                 }
             }
-    
+
             if (!empty($errors)) {
                 $_SESSION['errors'] = $errors;
                 // Điều hướng trở lại form
                 header("Location: ?act=formdatdichvu&id=$id");
                 exit;
             }
-    
+
             // Nếu không có lỗi, thêm dịch vụ vào cơ sở dữ liệu
             foreach ($ngaydat as $nd) {
                 foreach ($dichvu as $dv) {
-                    $giadichvu = $this -> modelPhong -> getGiaDichVu($dv);
+                    $giadichvu = $this->modelPhong->getGiaDichVu($dv);
                     $this->modelPhong->AddDichVu($id, $dv, $nd, $giadichvu);
                 }
             }
-    
+
             // Chuyển hướng sau khi thêm thành công
             header("Location: ?act=phongdat");
             exit;
         }
     }
-    
 }

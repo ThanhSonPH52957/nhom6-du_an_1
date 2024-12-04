@@ -128,8 +128,8 @@
                     <th>Tên phòng</th>
                     <th>Ngày check-in</th>
                     <th>Ngày check-out</th>
-                    <th>Giá tiền</th>
                     <th>Trạng thái</th>
+                    <th>Chi Tiet Phong</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
@@ -141,12 +141,12 @@
                             <td><?= htmlspecialchars($phong['ten_phong']) ?></td>
                             <td><?= formatDate($phong['check_in']) ?></td>
                             <td><?= formatDate($phong['check_out']) ?></td>
-                            <td><?= number_format($phong['tong_tien'], 0, ',', '.') ?> VNĐ</td>
-                            <td><?= htmlspecialchars($phong['ten_trang_thai']) ?></td> <!-- Hiển thị tên trạng thái -->
+                            <td><?= htmlspecialchars($phong['ten_trang_thai']) ?></td>
+                            <td> <a href="?act=chitiethoadon&id=<?= $phong['id'] ?>"><button class="btn btn-info">Chi tiết</button></a></td><!-- Hiển thị tên trạng thái -->
                             <td>
-                            <?php if ($phong['trang_thai_id'] == 3 || $phong['trang_thai_id'] == 4): ?>
-                                <button class="btn btn-success" disabled>Đặt dịch vụ</button>    
-                                <button class="btn btn-danger" disabled>Hủy</button>
+                                <?php if ($phong['trang_thai_id'] == 3 || $phong['trang_thai_id'] == 4): ?>
+                                    <button class="btn btn-success" disabled>Đặt dịch vụ</button>
+                                    <button class="btn btn-danger" disabled>Hủy</button>
                                 <?php else: ?>
                                     <a href="?act=formdatdichvu&id=<?= $phong['id'] ?>"><button class="btn btn-success">Đặt dịch vụ</button></a>
                                     <a href="?act=capnhatdonhang&id=<?= $phong['id'] ?>"><button class="btn btn-danger">Hủy</button></a>
