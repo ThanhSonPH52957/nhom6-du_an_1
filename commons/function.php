@@ -15,6 +15,8 @@ function connectDB() {
 
         // cài đặt chế độ trả dữ liệu
         $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $conn->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));");
+
     
         return $conn;
     } catch (PDOException $e) {

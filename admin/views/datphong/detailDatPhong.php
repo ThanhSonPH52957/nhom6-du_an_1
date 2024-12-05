@@ -71,8 +71,16 @@
                 <div class="col-sm-4 invoice-col">
                     Thông tin dịch vụ:
                   <address>
-                    <?php foreach($dichvu as $ten){ ?> 
-                      <strong><?= $ten['ten_dich_vu']?>, </strong>
+                    <?php foreach($listdv as $ten){ ?> 
+                      <table>
+                        <tr>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <td style="margin-right: 5px;"><strong><?= formatDate($ten['ngay_sd'])?></strong>: </td>
+                          <td> <?= $ten['ten_dich_vu']?></td>
+                        </tr>
+                      </table>
                     <?php } ?>
                   </address>
                 </div>

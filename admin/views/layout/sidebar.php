@@ -24,13 +24,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= BASE_URL_ADMIN.'?act=danhmuc'?>" class="nav-link">
-              <i class="nav-icon fas fa-list"></i>
+            <a href="<?= BASE_URL_ADMIN.'?act=datphong'?>" class="nav-link">
+              <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
-                Danh mục phòng
+               Danh sách đặt phòng
               </p>
             </a>
           </li>
+          
           <li class="nav-item">
             <a href="<?= BASE_URL_ADMIN.'?act=phong'?>" class="nav-link">
               <i class="nav-icon fas fa-hotel"></i>
@@ -48,10 +49,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= BASE_URL_ADMIN.'?act=datphong'?>" class="nav-link">
-              <i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <a href="<?= BASE_URL_ADMIN.'?act=danhmuc'?>" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
               <p>
-               Danh sách đặt phòng
+                Danh mục phòng
               </p>
             </a>
           </li>

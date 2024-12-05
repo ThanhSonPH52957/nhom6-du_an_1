@@ -38,7 +38,7 @@ class Phong
             FROM dat_phongs
             INNER JOIN phongs ON phongs.id = dat_phongs.phong_id
             INNER JOIN trang_thai_dat_phongs ON dat_phongs.trang_thai_id = trang_thai_dat_phongs.id
-            WHERE dat_phongs.tai_khoan_id = :tai_khoan_id order by dat_phong";
+            WHERE dat_phongs.tai_khoan_id = :tai_khoan_id order by dat_phongs.id desc";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);

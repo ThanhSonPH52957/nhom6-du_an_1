@@ -24,7 +24,23 @@ class AdminDatPhong
         $sql = 'select chi_tiet_hoa_dons.*, dich_vus.ten_dich_vu, dich_vus.gia_dich_vu
         from chi_tiet_hoa_dons
         inner join dich_vus on chi_tiet_hoa_dons.dich_vu_id = dich_vus.id
-        where chi_tiet_hoa_dons.dat_phong_id = :id';
+        where chi_tiet_hoa_dons.dat_phong_id = :id group by ngay_sd';
+        $stmt = $this -> conn -> prepare($sql);
+        $stmt -> execute([
+            ':id' => $id
+        ]);
+        return $stmt->fetchAll();
+    }
+
+    function getDichVu ($id) {
+        $sql = "SELECT 
+    chi_tiet_hoa_dons.ngay_sd,
+    GROUP_CONCAT(dich_vus.ten_dich_vu SEPARATOR ', ') AS ten_dich_vu
+FROM chi_tiet_hoa_dons
+INNER JOIN dich_vus ON chi_tiet_hoa_dons.dich_vu_id = dich_vus.id
+WHERE chi_tiet_hoa_dons.dat_phong_id = :id
+GROUP BY chi_tiet_hoa_dons.ngay_sd;
+";
         $stmt = $this -> conn -> prepare($sql);
         $stmt -> execute([
             ':id' => $id

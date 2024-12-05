@@ -14,6 +14,7 @@
         function chiTietDatPhong($id) {
             $onedatphong = $this -> modelDatPhong -> getOneDatPhong($id);
             $dichvu = $this -> modelDatPhong -> getDichVuFromId($id);
+            $listdv = $this -> modelDatPhong -> getDichVu($id);
 
             $tienphong = $onedatphong['tong_tien'];
             

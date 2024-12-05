@@ -310,7 +310,6 @@
                                     <span class="text-muted">Trạng thái</span>
                                     <p class="mb-0"><?= $order['ten_trang_thai']?></p> <!-- Gắn giá trị tổng tiền -->
                                   </td>
-
                                 </tr><!-- end -->
                               <?php endforeach; ?>
                             <?php else: ?>
