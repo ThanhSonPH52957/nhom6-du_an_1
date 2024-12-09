@@ -50,8 +50,8 @@
                     <td><?= $listtk['dia_chi']?></td>
                     <td><?= $listtk['ten_chuc_vu'] ?></td>
                     <td><?= ($listtk['trang_thai'] == 1) ? 'Hoạt động' : 'Ẩn' ?></td>
-                    <td><a href="<?= BASE_URL_ADMIN.'?act=updatetaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi chức vụ</button></a>
-                    <a href="<?= BASE_URL_ADMIN.'?act=updatetttaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi trạng thái</button></a></td>
+                    <td><a href="<?= BASE_URL_ADMIN.'?act=updatetaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi <br> chức vụ</button></a>
+                    <a href="<?= BASE_URL_ADMIN.'?act=updatetttaikhoan&id='.$listtk['id'] ?>"><button class="btn btn-warning">Thay đổi <br> trạng thái</button></a></td>
                   </tr>
                   <?php } ?>
                   </tbody>

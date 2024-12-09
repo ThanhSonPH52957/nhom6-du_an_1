@@ -73,6 +73,7 @@ match ($act) {
     'formupdatecanhan' => (new AdminTaiKhoanController()) -> formUpdateCaNhan(),
     // 'updatecanhan' => (new AdminTaiKhoanController()) -> updateCaNhan(),
     'updatematkhaucanhan' => (new AdminTaiKhoanController()) -> updateMatKhauCaNhan(),
+    'updatethongtincanhan' => (new AdminTaiKhoanController()) -> updateThongTinCaNhan(),
 
     // //route auth
     'loginadmin' => (new AdminTaiKhoanController()) -> formLogin(),

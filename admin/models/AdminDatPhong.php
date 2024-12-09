@@ -114,9 +114,27 @@ GROUP BY chi_tiet_hoa_dons.ngay_sd;
     public function getDoanhThuTheoNgay() {
         try {
             // Thay 'ngay_dat' bằng tên cột chứa ngày của bạn
-            $sql = "SELECT DATE(ngay_dat) AS `date`, SUM(tong_tien) AS total 
-            FROM dat_phongs 
-            WHERE trang_thai_id = 3 GROUP BY DATE(ngay_dat) ORDER BY DATE(ngay_dat);";
+            $sql = "SELECT 
+    DATE(dp.ngay_dat) AS `date`,
+    SUM(dp.tong_tien) + COALESCE(SUM(cthd.tien_dich_vu), 0) AS total
+FROM 
+    dat_phongs dp
+LEFT JOIN (
+    SELECT 
+        dat_phong_id,
+        SUM(tien_dich_vu) AS tien_dich_vu
+    FROM 
+        chi_tiet_hoa_dons
+    GROUP BY 
+        dat_phong_id
+) cthd ON dp.id = cthd.dat_phong_id
+WHERE 
+    dp.trang_thai_id = 3
+GROUP BY 
+    DATE(dp.ngay_dat)
+ORDER BY 
+    DATE(dp.ngay_dat);
+;";
     
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();

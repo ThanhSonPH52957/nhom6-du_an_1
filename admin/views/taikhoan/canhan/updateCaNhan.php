@@ -35,30 +35,42 @@
         <hr>
         <h3>Thông tin cá nhân</h3>
 
-        <form action="#" method="post">
+        <form action="<?= BASE_URL_ADMIN . '?act=updatethongtincanhan' ?>" method="post">
           <div class="form-group">
             <label class="col-lg-3 control-label">Họ tên:</label>
             <div class="col-lg-8">
               <input class="form-control" name="ho_ten" type="text" value="<?= $thongtin['ho_ten']?>">
             </div>
+            <?php if (isset($_SESSION['error']['ho_ten'])) { ?>
+              <p class="text-danger"><?= $_SESSION['error']['ho_ten'] ?></p>
+            <?php } ?>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Email:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<?= $thongtin['email']?>">
+              <input class="form-control" name="email" type="text" value="<?= $thongtin['email']?>">
             </div>
+            <?php if (isset($_SESSION['error']['email'])) { ?>
+              <p class="text-danger"><?= $_SESSION['error']['email'] ?></p>
+            <?php } ?>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Số điện thoại:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<?= $thongtin['so_dien_thoai']?>">
+              <input class="form-control" name="sdt" type="text" value="<?= $thongtin['so_dien_thoai']?>">
             </div>
+            <?php if (isset($_SESSION['error']['sdt'])) { ?>
+              <p class="text-danger"><?= $_SESSION['error']['sdt'] ?></p>
+            <?php } ?>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Địa chỉ:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<?= $thongtin['dia_chi']?>">
+              <input class="form-control" name="dia_chi" type="text" value="<?= $thongtin['dia_chi']?>">
             </div>
+            <?php if (isset($_SESSION['error']['dia_chi'])) { ?>
+              <p class="text-danger"><?= $_SESSION['error']['dia_chi'] ?></p>
+            <?php } ?>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label"></label>

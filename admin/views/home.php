@@ -206,12 +206,11 @@
                       },
                       series: [
 
-                        <?php echo $sldondp; ?>,
-                        <?php echo $slphong; ?>,
-                        <?php echo $slthanhvien; ?>
+                        <?php echo $tongdoanhthuphong; ?>,
+                        <?php echo $total; ?>,
                       ],
-                      labels: ['Số Lượng Đơn Đặt Phòng', 'Số Lượng Phòng', 'Số Lượng Thành Viên'],
-                      colors: ['#FF4560', '#008FFB', '#00E396', '#775DD0'],
+                      labels: ['Doanh Thu Đặt Phòng', 'Doanh Thu Dịch Vụ'],
+                      colors: ['#FF4560', '#008FFB', '#775DD0'],
                       title: {
                         text: ''
                       }

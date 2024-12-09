@@ -122,5 +122,45 @@
                 }
             }
         }
+
+        
+        function updateThongTinCaNhan() {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $hoten = $_POST['ho_ten'];
+                $email = $_POST['email'];
+                $sdt = $_POST['sdt'];
+                $diachi = $_POST['dia_chi'];
+                $user = $this -> modelTaiKhoan -> getOneTaiKhoanFromEmail($_SESSION['user_admin']);
+
+                $errors = [];
+
+                if(empty($hoten)) {
+                    $errors['ho_ten'] = 'Vui lòng nhập vào họ tên';
+                }
+
+                if(empty($email)) {
+                    $errors['email'] = 'Vui lòng nhập email';
+                }
+
+                if(empty($sdt)) {
+                    $errors['sdt'] = 'Vui lòng nhập số điện thoại';
+                }
+
+                $_SESSION['error'] = $errors;
+                if(!$errors) {
+                    $status = $this -> modelTaiKhoan -> updateThongTin($user['id'], $hoten, $email, $sdt, $diachi);
+                    if ($status) {
+                        $_SESSION['success'] = "Đổi thông tin thành công";
+                        $_SESSION['flash'] = true;
+                        header("Location: " . BASE_URL_ADMIN . '?act=formupdatecanhan');
+                    }
+                } else {
+                    $_SESSION['flash'] = true;
+
+                    header("Location: " . BASE_URL_ADMIN . '?act=formupdatecanhan');
+                    exit();
+                }
+            }
+        }
     }
 ?>

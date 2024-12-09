@@ -68,18 +68,15 @@
             return true;
         }
 
-        function UpdateKhachHang($khach_hang_id, $ho_ten, $so_dien_thoai, $email, $ngay_sinh, $gioi_tinh, $dia_chi, $trang_thai) {
-            $sql = "update tai_khoans set ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, email = :email, ngay_sinh = :ngay_sinh, gioi_tinh = :gioi_tinh, dia_chi = :dia_chi, trang_thai = :trang_thai where id = :id";
+        function UpdateThongTin($id, $hoten, $email, $sdt, $diachi) {
+            $sql = "update tai_khoans set ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, email = :email, dia_chi = :dia_chi where id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
-            ':ho_ten' => $ho_ten,
-            ':so_dien_thoai' => $so_dien_thoai,
+            ':ho_ten' => $hoten,
+            ':so_dien_thoai' => $sdt,
             ':email' => $email,
-            ':ngay_sinh' => $ngay_sinh,
-            ':gioi_tinh' => $gioi_tinh,
-            ':dia_chi' => $dia_chi,
-            ':trang_thai' => $trang_thai,
-            'id' => $khach_hang_id
+            ':dia_chi' => $diachi,
+            'id' => $id
             ]);
 
             return true;
