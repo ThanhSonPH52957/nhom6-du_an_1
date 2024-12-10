@@ -63,6 +63,7 @@ match ($act) {
     'chitietdatphong' => (new AdminDatPhongController()) -> chiTietDatPhong($_GET['id']),
     'formupdatedatphong' => (new AdminDatPhongController()) -> formUpdateDatPhong($_GET['id']),
     'updatedatphong' => (new AdminDatPhongController()) -> updateDatPhong($_GET['id']),
+    'chitiethoadon'  => (new AdminDatPhongController()) -> chiTietHoaDon($_GET['id']),
 
     //router quản lý tài khoản
     'listtaikhoan' => (new AdminTaiKhoanController()) -> danhSachTaiKhoan(),

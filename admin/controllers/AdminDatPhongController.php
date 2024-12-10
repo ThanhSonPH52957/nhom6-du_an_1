@@ -32,6 +32,27 @@
             require_once './views/datphong/detailDatPhong.php';
         }
 
+        function chiTietHoaDon($id) {
+            $onedatphong = $this -> modelDatPhong -> getOneDatPhong($id);
+            $dichvu = $this -> modelDatPhong -> getDichVuFromId($id);
+            $listdv = $this -> modelDatPhong -> getDichVu($id);
+
+            $tienphong = $onedatphong['tong_tien'];
+            
+            $tiendichvu = 0;
+            $tinhdv = $this -> modelDatPhong -> getTienDichVu($id);
+            
+            foreach($tinhdv as $dv) {
+                $tiendichvu += $dv['tien_dich_vu'];
+            }
+            $tongdichvu = $tiendichvu;
+
+            $tongtien = $tienphong + $tongdichvu;
+
+            // $listTrangThai = $this -> modelDatPhong -> getAllTrangThai();
+            require_once './views/datphong/invoice-print.php';
+        }
+
         function formUpdateDatPhong($id) {
             $datphong = $this -> modelDatPhong -> getOneDatPhong($id);
             $listTrangThai = $this -> modelDatPhong-> getAllTrangThai();
